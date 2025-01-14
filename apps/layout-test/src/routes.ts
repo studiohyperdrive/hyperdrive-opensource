@@ -16,4 +16,11 @@ export const routes: Routes = [
 		loadComponent: () =>
 			import('./pages/mediaquery/mediaquery.component').then((m) => m.MediaQueryComponent),
 	},
+	{
+		path: 'marker',
+		loadComponent: () =>
+			import('./pages/image-marker/image-marker.component').then(
+				(m) => m.NgxImageMarkerPageComponent
+			),
+	},
 ];

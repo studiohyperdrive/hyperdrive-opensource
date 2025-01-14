@@ -1,0 +1,14 @@
+:host {
+	display: block;
+	position: relative;
+
+	// Iben: Because of issues with the close and save flow in MarkerJs2 in Angular, we remove the save and close buttons
+	// Saving goes through the Angular flow
+	::ng-deep {
+
+		[data-action="render"],
+		[data-action="close"] {
+			display: none;
+		}
+	}
+}

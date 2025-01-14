@@ -1,0 +1,14 @@
+<ngx-image-marker
+	image="https://cdn.discordapp.com/attachments/909534972140978206/1328646443422056518/klimmuur.png?ex=678775ed&is=6786246d&hm=255889497ba743dfc62f4bd23b48840805dce77e552ed6bc07b0c397cc26fc32&"
+	imageDescription="Floor-plan of a climbing place"
+	[canEdit]="allowEdit"
+	[defaultData]="currentState"
+	[markerTypes]="markerTypes"
+	(stateUpdated)="updateState($event)"
+	(markerClicked)="markerClicked()"
+>
+</ngx-image-marker>
+
+<button [disabled]="!allowEdit" (click)="save()">Save</button>
+<br />
+<button [disabled]="allowEdit" (click)="edit()">Edit</button>
