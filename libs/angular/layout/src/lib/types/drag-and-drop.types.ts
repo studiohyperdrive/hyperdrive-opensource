@@ -21,7 +21,7 @@ export type NgxAccessibleDragAndDropMoveType = 'reordered' | 'moved';
 
 interface NgxAccessibleDragAndDropBaseMessage<
 	KeyType extends keyof NgxAccessibleDragAndDropMessageRecord,
-	DataType
+	DataType,
 > {
 	type: KeyType;
 	data: DataType;

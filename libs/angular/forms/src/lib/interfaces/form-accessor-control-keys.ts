@@ -30,7 +30,7 @@ type Previous = [
 	18,
 	19,
 	20,
-	...0[]
+	...0[],
 ];
 
 type Join<Key, Path> = Key extends string | number
@@ -40,18 +40,21 @@ type Join<Key, Path> = Key extends string | number
 	: never;
 
 type ControlPaths<FormAccessorFormType extends AbstractControl, Depth extends number = 10> = [
-	Depth
+	Depth,
 ] extends [never]
 	? never
 	: FormAccessorFormType extends FormGroup
-	? {
-			[Key in keyof FormAccessorFormType['controls']]-?: Key extends string | number
-				?
-						| `${Key}`
-						| Join<
-								Key,
-								ControlPaths<FormAccessorFormType['controls'][Key], Previous[Depth]>
-						  >
-				: never;
-	  }[keyof FormAccessorFormType['controls']]
-	: '';
+		? {
+				[Key in keyof FormAccessorFormType['controls']]-?: Key extends string | number
+					?
+							| `${Key}`
+							| Join<
+									Key,
+									ControlPaths<
+										FormAccessorFormType['controls'][Key],
+										Previous[Depth]
+									>
+							  >
+					: never;
+			}[keyof FormAccessorFormType['controls']]
+		: '';

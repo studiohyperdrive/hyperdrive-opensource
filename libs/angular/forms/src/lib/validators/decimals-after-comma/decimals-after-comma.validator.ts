@@ -13,7 +13,7 @@ export const decimalsAfterCommaValidator = (max: number) => {
 		}
 
 		// Iben: We check if the input value matches the amount of decimals after the comma, if not, we return an error
-		return new RegExp(`^\\d\+(\.\\d{1,${max}})?$`).test(`${control.value}`)
+		return new RegExp(`^\\d+(.\\d{1,${max}})?$`).test(`${control.value}`)
 			? null
 			: { invalidDecimalsAfterComma: true };
 	};

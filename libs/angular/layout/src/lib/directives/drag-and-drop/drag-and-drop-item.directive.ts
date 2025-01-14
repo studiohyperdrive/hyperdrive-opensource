@@ -8,6 +8,7 @@ import {
 	Output,
 	signal,
 	WritableSignal,
+	OnInit,
 } from '@angular/core';
 import { CdkDropList } from '@angular/cdk/drag-drop';
 
@@ -30,7 +31,10 @@ import { NgxAccessibleDragAndDropHostDirective } from './drag-and-drop-host.dire
 		'[attr.tabIndex]': 'tabIndex()',
 	},
 })
-export class NgxAccessibleDragAndDropItemDirective extends NgxAccessibleAbstractDragAndDropItemDirective {
+export class NgxAccessibleDragAndDropItemDirective
+	extends NgxAccessibleAbstractDragAndDropItemDirective
+	implements OnInit
+{
 	/**
 	 * The tab index of the item
 	 */
@@ -88,21 +92,25 @@ export class NgxAccessibleDragAndDropItemDirective extends NgxAccessibleAbstract
 	/**
 	 * The index of the draggable item
 	 */
+	// eslint-disable-next-line @angular-eslint/no-input-rename
 	@Input({ required: true, alias: 'ngxAccessibleDragAndDropItemIndex' }) public itemIndex: number;
 
 	/**
 	 * An unique id of the draggable item
 	 */
+	// eslint-disable-next-line @angular-eslint/no-input-rename
 	@Input({ required: true, alias: 'ngxAccessibleDragAndDropItemId' }) public itemId: string;
 
 	/**
 	 * An optional label for the draggable item
 	 */
+	// eslint-disable-next-line @angular-eslint/no-input-rename
 	@Input({ alias: 'ngxAccessibleDragAndDropLabel' }) public label: string;
 
 	/**
 	 * Whether the draggable item  is disabled
 	 */
+	// eslint-disable-next-line @angular-eslint/no-input-rename
 	@Input({ alias: 'ngxAccessibleDragAndDropDisabled' }) public set disabled(isDisabled: boolean) {
 		this.tabIndex.set(isDisabled ? -1 : 0);
 	}

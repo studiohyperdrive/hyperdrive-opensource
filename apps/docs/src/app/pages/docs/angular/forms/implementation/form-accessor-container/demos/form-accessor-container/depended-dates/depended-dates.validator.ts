@@ -9,7 +9,7 @@ export const DependedDatesValidator = (form: FormGroup<any>): ValidationErrors |
 
 	clearFormError(form.get('world.start'), 'dependedDates');
 
-	if (!Boolean(values.hello.start) || !Boolean(values.world.start)) {
+	if (!values.hello.start || !values.world.start) {
 		return null;
 	}
 

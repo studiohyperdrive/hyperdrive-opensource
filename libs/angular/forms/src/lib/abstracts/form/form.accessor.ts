@@ -8,7 +8,7 @@ import { NgxFormsControlValueAccessor } from '../custom-control-value-accessor';
 export abstract class FormAccessor<
 		DataType = unknown,
 		FormAccessorFormType extends AbstractControl = FormControl,
-		FormValueType = DataType
+		FormValueType = DataType,
 	>
 	extends NgxFormsControlValueAccessor<DataType, FormAccessorFormType, FormValueType>
 	implements OnInit

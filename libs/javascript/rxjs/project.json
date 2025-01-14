@@ -16,6 +16,7 @@
 			"executor": "@nx/vite:test",
 			"outputs": ["{workspaceRoot}/coverage/libs/javascript/rxjs"],
 			"options": {
+        "verbose": true,
 				"passWithNoTests": true,
 				"reportsDirectory": "../../coverage/libs.nodejs/rxjs"
 			}

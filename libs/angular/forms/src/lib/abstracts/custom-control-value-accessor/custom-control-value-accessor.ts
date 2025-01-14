@@ -33,10 +33,11 @@ import {
 
 @Directive()
 export abstract class NgxFormsControlValueAccessor<
-	DataType = unknown,
-	FormAccessorFormType extends AbstractControl = FormControl,
-	FormValueType = DataType
-> implements ControlValueAccessor, OnDestroy
+		DataType = unknown,
+		FormAccessorFormType extends AbstractControl = FormControl,
+		FormValueType = DataType,
+	>
+	implements ControlValueAccessor, OnDestroy
 {
 	/**
 	 *  The Injector needed in the constructor

@@ -33,7 +33,9 @@ describe('NgxDisplayContentDirective', () => {
 			fixture = TestBed.createComponent(TestDisplayContentComponent);
 			try {
 				fixture.detectChanges();
-			} catch {}
+			} catch {
+				/* empty */
+			}
 		});
 
 		it('should render the content if no conditions are provided', () => {
@@ -100,7 +102,9 @@ describe('NgxDisplayContentDirective', () => {
 			fixture = TestBed.createComponent(TestOverrideDisplayContentComponent);
 			try {
 				fixture.detectChanges();
-			} catch {}
+			} catch {
+				/* empty */
+			}
 		});
 
 		it('should render the content if no conditions are provided', () => {

@@ -36,7 +36,7 @@ describe('fetchIf', () => {
 			},
 			(fetchData) => {
 				expect(fetchData).toEqual([{ id: 'hello' }]);
-				return undefined;
+				return of(undefined);
 			}
 		).subscribe();
 	});

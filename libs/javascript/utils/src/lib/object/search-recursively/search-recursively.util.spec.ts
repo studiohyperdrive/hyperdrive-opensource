@@ -30,7 +30,7 @@ describe('searchRecursively', () => {
 				{ id: 4, children: [] },
 				{ id: 5, children: [] },
 			],
-			item => item.id === 3
+			(item) => item.id === 3
 		);
 		expect(result).toEqual({ id: 3, children: [] });
 
@@ -60,7 +60,7 @@ describe('searchRecursively', () => {
 					],
 				},
 			],
-			item => item.id === 6
+			(item) => item.id === 6
 		);
 		expect(result).toEqual({ id: 6, children: [] });
 
@@ -93,7 +93,7 @@ describe('searchRecursively', () => {
 					],
 				},
 			],
-			item => item.something.includes('hello')
+			(item) => item.something.includes('hello')
 		);
 		expect(result).toEqual({ id: 5, something: 'hello blub', children: [] });
 	});

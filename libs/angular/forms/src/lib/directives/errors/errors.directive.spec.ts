@@ -83,7 +83,9 @@ describe('NgxFormsErrorsDirective', () => {
 
 			try {
 				fixture.detectChanges();
-			} catch (error) {}
+			} catch {
+				/* empty */
+			}
 		});
 
 		it('should not show the error as long as the control is pristine', () => {
@@ -135,7 +137,9 @@ describe('NgxFormsErrorsDirective', () => {
 
 			try {
 				fixture.detectChanges();
-			} catch (error) {}
+			} catch {
+				/* empty */
+			}
 		});
 
 		it('should not show the error as long as the control is pristine', () => {

@@ -35,7 +35,9 @@ describe('FormAccessor', () => {
 
 		try {
 			fixture.detectChanges();
-		} catch (error) {}
+		} catch {
+			/* empty */
+		}
 	});
 
 	it('should mark the form as touched', () => {
@@ -109,7 +111,9 @@ describe('FormAccessor with mapper', () => {
 
 		try {
 			fixture.detectChanges();
-		} catch (error) {}
+		} catch {
+			/* empty */
+		}
 	});
 
 	it('should map the value when written', () => {

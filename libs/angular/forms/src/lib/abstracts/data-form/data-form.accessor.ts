@@ -10,7 +10,7 @@ export abstract class DataFormAccessor<
 	ConstructionDataType = unknown,
 	DataType = unknown,
 	FormAccessorFormType extends AbstractControl = FormControl,
-	FormValueType = DataType
+	FormValueType = DataType,
 > extends NgxFormsControlValueAccessor<DataType, FormAccessorFormType, FormValueType> {
 	// Iben: Keep a reference to the current data so we don't make a new form if the data itself hasn't changed
 	private currentData: ConstructionDataType;

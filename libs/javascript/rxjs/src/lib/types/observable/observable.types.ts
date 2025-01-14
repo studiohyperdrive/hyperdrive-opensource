@@ -10,7 +10,7 @@ export type ObservableNumber = Observable<number>;
 
 export type ObservableRecord<
 	DataType,
-	DataId extends string | symbol | number = string
+	DataId extends string | symbol | number = string,
 > = Observable<Record<DataId, DataType>>;
 
 export type BooleanRecord = Record<string, boolean>;

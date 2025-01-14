@@ -153,7 +153,7 @@ export class NgxConfigurableLayoutComponent
 	 */
 	@Input() public set keys(keys: string[][]) {
 		// Wouter: If no keys are provided, we prevent the patching of the control.
-		if (!Boolean(keys)) {
+		if (!keys) {
 			return;
 		}
 

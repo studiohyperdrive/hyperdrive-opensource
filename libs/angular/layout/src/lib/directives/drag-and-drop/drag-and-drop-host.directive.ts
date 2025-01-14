@@ -1,4 +1,11 @@
-import { ContentChildren, Directive, ElementRef, Input, QueryList } from '@angular/core';
+import {
+	ContentChildren,
+	Directive,
+	ElementRef,
+	Input,
+	QueryList,
+	AfterViewInit,
+} from '@angular/core';
 
 import {
 	NgxAccessibleAbstractDragAndDropItemDirective,
@@ -14,7 +21,7 @@ import { NgxAccessibleDragAndDropContainerDirective } from './drag-and-drop-cont
 	exportAs: 'ngxAccessibleDragAndDropHost',
 	standalone: true,
 })
-export class NgxAccessibleDragAndDropHostDirective {
+export class NgxAccessibleDragAndDropHostDirective implements AfterViewInit {
 	/**
 	 * A list of all the drag and drop items
 	 */

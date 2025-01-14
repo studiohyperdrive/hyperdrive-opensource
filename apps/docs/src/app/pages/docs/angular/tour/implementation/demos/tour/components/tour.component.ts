@@ -17,11 +17,11 @@ import { NgxTourStepComponent } from '@ngx/tour';
 			{{ title }}
 		</p>
 		{{ content }}
-		@if(currentStep < amountOfSteps -1) {
-		<button (click)="handleInteraction.emit('next')">Next</button>
-		} @if(currentStep !== 0) {
-
-		<button (click)="handleInteraction.emit('back')">Previous</button>
+		@if (currentStep < amountOfSteps - 1) {
+			<button (click)="handleInteraction.emit('next')">Next</button>
+		}
+		@if (currentStep !== 0) {
+			<button (click)="handleInteraction.emit('back')">Previous</button>
 		}
 
 		<button (click)="handleInteraction.emit('close')">Close</button>

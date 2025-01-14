@@ -44,7 +44,9 @@ describe('FormAccessor', () => {
 
 		try {
 			fixture.detectChanges();
-		} catch (error) {}
+		} catch {
+			/* empty */
+		}
 	});
 
 	it('should create the form on the provided data', () => {
