@@ -47,6 +47,7 @@
     "@nx/eslint-plugin": "20.2.1",
     "@nx/vite": "20.2.2",
     "@studiohyperdrive/env": "1.0.4",
+    "@studiohyperdrive/utils": "^2.0.0",
     "@types/lodash": "4.17.12",
     "angular2-uuid": "1.1.1",
     "date-fns": "3.6.0",

@@ -51,10 +51,11 @@
 	},
 	"peerDependencies": {
 		"@angular/common": "^19.0.0",
-		"@angular/core": "^19.0.0"
+    "@angular/core": "^19.0.0",
+    "@studiohyperdrive/utils": "^2.0.0"
 	},
 	"allowedNonPeerDependencies": {
 		"rxjs": "^7.5.6",
 		"tslib": "^2.5.0"
-	}
+  }
 }
