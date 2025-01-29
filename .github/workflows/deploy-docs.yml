@@ -26,7 +26,7 @@ jobs:
                   node-version: '18'
 
             # Remove package-lock.json
-			# See (https://github.com/npm/cli/issues/4828)
+            # See (https://github.com/npm/cli/issues/4828)
             - name: Remove package-lock.json
               run: rm -rf package-lock.json
 

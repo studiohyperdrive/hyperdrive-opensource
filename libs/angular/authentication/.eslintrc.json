@@ -1,0 +1,38 @@
+{
+	"extends": "../../../.eslintrc.json",
+	"ignorePatterns": ["!**/*"],
+	"overrides": [
+		{
+			"files": ["*.ts"],
+			"parserOptions": {
+				"project": ["libs/angular/authentication/tsconfig.*?.json"],
+				"createDefaultProgram": true
+			},
+			"rules": {
+				"@angular-eslint/component-class-suffix": [
+					"error",
+					{
+						"suffixes": ["Component", "Container", "Page"]
+					}
+				],
+				"@typescript-eslint/no-inferrable-types": "off",
+				"comma-dangle": [
+					"error",
+					{
+						"arrays": "always-multiline",
+						"exports": "always-multiline",
+						"functions": "never",
+						"imports": "always-multiline",
+						"objects": "always-multiline"
+					}
+				],
+				"import/order": "error",
+				"@angular-eslint/prefer-standalone": "off"
+			}
+		},
+		{
+			"files": ["*.html"],
+			"rules": {}
+		}
+	]
+}

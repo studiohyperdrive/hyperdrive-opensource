@@ -14,9 +14,7 @@ xdescribe('useMockDataDuringTour', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			imports: [MockTourHolderComponent],
-			providers: [
-				provideNgxTourConfiguration(MockTourStepComponent),
-			],
+			providers: [provideNgxTourConfiguration(MockTourStepComponent)],
 		});
 
 		fixture = TestBed.createComponent(MockTourHolderComponent);

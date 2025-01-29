@@ -25,6 +25,7 @@
 			"@js/utils": ["libs/javascript/utils/src/index.ts"],
 			"@ng-doc/generated": ["./ng-doc/docs/index.ts"],
 			"@ng-doc/generated/*": ["./ng-doc/docs/*"],
+			"@ngx/auth": ["libs/angular/authentication/src/index.ts"],
 			"@ngx/cookies": ["libs/angular/cookies/src/index.ts"],
 			"@ngx/core": ["libs/angular/core/src/index.ts"],
 			"@ngx/forms": ["libs/angular/forms/src/public-api.ts"],
