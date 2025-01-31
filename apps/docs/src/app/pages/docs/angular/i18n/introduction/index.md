@@ -2,32 +2,24 @@
 keyword: IntroductionPage
 ---
 
-This library provides a lazy-loaded modular approach to translations.
+`ngx-i18n` is an Angular based package that provides a modular and lazy-loaded approach to I18n.
 
-`ngx-1i8n` is a layer on top of `ngx-translate` that allows for a lazy-loaded modular approach to translations. This approach allows the user to split up the translations into several independent files, which can be lazy-loaded whenever they're needed.
+## For organisations
 
-This approach only works for module-based projects. There is currently no support for standalone-components.
+In an ever connected world, it's important to be able to have your application be available in multiple languages. Our internationalization package aims to streamline this process for both the end-user and the developer, resulting in a fast and modular solution.
 
-## Modular
+By allowing us to divide the translations based on their corresponding feature, our solution creates a modular setup that is future proof and easy to adapt. Because of this approach we can also ensure that if a certain feature is locked behind a threshold, from being authenticated to requiring a specific role, certain translations are never loaded in. Not only does this stop users from getting an idea of parts of the application that they don't have access to, but it also speeds up the loading time of your application.
 
-In order for a modular translation system, we provide a `TranslationLoader` to each `forChild` method of the `NgxI18nModule`. This loader uses a similar approach as @rbalet's [MultiTranslateHttpLoader](https://github.com/rbalet/ngx-translate-multi-http-loader).
+Furthermore, our solution uses the aforementioned modularity to only load the translations when they are needed, instead of loading everything up front. This makes the initial loading time for your application much smaller, resulting in a faster and more user-friendly interface for your end-users.
 
-Using an array of source paths, the translation loader loads in only the provided translations. If one of the assets has previously been loaded by a different module, the translation will be fetched from the cache.
+Looking for more information on how this package can help you out in your application? Mail us at [info@studiohyperdrive.be](mailto:info@studiohyperdrive.be)
 
-```ts
-import { NgxI18nMultiTranslationHttpLoader } from '@studiohyperdrive/ngx-i18n';
+## For developers
 
-export function ExampleTranslationLoader(http: HttpBackend) {
-	return new NgxI18nMultiTranslationHttpLoader(http, ['./path-to-translation/']);
-}
-```
+`ngx-i18n` is a lazy-loaded modular approach to i18n.
 
-If no custom `TranslationLoader` is provided, than the module will use a fall-back loader which has a default array of paths that can be set in the config file.
+By splitting up translations in multiple individual files, we have the ability to further separate concerns between features and are able to load translations in a lazy loaded way.
 
-## Lazy-loaded
+At its core, the package works with `TranslationLoaders` that define which files need to be loaded in and `TranslationLoaderGuards` to know when a `TranslationLoader` needs to load in specific files. When files are shared, the loader will always use the already loaded in file, reducing loading times even further.
 
-In order to provide a lazy loaded translation system, the translations only get loaded when routing to a specific route.
-
-For this purpose we've provided a `NgxI18nTranslationLoaderGuard` which will automatically fetch all translations when the application routes to this route.
-
-At any given time you can query the `NgxI18nLoadingService` to see whether the translations have been loaded into the application. There are two Observables provided, being `translationsLoading$` and `translationsFailed$`;
+Looking for more information on how this package can help you out in your application? Check out `Implementation` to find out more!
