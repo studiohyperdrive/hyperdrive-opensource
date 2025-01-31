@@ -1,0 +1,19 @@
+:host {
+	display: block;
+	width: 100%;
+
+	div {
+		position: relative;
+		width: 100%;
+
+		ngx-image-marker {
+			width: 100%;
+
+			::ng-deep {
+				.ngx-image-marker-image {
+					width: 100%;
+				}
+			}
+		}
+	}
+}

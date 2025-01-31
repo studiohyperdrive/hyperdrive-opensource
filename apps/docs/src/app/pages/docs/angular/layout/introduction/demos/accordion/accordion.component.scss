@@ -1,0 +1,115 @@
+:host {
+	display: block;
+	width: 100%;
+
+	.Hyperdrive {
+		ngx-accordion {
+			width: 100%;
+		}
+
+		::ng-deep {
+			details {
+				width: 100%;
+			}
+
+			.ngx-accordion-item {
+				margin-bottom: 35px;
+				width: 100%;
+			}
+
+			.ngx-accordion-header {
+				display: grid;
+				grid-template-columns: 5fr 1fr;
+				align-items: center;
+
+				height: 45px;
+				border-bottom: none;
+				border-left: 10px solid var(--ng-doc-primary);
+				padding: 0px 15px;
+
+				background-color: var(--ng-doc-base-1);
+				box-shadow: inset 0 0 0 0 var(--ng-doc-primary);
+				-webkit-transition: all ease 1.5s;
+				-moz-transition: all ease 1.5s;
+				transition: all ease 1.5s;
+
+				&:hover {
+					font-weight: bold;
+				}
+
+				i {
+					justify-self: end;
+				}
+			}
+
+			details[open] {
+				.ngx-accordion-header {
+					box-shadow: inset 1000px 0 0 0 var(--ng-doc-primary);
+					color: #fff;
+				}
+			}
+		}
+	}
+
+	.Simple {
+		::ng-deep {
+			.ngx-accordion-item {
+				margin-bottom: 35px;
+			}
+
+			.ngx-accordion-header {
+				display: grid;
+				grid-template-columns: 5fr 1fr;
+				padding-right: 15px;
+				padding-bottom: 15px;
+
+				&:hover {
+					font-weight: bold;
+				}
+
+				i {
+					justify-self: end;
+				}
+			}
+		}
+	}
+
+	.Modern {
+		::ng-deep {
+			.ngx-accordion-item {
+				margin-bottom: 35px;
+			}
+
+			details[open] {
+				.ngx-accordion-header {
+					border-bottom-right-radius: 0px;
+					border-bottom-left-radius: 0px;
+				}
+
+				.ngx-accordion-content {
+					border-top-left-radius: 0px;
+					border-top-right-radius: 0px;
+				}
+			}
+
+			.ngx-accordion-header {
+				display: grid;
+				grid-template-columns: 5fr 1fr;
+				padding: 15px;
+				border: 1px solid var(--ng-doc-border-color);
+				background-color: var(--ng-doc-base-1);
+				border-radius: var(--ng-doc-base-gutter);
+
+				i {
+					justify-self: end;
+				}
+			}
+
+			.ngx-accordion-content {
+				border: 1px solid var(--ng-doc-border-color);
+				border-radius: var(--ng-doc-base-gutter);
+				border-top: none;
+			}
+		}
+	}
+}

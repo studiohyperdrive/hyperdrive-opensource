@@ -1,0 +1,9 @@
+<div *displayContent="{ offline: !Online }">
+	<ngx-image-marker
+		image="https://studiohyperdrive.be/_next/image?url=https%3A%2F%2Fshd-website-p.s3.eu-central-1.amazonaws.com%2FHomepage_Afbeelding_9473dd6613.jpg&w=1080&q=75"
+		imageDescription="A group of developers"
+		[canEdit]="true"
+		[startState]="$any(markerState())"
+		(stateUpdated)="updateState($event)"
+	></ngx-image-marker>
+</div>

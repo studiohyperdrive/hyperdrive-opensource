@@ -8,7 +8,7 @@ keyword: IntroductionPage
 
 In many applications, data-tables are the primary way to both visualize and interact with complex datasets. Our table package aims to be a robust all-in-one solution to handle these data-tables in a consistent way, with a focus on user-experience and accessibility.
 
-Designed to adapt to your individual needs, the data-table comes with little to no styling up front. Using this approach, there's less restrictions for developers to adjust the styling to your visual identity. In the example below you can switch the styling of the presented table to see different approach to the visuals.
+Designed to adapt to your individual needs, the data-table comes with little to no styling up front. Using this approach, there's less restrictions for developers to adjust the styling to your visual identity. In the example below you can switch the styling of the presented table to see different approaches to the visuals.
 
 {{ NgDocActions.playground("TableStylingPlayground") }}
 

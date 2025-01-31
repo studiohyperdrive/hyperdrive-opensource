@@ -1,0 +1,15 @@
+<ngx-accordion *displayContent="{ loading: false, offline: !Online }" [class]="Styling">
+	@for (user of data(); track $index; let index = $index) {
+		<ngx-accordion-item>
+			<ng-template #headerTmpl let-isOpen>
+				{{ user.name }} <i>{{ isOpen ? '▲' : '▼' }}</i>
+			</ng-template>
+
+			<ng-template #contentTmpl>
+				<p>Tel: {{ user.phone }}</p>
+
+				<p>Mail: {{ user.email }}</p>
+			</ng-template>
+		</ngx-accordion-item>
+	}
+</ngx-accordion>
