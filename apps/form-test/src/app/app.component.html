@@ -1,5 +1,3 @@
-<app-form-accessor [formControl]="control" />
-
 <button (click)="checkValues()">Check value and validity</button>
 
 <button (click)="disableForm()">Disable/enable</button>
@@ -10,17 +8,4 @@
 
 <hr />
 
-<div [formGroup]="form">
-	<label for="">
-		Start
-		<app-date-input formControlName="start" />
-	</label>
-
-	<label for="">
-		End
-		<app-date-input formControlName="end" />
-	</label>
-</div>
-
-<button (click)="form.get('start').markAsTouched()">Mark start as touched</button>
-<button (click)="form.get('end').markAsTouched()">Mark end as touched</button>
+<app-parent [formControl]="someControl"></app-parent>
