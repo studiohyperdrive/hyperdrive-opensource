@@ -17,19 +17,26 @@ import {
 	ValidationErrors,
 } from '@angular/forms';
 
-import { BehaviorSubject, Observable, Subject, filter, takeUntil, tap } from 'rxjs';
+import {
+	BehaviorSubject,
+	Observable,
+	Subject,
+	distinctUntilChanged,
+	filter,
+	switchMap,
+	takeUntil,
+	tap,
+} from 'rxjs';
 import { FormAccessorControlsEntity, FormStateOptionsEntity } from '../../interfaces';
 import { BaseFormAccessor } from '../base-form/base-form.accessor';
 import { DataFormAccessor } from '../data-form/data-form.accessor';
 import { FormAccessor } from '../form/form.accessor';
 import {
 	handleFormAccessorControlDisabling,
-	handleFormAccessorMarkAsDirty,
-	handleFormAccessorMarkAsPristine,
-	handleFormAccessorMarkAsTouched,
 	handleFormAccessorUpdateValueAndValidity,
 	hasErrors,
 } from '../../utils';
+import { NgxFormAccessorParentChildInteraction } from '../../types/form-accessor.types';
 
 @Directive()
 export abstract class NgxFormsControlValueAccessor<
@@ -65,6 +72,20 @@ export abstract class NgxFormsControlValueAccessor<
 	 * Inner form to write to
 	 */
 	public form: FormAccessorFormType;
+
+	/**
+	 * Whether all or one of the inner form fields should trigger markAsDirty on the parent control.
+	 *
+	 * If the FormAccessor does not have a parent (Data)FormAccessor this is 'one' by default, else it inherits the version from the parent
+	 */
+	public markAsDirtyParentChildInteraction: NgxFormAccessorParentChildInteraction;
+
+	/**
+	 * Whether all or one of the inner form fields should trigger markAsTouched on the parent control.
+	 *
+	 * If the FormAccessor does not have a parent (Data)FormAccessor this is 'all' by default, else it inherits the version from the parent
+	 */
+	public markAsTouchedParentChildInteraction: NgxFormAccessorParentChildInteraction;
 
 	/**
 	 * Whether the first setDisable has run
@@ -167,79 +188,46 @@ export abstract class NgxFormsControlValueAccessor<
 					return;
 				}
 
-				this.parentControlSubject$.next(parentControl.control);
+				const { control } = parentControl;
 
-				// Iben: Grab the control from the parent container
-				const control = parentControl.control;
+				control.events
+					.pipe(
+						distinctUntilChanged(),
+						tap((event) => {
+							console.dir(event);
+							if (event.source.touched && !this.form.touched) {
+								this.form.markAllAsTouched();
+							}
 
-				// Iben: Setup the markAsTouched flow
-				// Iben: Keep a reference to the original `markAsTouched` handler.
-				const markAsTouched = control.markAsTouched.bind(control);
+							if (event.source.pristine && !this.form.pristine) {
+								this.form.markAsPristine();
+							}
 
-				// Iben: Override the `markAsTouched` handler with our own.
-				control.markAsTouched = (options?: FormStateOptionsEntity) => {
-					// Iben: If the control is already marked as touched, we early exit
-					if (control.touched) {
-						return;
-					}
+							if (event.source.dirty && !this.form.dirty) {
+								this.form.markAsDirty();
+							}
+						})
+					)
+					.subscribe();
 
-					// Iben: Invoke the original `markAsTouchedHandler`.
-					markAsTouched(options);
+				this.initialized$
+					.pipe(
+						filter(Boolean),
+						// Iben: Switch to listening to the form events
+						switchMap(() => this.form.events),
+						tap((event) => {
+							// Iben: Check if we should mark the parent control as dirty
+							if (event.source.dirty) {
+								control.markAsDirty();
+							}
 
-					// Iben: If the onlySelf flag is set to true, we early exit
-					if (options?.onlySelf) {
-						return;
-					}
-
-					// Iben: Invoke the custom `markAsTouchedHandler`.
-					this.markAsTouched(options);
-				};
-
-				// Iben: Setup the markAsDirty flow
-				// Iben: Keep a reference to the original `markAsDirty` handler.
-				const markAsDirty = control.markAsDirty.bind(control);
-
-				// Iben: Override the `markAsDirty` handler with our own.
-				control.markAsDirty = (options?: FormStateOptionsEntity) => {
-					// Iben: If the control is already marked as dirty, we early exit
-					if (control.dirty) {
-						return;
-					}
-
-					// Iben: Invoke the original `markAsDirtyHandler`.
-					markAsDirty(options);
-
-					// Iben: If the onlySelf flag is set to true, we early exit
-					if (options?.onlySelf) {
-						return;
-					}
-
-					// Iben: Invoke the custom `markAsDirtyHandler`.
-					this.markAsDirty(options);
-				};
-
-				// Iben: Setup the markAsPristine flow
-				// Iben: Keep a reference to the original `markAsPristine` handler.
-				const markAsPristine = control.markAsPristine.bind(control);
-
-				// Iben: Override the `markAsPristine` handler with our own.
-				control.markAsPristine = (options?: FormStateOptionsEntity) => {
-					// Iben: If the control is already marked as pristine, we early exit
-					if (control.pristine) {
-						return;
-					}
-
-					// Iben: Invoke the original `markAsPristineHandler`.
-					markAsPristine(options);
-
-					// Iben: If the onlySelf flag is set to true, we early exit
-					if (options?.onlySelf) {
-						return;
-					}
-
-					// Iben: Invoke the custom `markAsPristineHandler`.
-					this.markAsPristine(options);
-				};
+							// Iben: Check if we should mark the parent control as touched
+							if (event.source.touched) {
+								control.markAsTouched();
+							}
+						})
+					)
+					.subscribe();
 			} catch (error) {
 				console.warn(
 					'NgxForms: No parent control was found while trying to set up the form accessor.'
@@ -289,36 +277,6 @@ export abstract class NgxFormsControlValueAccessor<
 
 		// Iben: Validate the current value
 		this.validate();
-
-		// Iben: Detect changes so the changes are visible in the dom
-		this.cdRef.detectChanges();
-	}
-
-	/**
-	 * Mark all controls of the form as touched
-	 */
-	public markAsTouched(options: FormStateOptionsEntity = {}): void {
-		handleFormAccessorMarkAsTouched(this.form, this.accessors?.toArray() || [], options);
-
-		// Iben: Detect changes so the changes are visible in the dom
-		this.cdRef.detectChanges();
-	}
-
-	/**
-	 * Mark all controls of the form as dirty
-	 */
-	public markAsDirty(options: FormStateOptionsEntity = {}): void {
-		handleFormAccessorMarkAsDirty(this.form, this.accessors?.toArray() || [], options);
-
-		// Iben: Detect changes so the changes are visible in the dom
-		this.cdRef.detectChanges();
-	}
-
-	/**
-	 * Mark all controls of the form as pristine
-	 */
-	public markAsPristine(options: FormStateOptionsEntity = {}): void {
-		handleFormAccessorMarkAsPristine(this.form, this.accessors?.toArray() || [], options);
 
 		// Iben: Detect changes so the changes are visible in the dom
 		this.cdRef.detectChanges();
@@ -392,5 +350,29 @@ export abstract class NgxFormsControlValueAccessor<
 	public ngOnDestroy(): void {
 		this.destroy$.next(undefined);
 		this.destroy$.complete();
+	}
+
+	/**
+	 * Checks if all controls match the provided state
+	 *
+	 * @param {AbstractControl[]} controls - A list of controls
+	 * @param {('touched' | 'dirty')} state - The required state
+	 */
+	private checkStateOfControls(controls: AbstractControl[], state: 'touched' | 'dirty'): boolean {
+		// Iben: Loop over each control and check the state
+		return controls.every((control) => {
+			// Iben: If the control does not have children, we check the state of the control
+			if (!control['controls']) {
+				return control[state];
+			}
+
+			// Iben: Get the child controls of the control
+			const controls = Array.isArray(control['controls'])
+				? control['controls']
+				: Object.entries(control['controls']);
+
+			// Iben: If the control has children, we recursively check the state
+			return this.checkStateOfControls(controls, state);
+		});
 	}
 }

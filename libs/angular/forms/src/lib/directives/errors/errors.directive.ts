@@ -23,7 +23,6 @@ import { Observable, Subject, combineLatest, startWith, takeUntil, tap } from 'r
 import { NgxFormsErrorsConfigurationToken } from '../../tokens';
 import { NgxFormsErrorConfigurationOptions } from '../../interfaces';
 import { NgxFormsErrorAbstractComponent } from '../../abstracts';
-import { touchedEventListener } from '../../utils';
 
 @Directive({
 	selector: '[ngxFormsErrors]',
@@ -118,15 +117,17 @@ export class NgxFormsErrorsDirective implements AfterViewInit, OnDestroy {
 		// Iben: Listen to the value changes, status changes and the touched changes of the control
 		combineLatest([
 			this.abstractControl.valueChanges.pipe(startWith(this.abstractControl.value)),
-			touchedEventListener(this.abstractControl),
+			this.abstractControl.events.pipe(startWith(undefined)),
 			this.abstractControl.statusChanges.pipe(startWith(this.abstractControl.status)),
 		])
 			.pipe(
-				tap(([, touched]) => {
+				tap(([, event]) => {
 					// Iben: Check whether we should show the error based on the provided config
 					const shouldShow =
 						this.abstractControl.invalid &&
-						(this.config.showWhen === 'touched' ? touched : this.abstractControl.dirty);
+						(this.config.showWhen === 'touched'
+							? event?.source?.touched
+							: this.abstractControl.dirty);
 
 					// Iben: Show the error based on whether or not a component was provided
 					if (!this.config.component) {

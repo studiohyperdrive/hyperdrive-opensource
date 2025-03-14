@@ -1,7 +1,6 @@
 import { AbstractControl, FormGroup } from '@angular/forms';
 
 import { DataFormAccessor, FormAccessor } from '../../abstracts';
-import { markAllAsDirty } from '../mark-all-as-dirty/mark-all-as-dirty.util';
 import { FormStateOptionsEntity } from '../../interfaces';
 import { updateAllValueAndValidity } from '../custom-update-value-and-validity/custom-update-value-and-validity.util';
 
@@ -105,68 +104,6 @@ export const handleFormAccessorControlDisabling = (
 	} else {
 		handleDisableFormGroup(form as FormGroup, controlKeys, emitEvent);
 	}
-};
-
-/**
- * Marks a form and all the form-accessors this form is based on as dirty
- *
- * @param form - The form we wish to mark as dirty
- * @param accessors - An array of all the accessors we wish to mark as dirty
- * @param options - Form state options we wish to provide
- */
-export const handleFormAccessorMarkAsDirty = (
-	form: AbstractControl,
-	accessors: (FormAccessor | DataFormAccessor)[],
-	options: FormStateOptionsEntity = {}
-) => {
-	// Iben: If the control has child controls, recursively mark them as dirty
-	if (form['controls']) {
-		markAllAsDirty(form['controls'], options);
-	} else {
-		// Iben : Mark the form as dirty
-		form.markAsDirty(options);
-	}
-
-	// Iben: Loop over each form accessor and call the mark as dirty function, so all subsequent accessors are also marked as dirty
-	accessors.forEach((accessor) => accessor.markAsDirty(options));
-};
-
-/**
- * Marks a form and all the form-accessors this form is based on as touched
- *
- * @param form - The form we wish to mark as touched
- * @param accessors - An array of all the accessors we wish to mark as touched
- * @param options - Form state options we wish to provide
- */
-export const handleFormAccessorMarkAsTouched = (
-	form: AbstractControl,
-	accessors: (FormAccessor | DataFormAccessor)[],
-	options: FormStateOptionsEntity = {}
-) => {
-	// Iben: Mark all the controls and the children as touched
-	form.markAllAsTouched();
-
-	// Iben: Loop over each form accessor and call the mark as touched function, so all subsequent accessors are also marked as touched
-	accessors.forEach((accessor) => accessor.markAsTouched(options));
-};
-
-/**
- * Marks a form and all the form-accessors this form is based on as pristine
- *
- * @param form - The form we wish to mark as pristine
- * @param accessors - An array of all the accessors we wish to mark as pristine
- * @param options - Form state options we wish to provide
- */
-export const handleFormAccessorMarkAsPristine = (
-	form: AbstractControl,
-	accessors: (FormAccessor | DataFormAccessor)[],
-	options: FormStateOptionsEntity = {}
-) => {
-	// Iben: Mark all the controls and the children as touched
-	form.markAsPristine();
-
-	// Iben: Loop over each form accessor and call the mark as touched function, so all subsequent accessors are also marked as touched
-	accessors.forEach((accessor) => accessor.markAsPristine(options));
 };
 
 /**

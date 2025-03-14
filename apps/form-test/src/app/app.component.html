@@ -2,10 +2,10 @@
 
 <button (click)="disableForm()">Disable/enable</button>
 
-<button (click)="markAllAsTouched(control)">Mark as touched</button>
+<button (click)="markAllAsTouched()">Mark as touched</button>
 
 {{ control.value | json }}
 
 <hr />
 
-<app-parent [formControl]="someControl"></app-parent>
+<app-parent [formControl]="control"></app-parent>

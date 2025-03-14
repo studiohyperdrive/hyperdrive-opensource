@@ -16,7 +16,9 @@ import { createAccessorProviders, FormAccessor } from '@ngx/forms';
 			<p>valid: {{ form.valid }}</p>
 			<p>value: {{ form.value | json }}</p>
 			<button (click)="handleTouched()">mark as touched</button>
+			{{ form.get('grandChild1').touched }}
 			<app-grand-child formControlName="grandChild1" />
+			{{ form.get('grandChild2').touched }}
 			<app-grand-child formControlName="grandChild2" />
 		</ng-container>
 	`,
@@ -44,7 +46,6 @@ export class ChildComponent
 	}
 
 	public onChangeMapper(value: Partial<ChildInnerEntity>): string {
-		this.form.markAsTouched();
 		return `${value.grandChild1}-${value.grandChild2}`;
 	}
 
