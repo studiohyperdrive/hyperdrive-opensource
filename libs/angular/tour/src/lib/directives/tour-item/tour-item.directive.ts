@@ -7,7 +7,7 @@ import {
 	Input,
 	OnDestroy,
 } from '@angular/core';
-import { UUID } from 'angular2-uuid';
+import { v4 as uuid } from 'uuid';
 
 import { NgxTourService } from '../../services';
 
@@ -61,7 +61,7 @@ export class NgxTourItemDirective implements AfterViewInit, OnDestroy {
 
 		// Iben: Check if the element has an id, if not, give it a new id for accessibility
 		if (!this.elementRef.nativeElement.getAttribute('id')) {
-			this.elementRef.nativeElement.setAttribute('id', UUID.UUID());
+			this.elementRef.nativeElement.setAttribute('id', uuid());
 		}
 	}
 

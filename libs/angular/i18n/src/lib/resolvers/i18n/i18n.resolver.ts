@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UUID } from 'angular2-uuid';
+import { v4 as uuid } from 'uuid';
 import { finalize, map, Observable } from 'rxjs';
 
 import { NgxI18nLoadingService, NgxI18nService } from '../../services';
@@ -17,7 +17,7 @@ export class NgxI18nTranslationLoaderResolver {
 
 	public resolve(): Observable<boolean> {
 		// Iben: Generate an id for the translations we're about to load
-		const id = UUID.UUID();
+		const id = uuid();
 
 		// Iben: Dispatch to the loader service that we're about to load a set of translations
 		this.i18nLoadingService.dispatchTranslationLoaderAction({ id, state: 'LOADING' });

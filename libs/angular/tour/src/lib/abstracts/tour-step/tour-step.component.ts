@@ -12,7 +12,7 @@ import {
 	ViewChild,
 	WritableSignal,
 } from '@angular/core';
-import { UUID } from 'angular2-uuid';
+import { v4 as uuid } from 'uuid';
 
 import { NgxTourInteraction, NgxTourStepPosition } from '../../types';
 import { NgxTourService } from '../../services';
@@ -121,7 +121,7 @@ export abstract class NgxTourStepComponent<DataType = any> implements OnInit, Af
 
 		// Iben: If the title element does not have an id, we generate one
 		if (!id) {
-			id = UUID.UUID();
+			id = uuid();
 			this.titleElement.nativeElement.setAttribute('id', id);
 		}
 
