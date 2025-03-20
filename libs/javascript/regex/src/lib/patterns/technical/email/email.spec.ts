@@ -2,7 +2,7 @@ import { describe } from 'vitest';
 
 import { emailPattern } from './email';
 
-describe('phoneBelgiumBinFormatted', () => {
+describe('emailPattern', () => {
 	it('should test true to email addresses that comply', () => {
 		// https://en.wikipedia.org/wiki/Email_address#Valid_email_addresses
 		[
