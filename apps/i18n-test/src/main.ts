@@ -11,6 +11,7 @@ bootstrapApplication(AppComponent, {
 		importNgxI18nProviders({
 			defaultLanguage: 'nl',
 			defaultAssetPaths: ['./assets/shared/'],
+			cacheBust: '1.0.0',
 		}),
 		provideHttpClient(withInterceptorsFromDi()),
 	],
