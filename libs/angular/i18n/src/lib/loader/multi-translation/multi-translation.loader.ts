@@ -6,10 +6,17 @@ import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { NgxI18nLoadingService } from '../../services';
+import { NgxI18nConfiguration } from '../../i18n.types';
+import { NgxI18nConfigurationToken } from '../../tokens';
 
 export class NgxI18nMultiTranslationHttpLoader implements TranslateLoader {
 	private readonly translationLoadingService: NgxI18nLoadingService =
 		inject(NgxI18nLoadingService);
+
+	/**
+	 * The configuration for the NgxI18nModule.
+	 */
+	private readonly config: NgxI18nConfiguration = inject(NgxI18nConfigurationToken);
 
 	constructor(
 		private readonly httpBackend: HttpBackend,
@@ -37,7 +44,9 @@ export class NgxI18nMultiTranslationHttpLoader implements TranslateLoader {
 				});
 			} else {
 				// Iben: If the translations aren't available in the store, we fetch them from the server
-				const fetchPath = `${path}${lang}.json`;
+				// Wouter: When provided, add a cache busting param so that each request is fetched from the server instead of the browser cache
+				const fetchPath = `${path}${lang}.json${this.config.cacheBust ? '?v=' + this.config.cacheBust : ''}`;
+
 				return new HttpClient(this.httpBackend).get(fetchPath).pipe(
 					// Iben: Map this to an object so we can track which results corresponds with which path
 					map((translations) => {
