@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 import { HttpClient } from '@angular/common/http';
 import { StoreService } from '../abstracts';
@@ -49,7 +50,7 @@ export class SpecStoreService extends StoreService {
 			actions.channel,
 			this.httpClient.get<DataType>('test'),
 			this.store
-		);
+		).pipe(switchMap(() => this.channel$));
 	}
 
 	public clearChannel(): void {
@@ -62,7 +63,7 @@ export class SpecStoreService extends StoreService {
 			this.httpClient.get<DataType[]>('test'),
 			this.store,
 			actionType
-		);
+		).pipe(switchMap(() => this.videos$));
 	}
 
 	public clearVideos(): void {
