@@ -13,7 +13,7 @@ import {
 	TemplateRef,
 	ViewChild,
 } from '@angular/core';
-import { UUID } from 'angular2-uuid';
+import { v4 as uuid } from 'uuid';
 
 import { NgTemplateOutlet } from '@angular/common';
 import { NgxAccordionComponent } from '../accordion.component';
@@ -102,7 +102,7 @@ export class NgxAccordionItemComponent implements OnInit, AfterViewInit, OnDestr
 	/**
 	 * The id of the accordion item
 	 */
-	public readonly id: string = UUID.UUID();
+	public readonly id: string = uuid();
 
 	/**
 	 * Whether the accordion item is open
