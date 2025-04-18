@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { CoursesStore, actions, selectors } from '../store/courses.store';
 import { StoreService, dispatchDataToStore } from '@ngx/store';
 
@@ -15,6 +16,8 @@ export class CoursesService extends StoreService<CoursesStore> {
 	}
 
 	dispatchCourses() {
-		return dispatchDataToStore(actions.courses, of(['hello', 'world']), this.store);
+		return dispatchDataToStore(actions.courses, of(['hello', 'world']), this.store).pipe(
+			switchMap(() => this.state.courses$)
+		);
 	}
 }

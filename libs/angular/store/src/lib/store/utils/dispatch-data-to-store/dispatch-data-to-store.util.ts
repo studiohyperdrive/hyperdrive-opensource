@@ -1,6 +1,6 @@
 import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
-import { catchError, finalize, tap } from 'rxjs/operators';
+import { catchError, finalize, tap, map } from 'rxjs/operators';
 /**
  * Dispatches data to the store based on a provided action and Observable. Loading and error state will be handled by default.
  *
@@ -15,7 +15,7 @@ export const dispatchDataToStore = <DataType>(
 	data: Observable<DataType>,
 	store: Store,
 	dispatchType: 'set' | 'add' | 'update' = 'set'
-): Observable<DataType> => {
+): Observable<void> => {
 	// Iben: Set the loading state to true and the error state to false to start a new set
 	store.dispatch(dispatchAction.loading({ payload: true }));
 	store.dispatch(dispatchAction.error({ payload: false }));
@@ -40,6 +40,7 @@ export const dispatchDataToStore = <DataType>(
 		// Iben: Set the loading state to false
 		finalize(() => {
 			store.dispatch(dispatchAction.loading({ payload: false }));
-		})
+		}),
+		map(() => void 0)
 	);
 };

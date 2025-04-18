@@ -106,7 +106,7 @@ A short example can be found here
 	});
 ```
 
-### dispatchDataToSTore
+### dispatchDataToStore
 
 An additional util that works in tandem with the aforementioned store assets is the `dispatchDataToStore` util. Using the assets, the util will automatically handle the loading and error state of the provided data.
 

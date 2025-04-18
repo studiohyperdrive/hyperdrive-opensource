@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError, switchMap } from 'rxjs';
 import { BaseStoreAssets, EntityStoreAssets, StoreFlowAssets } from '../interfaces';
 import {
 	createBaseStoreAssets,
@@ -38,14 +38,18 @@ export class StoreStateService extends StoreService<StoreState> {
 			actions.data,
 			throwError(() => new Error('This is an error')),
 			this.store
-		);
+		).pipe(switchMap(() => throwError(() => new Error('This is an error'))));
 	}
 
 	setData(payload: string[]): Observable<string[]> {
-		return dispatchDataToStore(actions.data, of(payload), this.store);
+		return dispatchDataToStore(actions.data, of(payload), this.store).pipe(
+			switchMap(() => this.state.data$)
+		);
 	}
 
 	setCompleted(payload: boolean): Observable<boolean> {
-		return dispatchDataToStore(actions.isCompleted, of(payload), this.store);
+		return dispatchDataToStore(actions.isCompleted, of(payload), this.store).pipe(
+			switchMap(() => this.state.isCompleted$)
+		);
 	}
 }
