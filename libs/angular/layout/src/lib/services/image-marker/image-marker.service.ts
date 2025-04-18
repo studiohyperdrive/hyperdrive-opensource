@@ -4,7 +4,7 @@ import { MarkerView } from 'markerjs-live';
 import { NgxWindowService } from '@studiohyperdrive/ngx-core';
 
 import { Observable, Subject } from 'rxjs';
-import { UUID } from 'angular2-uuid';
+import { v4 as uuid } from 'uuid';
 import {
 	NgxImageMarker,
 	NgxImageMarkerConfiguration,
@@ -48,7 +48,7 @@ export class NgxImageMarkerService implements OnDestroy {
 		}
 
 		// Iben: Create an id for the marker
-		const id = UUID.UUID();
+		const id = uuid();
 
 		// Iben: Depending on the provided mode, we create a edit view or a non editable view
 		return configuration.mode === 'edit'

@@ -1,39 +1,39 @@
 {
 	"name": "@studiohyperdrive/ngx-auth",
-  "version": "19.0.0",
-  "description": "A library of core authentication functionality used with @studiohyperdrive/types-auth.",
-  "keywords": [
-    "angular",
-    "authentication",
-    "auth",
-    "feature",
-    "feature flag",
-    "a-b-testing",
-    "permission",
-    "permissions",
-    "guard",
-    "interceptor",
-    "directive",
-    "user",
-    "session"
-  ],
-  "homepage": "https://open-source.studiohyperdrive.be/docs/angular/authentication/installation",
-  "license": "MIT",
-  "author": {
-    "name": "Studio Hyperdrive",
-    "url": "https://studiohyperdrive.be/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/studiohyperdrive/hyperdrive-opensource",
-    "directory": "libs/angular/authentication/src"
-  },
+	"version": "19.0.0",
+	"description": "A library of core authentication functionality used with @studiohyperdrive/types-auth.",
+	"keywords": [
+		"angular",
+		"authentication",
+		"auth",
+		"feature",
+		"feature flag",
+		"a-b-testing",
+		"permission",
+		"permissions",
+		"guard",
+		"interceptor",
+		"directive",
+		"user",
+		"session"
+	],
+	"homepage": "https://open-source.studiohyperdrive.be/docs/angular/authentication/installation",
+	"license": "MIT",
+	"author": {
+		"name": "Studio Hyperdrive",
+		"url": "https://studiohyperdrive.be/"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/studiohyperdrive/hyperdrive-opensource",
+		"directory": "libs/angular/authentication/src"
+	},
 	"peerDependencies": {
 		"@angular/core": "^19.0.0",
 		"rxjs": "7.8.1",
 		"@angular/common": "19.0.3",
 		"obj-clean": "3.0.1",
-    "@studiohyperdrive/types-auth": "^2.0.0"
+		"@angular/router": "19.0.3"
 	},
 	"sideEffects": false
 }
