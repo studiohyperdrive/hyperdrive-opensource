@@ -1,7 +1,7 @@
 import { filter, map, Observable, of, take, tap } from 'rxjs';
 import { inject } from '@angular/core';
 
-import { UUID } from 'angular2-uuid';
+import { v4 as uuid } from 'uuid';
 
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import {
@@ -120,7 +120,7 @@ export abstract class NgxAccessibleDragAndDropAbstractService {
 	public setDragAndDropDescription(parent: HTMLElement, description?: string): Observable<void> {
 		// Iben: Create the description element and its id
 		const element: HTMLParagraphElement = document.createElement('p');
-		const id: string = UUID.UUID();
+		const id: string = uuid();
 
 		// Iben: Take the current language to fetch the message
 		return (
