@@ -1,6 +1,6 @@
 import { HttpClient, HttpContext, HttpResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import * as clean from 'obj-clean';
+import clean from 'obj-clean';
 
 import { map, Observable } from 'rxjs';
 import { NgxAuthenticatedHttpClientConfiguration } from '../../types';
