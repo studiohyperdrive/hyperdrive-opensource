@@ -86,6 +86,11 @@ export abstract class NgxQueryParamFormSyncComponent<
 						value = this.unscrambleParams(value);
 					}
 
+					//Iben: If the entire object is empty, we early exit and do not set the form
+					if (Object.keys(value).length === 0) {
+						return;
+					}
+
 					// Iben: Set the current form value
 					this.form.setValue(value);
 				}),
