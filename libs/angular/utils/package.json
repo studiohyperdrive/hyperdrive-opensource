@@ -1,6 +1,6 @@
 {
 	"name": "@studiohyperdrive/ngx-utils",
-	"version": "19.0.0",
+	"version": "19.0.1",
 	"description": "A series of abstracts, utils, pipes and services for Angular applications.",
 	"keywords": [
 		"angular",
