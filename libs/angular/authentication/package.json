@@ -1,6 +1,6 @@
 {
 	"name": "@studiohyperdrive/ngx-auth",
-	"version": "19.0.1",
+	"version": "19.0.2",
 	"description": "A library of core authentication functionality used with @studiohyperdrive/types-auth.",
 	"keywords": [
 		"angular",
