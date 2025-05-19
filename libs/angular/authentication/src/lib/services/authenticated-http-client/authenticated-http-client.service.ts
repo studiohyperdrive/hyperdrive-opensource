@@ -112,19 +112,22 @@ export class NgxAuthenticatedHttpClient {
 	 * Constructs a POST request to the provided API
 	 *
 	 * @param  url - The url of the API
+	 * @param body - The body we wish to send
 	 * @param params - An optional set of params we wish to send to the API
 	 * @param withCredentials - Whether the call is made by an authenticated user, by default true
 	 * @param context - An optional HTTPContext
 	 */
 	public post<DataType = void>(
 		url: string,
+		body: any,
 		params?: Parameters<HttpClient['post']>[1]['params'],
 		withCredentials: boolean = true,
 		context?: HttpContext
 	): Observable<DataType> {
 		return this.httpClient.post<DataType>(
 			this.handleUrl(url),
-			clean({ params, withCredentials, context }) as Parameters<HttpClient['post']>[1]
+			body,
+			clean({ params, withCredentials, context }) as Parameters<HttpClient['post']>[2]
 		);
 	}
 
@@ -132,19 +135,22 @@ export class NgxAuthenticatedHttpClient {
 	 * Constructs a PUT request to the provided API
 	 *
 	 * @param  url - The url of the API
+	 * @param body - The body we wish to send
 	 * @param params - An optional set of params we wish to send to the API
 	 * @param withCredentials - Whether the call is made by an authenticated user, by default true
 	 * @param context - An optional HTTPContext
 	 */
 	public put<DataType = void>(
 		url: string,
+		body?: any,
 		params?: Parameters<HttpClient['put']>[1]['params'],
 		withCredentials: boolean = true,
 		context?: HttpContext
 	): Observable<DataType> {
 		return this.httpClient.put<DataType>(
 			this.handleUrl(url),
-			clean({ params, withCredentials, context }) as Parameters<HttpClient['put']>[1]
+			body,
+			clean({ params, withCredentials, context }) as Parameters<HttpClient['put']>[2]
 		);
 	}
 
@@ -152,19 +158,22 @@ export class NgxAuthenticatedHttpClient {
 	 * Constructs a PATCH request to the provided API
 	 *
 	 * @param  url - The url of the API
+	 * @param body - The body we wish to send
 	 * @param params - An optional set of params we wish to send to the API
 	 * @param withCredentials - Whether the call is made by an authenticated user, by default true
 	 * @param context - An optional HTTPContext
 	 */
 	public patch<DataType = void>(
 		url: string,
+		body: any,
 		params?: Parameters<HttpClient['patch']>[1]['params'],
 		withCredentials: boolean = true,
 		context?: HttpContext
 	): Observable<DataType> {
 		return this.httpClient.patch<DataType>(
 			this.handleUrl(url),
-			clean({ params, withCredentials, context }) as Parameters<HttpClient['patch']>[1]
+			body,
+			clean({ params, withCredentials, context }) as Parameters<HttpClient['patch']>[2]
 		);
 	}
 }
