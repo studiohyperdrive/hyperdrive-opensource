@@ -41,8 +41,9 @@ export function calculatePagination(
  * @param currentPage
  */
 export function calculateNextPage(totalPages: number, currentPage: number): number {
-	return currentPage === totalPages ? currentPage : currentPage + 1;
+	return currentPage < totalPages ? currentPage + 1 : currentPage;
 }
+
 
 /**
  * Create the HAL-format links to self, first-, last- & next-page.
