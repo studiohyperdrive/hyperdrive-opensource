@@ -44,7 +44,7 @@ export class TableViewComponent extends NgxQueryParamFormSyncComponent<
 	constructor(
 		readonly route: ActivatedRoute,
 		readonly router: Router,
-		readonly storeService: StoreService
+		readonly storeService: NgxStoreService
 	) {
 		super(route, router);
 	}

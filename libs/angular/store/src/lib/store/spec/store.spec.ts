@@ -18,7 +18,7 @@ export const mockVideos = [
 	{ id: 'two', url: 'hello.world' },
 ];
 
-// Iben: These tests test the StoreService abstraction, dispatchDataToStore and StoreAssets in one go.
+// Iben: These tests test the NgxStoreService abstraction, dispatchDataToStore and StoreAssets in one go.
 // TODO: Find a way to add an error flow test.
 describe('NgxStore', () => {
 	let service: SpecStoreService;

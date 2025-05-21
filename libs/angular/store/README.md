@@ -26,7 +26,7 @@ For more information about the build process, authors, contributions and issues,
 
 As mentioned before, `ngx-store` works in tandem with `@ngrx`. The package aims to optimize the workflow for (complex) projects that currently already use this redux implementation.
 
-With this in mind, our goal is to make this package as flexible as possible. We are aware that existing projects often already have their own approach to their store setup, and therefor we try to provide solutions that can be used when needed. Whilst we strongly suggest using the entire system for the optimal approach, several of our utils are entirely optional. The use of `handleEffect`, `dispatchDataToStore` and the `StoreService` is never mandatory and all utils are opt-in at any stage.
+With this in mind, our goal is to make this package as flexible as possible. We are aware that existing projects often already have their own approach to their store setup, and therefor we try to provide solutions that can be used when needed. Whilst we strongly suggest using the entire system for the optimal approach, several of our utils are entirely optional. The use of `handleEffect`, `dispatchDataToStore` and the `NgxStoreService` is never mandatory and all utils are opt-in at any stage.
 
 Because of this approach, our implementation has to take into account these constraints and will therefore deviate from the standard redux implementation.
 
