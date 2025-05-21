@@ -3,10 +3,10 @@ import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { CoursesStore, actions, selectors } from '../store/courses.store';
-import { StoreService, dispatchDataToStore } from '@ngx/store';
+import { NgxStoreService, dispatchDataToStore } from '@ngx/store';
 
 @Injectable()
-export class CoursesService extends StoreService<CoursesStore> {
+export class CoursesService extends NgxStoreService<CoursesStore> {
 	constructor(protected readonly store: Store) {
 		super(store, selectors);
 	}

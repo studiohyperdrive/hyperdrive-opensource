@@ -8,7 +8,7 @@ import {
 	createStoreAssets,
 	dispatchDataToStore,
 } from '../utils';
-import { StoreService } from '../abstracts';
+import { NgxStoreService } from '../abstracts';
 
 interface StoreState extends StoreFlowAssets {
 	data: EntityStoreAssets<string>;
@@ -28,7 +28,7 @@ export const { actions, reducers, selectors } = createStoreAssets<StoreState>('s
 ]);
 
 @Injectable()
-export class StoreStateService extends StoreService<StoreState> {
+export class StoreStateService extends NgxStoreService<StoreState> {
 	constructor(protected readonly store: Store) {
 		super(store, selectors);
 	}

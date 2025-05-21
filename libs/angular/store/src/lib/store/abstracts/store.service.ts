@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { NgxStoreSelectors, StoreFlowAssets, StoreState } from '../interfaces';
 
 @Injectable()
-export class StoreService<StoreAssetsType extends StoreFlowAssets = any> {
+export class NgxStoreService<StoreAssetsType extends StoreFlowAssets = any> {
 	/**
 	 * A wrapper object for the store state selectors
 	 */
@@ -76,7 +76,7 @@ export class StoreService<StoreAssetsType extends StoreFlowAssets = any> {
 		// Iben: If no selectors were provided, we throw an error informing the user
 		if (!this.stateWrapper) {
 			console.error(
-				'NgxStore: No selectors were provided to the constructor of the StoreService extender. Without it, the state object cannot be created and will result in an error.'
+				'NgxStore: No selectors were provided to the constructor of the NgxStoreService extender. Without it, the state object cannot be created and will result in an error.'
 			);
 
 			return undefined;
