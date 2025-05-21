@@ -61,7 +61,7 @@
 			</ng-template>
 		</ngx-table-cell>
 
-		<ng-template #loadingTmpl> Loading </ng-template>
+		<!-- <ng-template #loadingTmpl> Loading </ng-template> -->
 	</ngx-table>
 
 	<p>
@@ -72,3 +72,4 @@
 <button (click)="setFormValue()">Set form value</button>
 <button (click)="toggleDetailView()">Toggle detail row</button>
 <button (click)="toggleDataSet()">Toggle dataset</button>
+<button (click)="loading = !loading">Toggle loading</button>

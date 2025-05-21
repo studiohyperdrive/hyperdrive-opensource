@@ -283,12 +283,20 @@
 
 @if (!loading && (!data || data.length === 0)) {
 	<div>
-		<ng-template [ngTemplateOutlet]="emptyTemplate"> </ng-template>
+		@if (emptyTemplate) {
+			<ng-template [ngTemplateOutlet]="emptyTemplate"> </ng-template>
+		} @else if (configuredComponents.has('empty')) {
+			<ng-container #configuredEmptyContainer> </ng-container>
+		}
 	</div>
 }
 @if (loading) {
 	<div>
-		<ng-template [ngTemplateOutlet]="loadingTemplate"> </ng-template>
+		@if (loadingTemplate) {
+			<ng-template [ngTemplateOutlet]="loadingTemplate"> </ng-template>
+		} @else if (configuredComponents.has('loading')) {
+			<ng-container #configuredLoadingContainer> </ng-container>
+		}
 	</div>
 }
 

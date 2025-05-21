@@ -3,6 +3,7 @@ import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
+	ComponentRef,
 	ContentChild,
 	ContentChildren,
 	EventEmitter,
@@ -17,6 +18,9 @@ import {
 	QueryList,
 	SimpleChanges,
 	TemplateRef,
+	Type,
+	ViewChild,
+	ViewContainerRef,
 	WritableSignal,
 	signal,
 } from '@angular/core';
@@ -39,6 +43,7 @@ import {
 	HideHeaderRowOption,
 	NgxTableConfig,
 	NgxTableConfigToken,
+	NgxTableConfigurationComponentsKey,
 	ShowDetailRowOption,
 } from '../token';
 import {
@@ -112,6 +117,11 @@ export class NgxTableComponent
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	private onChanged: Function = (_: any) => {};
+
+	/**
+	 * A set that holds which components are configured
+	 */
+	public configuredComponents: Set<NgxTableConfigurationComponentsKey> = new Set();
 
 	/**
 	 * Whether or not the form was generated
@@ -192,6 +202,47 @@ export class NgxTableComponent
 	 * The currently focussed cell
 	 */
 	public focussedCell: string;
+
+	/**
+	 * The loading container for a globally configured loading component
+	 */
+	@ViewChild('configuredLoadingContainer', { read: ViewContainerRef })
+	private configuredLoadingContainer: ViewContainerRef;
+
+	/**
+	 * The empty container for a globally configured empty component
+	 */
+	@ViewChild('configuredEmptyContainer', { read: ViewContainerRef })
+	private configuredEmptyContainer: ViewContainerRef;
+
+	/**
+	 * The sort container for a globally configured sort component
+	 */
+	@ViewChild('configuredSortContainer', { read: ViewContainerRef })
+	private configuredSortContainer: ViewContainerRef;
+
+	/**
+	 * The open row state container for a globally configured open row state component
+	 */
+	@ViewChild('configuredOpenRowStateContainer', { read: ViewContainerRef })
+	private configuredOpenRowStateContainer: ViewContainerRef;
+
+	/**
+	 * The sort container for a globally configured sort component
+	 */
+	@ViewChild('configuredCheckboxContainer', { read: ViewContainerRef })
+	private configuredCheckboxContainer: ViewContainerRef;
+
+	/**
+	 * The open row state container for a globally configured open row state component
+	 */
+	@ViewChild('configuredRadioContainer', { read: ViewContainerRef })
+	private configuredRadioContainer: ViewContainerRef;
+
+	private configuredContainersRecord: Record<
+		NgxTableConfigurationComponentsKey,
+		ViewContainerRef
+	>;
 
 	/**
 	 * A QueryList of all the table cell templates
@@ -643,6 +694,30 @@ export class NgxTableComponent
 		this.tableColumns.set([...(this.columns || []), ...(this.actions || [])]);
 	}
 
+	private setComponent(
+		shouldShow: boolean,
+		type: NgxTableConfigurationComponentsKey,
+		setData?: (componentRef: ComponentRef<unknown>) => void
+	): void {
+		if (!shouldShow || !this.ngxTableConfig?.components[type]) {
+			return;
+		}
+
+		setTimeout(() => {
+			const container = this.configuredContainersRecord[type];
+
+			container.clear();
+
+			const componentRef = container.createComponent(
+				this.ngxTableConfig.components[type] as Type<unknown>
+			);
+
+			if (setData) {
+				setData(componentRef);
+			}
+		});
+	}
+
 	// Lifecycle methods
 	// ==============================
 	public ngAfterContentChecked(): void {
@@ -655,7 +730,13 @@ export class NgxTableComponent
 		if (changes.data) {
 			// Wouter: Deselect any row that was selected to prevent faulty class toggle.
 			this.selectedRow.set(undefined);
+
+			// Iben: Set the empty component if we have a globally configured empty component
+			this.setComponent(this.data?.length === 0, 'empty');
 		}
+
+		// Iben: Set the loading component if we have a globally configured loading component
+		this.setComponent(this.loading, 'loading');
 
 		// Iben: Setup the form when the data or selectable state changes
 		if ((changes.data || changes.selectable) && this.selectable) {
@@ -699,6 +780,26 @@ export class NgxTableComponent
 	}
 
 	public ngOnInit() {
+		// Iben: If components are provided in the configuration, we add them to the set
+		if (this.ngxTableConfig?.components) {
+			this.configuredComponents = new Set<NgxTableConfigurationComponentsKey>(
+				// Iben: Convert to any and then to key array because the typing seems to act op
+				Object.keys(
+					this.ngxTableConfig.components
+				) as any as NgxTableConfigurationComponentsKey[]
+			);
+
+			// Iben: Set the record for the containers
+			this.configuredContainersRecord = {
+				checkbox: this.configuredCheckboxContainer,
+				radio: this.configuredRadioContainer,
+				empty: this.configuredEmptyContainer,
+				loading: this.configuredLoadingContainer,
+				sort: this.configuredSortContainer,
+				openRowState: this.configuredOpenRowStateContainer,
+			};
+		}
+
 		// Iben: Subscribe to the form to handle the selectable behavior
 		this.rowsFormGroup.valueChanges
 			.pipe(
@@ -728,7 +829,7 @@ export class NgxTableComponent
 			)
 			.subscribe();
 
-		// Iben: Subscribe to the headerControl to handle multiSelect behaviour
+		// Iben: Subscribe to the headerControl to handle multiSelect behavior
 		this.headerControl.valueChanges
 			.pipe(
 				tap((selected) => {
