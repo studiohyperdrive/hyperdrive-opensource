@@ -1,6 +1,6 @@
 {
 	"name": "@studiohyperdrive/nodejs-hal-tools",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": "A NodeJs based approach to pagination based on the HAL standards.",
 	"keywords": [
 		"pagination",
