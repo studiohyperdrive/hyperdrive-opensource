@@ -26,4 +26,4 @@ The `ngx-gov-flanders` package provides helpers and wrappers that will make it e
 
 ## Documentation
 
-To find more information regarding this package, we refer to [our documentation platform](https://open-source.studiohyperdrive.be/docs/angular/gov/flanders/introduction).
+To find more information regarding this package, we refer to [our documentation platform](https://open-source.studiohyperdrive.be/docs/angular/government/flanders/introduction).
