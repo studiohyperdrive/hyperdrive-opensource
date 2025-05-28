@@ -51,6 +51,14 @@ describe('HAL Format Tools', () => {
 		it('should return 1 if there is only one page', () => {
 			expect(calculateNextPage(1, 1)).toBe(1);
 		});
+	
+		it('should handle invalid input gracefully: currentPage > totalPages', () => {
+			expect(calculateNextPage(3, 5)).toBe(3);
+		});
+
+		it('should handle 0 as current page', () => {
+			expect(calculateNextPage(5, 0)).toBe(1);
+		});
 	});
 
 	describe('createHalLinks', () => {
