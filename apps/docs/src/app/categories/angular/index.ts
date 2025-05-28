@@ -22,6 +22,8 @@ import CoreServicesCategory from './core/sub-categories/services/ng-doc.category
 import CoreCategory from './core/ng-doc.category';
 import UtilsUtilsCategory from './utils/sub-categories/utils/ng-doc.category';
 import AuthenticationCategory from './authentication/ng-doc.category';
+import GovernmentCategory from './government/ng-doc.category';
+import FlemishGovernmentCategory from './government/sub-categories/flanders/ng-doc.category';
 
 export {
 	AngularCategory,
@@ -48,4 +50,6 @@ export {
 	CoreCategory,
 	UtilsUtilsCategory,
 	AuthenticationCategory,
+	GovernmentCategory,
+	FlemishGovernmentCategory,
 };
