@@ -1,0 +1,36 @@
+{
+	"name": "ngx-gov-flanders",
+	"$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/angular/gov/flanders/src",
+	"prefix": "lib",
+	"projectType": "library",
+	"tags": [],
+	"targets": {
+		"build": {
+			"executor": "@nx/angular:package",
+			"outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+			"options": {
+				"project": "libs/angular/gov/flanders/ng-package.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "libs/angular/gov/flanders/tsconfig.lib.prod.json"
+				},
+				"development": {
+					"tsConfig": "libs/angular/gov/flanders/tsconfig.lib.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nx/jest:jest",
+			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+			"options": {
+				"jestConfig": "libs/angular/gov/flanders/jest.config.ts"
+			}
+		},
+		"lint": {
+			"executor": "@nx/eslint:lint"
+		}
+	}
+}
