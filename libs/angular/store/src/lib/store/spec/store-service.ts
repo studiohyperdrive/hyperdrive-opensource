@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { HttpClient } from '@angular/common/http';
-import { StoreService } from '../abstracts';
+import { NgxStoreService } from '../abstracts';
 import { dispatchDataToStore } from '../utils';
 import { DataType, actions, selectors } from './store-assets';
 
 @Injectable()
-export class SpecStoreService extends StoreService {
+export class SpecStoreService extends NgxStoreService {
 	public readonly channel$: Observable<DataType> = this.selectFromStore<DataType>(
 		selectors.channel
 	);
