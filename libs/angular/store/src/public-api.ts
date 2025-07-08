@@ -11,6 +11,7 @@ export {
 	EntityStoreActions,
 	EntityStoreSelectors,
 	StoreFlowAssets,
+	BasicEntityAdapterActions,
 } from './lib/store/interfaces';
 export {
 	createStoreAssets,
