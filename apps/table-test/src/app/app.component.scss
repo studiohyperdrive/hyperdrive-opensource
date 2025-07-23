@@ -12,4 +12,27 @@
 	.ngx-table-row-selected {
 		outline: 2px dashed red;
 	}
+
+	.ngx-table-row-first {
+		background-color: lightblue;
+
+		> :first-child {
+			border-top-left-radius: 10px;
+		}
+
+		> :last-child {
+			border-top-right-radius: 10px;
+		}
+	}
+	.ngx-table-row-last {
+		color: red;
+
+		> :first-child {
+			border-bottom-left-radius: 10px;
+		}
+
+		> :last-child {
+			border-bottom-right-radius: 10px;
+		}
+	}
 }

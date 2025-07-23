@@ -24,6 +24,8 @@ By default the `ngx-table` comes with very minimal styling. Several classes have
 | ngx-table-row-even            | A class added to all even rows in the table                                                                     |
 | ngx-table-row-selected        | A class added to all open rows in the table                                                                     |
 | ngx-table-row-highlight       | A class added to all rows in the table that match the provided `highlightKey` property                          |
+| ngx-table-row-first           | A class added to the first row in the table.                                                                    |
+| ngx-table-row-last            | A class added to the last row in the table. This is dynamically either a normal row or a detail row             |
 | ngx-table-detail-row          | A class added to all detail rows in the table                                                                   |
 | ngx-table-detail-row-open     | A class added to all open detail rows in the table                                                              |
 | ngx-table-footer-row          | A class added to all footer rows in the table                                                                   |

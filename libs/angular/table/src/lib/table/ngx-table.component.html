@@ -227,8 +227,20 @@
 		<tr *cdkHeaderRowDef="definedColumns()" cdk-header-row></tr>
 	}
 	@if (data) {
+		<!-- Wouter: An explanation for the ngx-table-row-last class calculation:
+			- If there is a detail row template, we only want to apply the class if the row is not open. Additionally, it must be the second-to-last
+				rendered row. This is because the length of the data and the indexes are already off by one, and we want the second-to-last row, so minus another one.
+			- If there is no detail row template and this is the last row, we want to apply the ngx-table-row-last class. -->
 		<tr
-			*cdkRowDef="let row; columns: definedColumns(); let rowIndex = dataIndex"
+			*cdkRowDef="
+				let row;
+				columns: definedColumns();
+				let rowIndex = dataIndex;
+				let last = last;
+				let first = first;
+				let count = count;
+				let renderIndex = renderIndex
+			"
 			cdk-row
 			aria-level="1"
 			[attr.tabindex]="detailRowTemplate !== undefined || selectable ? 0 : -1"
@@ -237,6 +249,16 @@
 				'ngx-table-row',
 				rowClass || '',
 				row[highlightKey] ? 'ngx-table-row-highlight' : '',
+				first ? 'ngx-table-row-first' : '',
+				detailRowTemplate
+					? openRows.has(rowIndex)
+						? ''
+						: renderIndex === count - 2
+							? 'ngx-table-row-last'
+							: ''
+					: last
+						? 'ngx-table-row-last'
+						: '',
 			]"
 			[class.ngx-table-row-odd]="rowIndex % 2 !== 0"
 			[class.ngx-table-row-even]="rowIndex % 2 === 0"
@@ -259,11 +281,23 @@
 		></tr>
 		@if (detailRowTemplate) {
 			<tr
-				*cdkRowDef="let row; let index = dataIndex; columns: ['ngxTableDetailColumn']"
+				*cdkRowDef="
+					let row;
+					let index = dataIndex;
+					columns: ['ngxTableDetailColumn'];
+					let last = last
+				"
 				class="ngx-table-detail-row"
 				cdk-row
 				aria-level="2"
 				aria-posinset="1"
+				[ngClass]="{
+					'ngx-table-row-last':
+						last &&
+						(showDetailRow === 'always' ||
+							(showDetailRow === 'on-single-item' && data?.length === 1) ||
+							openRows.has(index)),
+				}"
 				[class.ngx-table-detail-row-open]="
 					showDetailRow === 'always' ||
 					(showDetailRow === 'on-single-item' && data?.length === 1) ||
