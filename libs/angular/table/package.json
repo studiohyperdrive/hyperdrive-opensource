@@ -1,6 +1,6 @@
 {
 	"name": "@studiohyperdrive/ngx-table",
-	"version": "19.0.1",
+	"version": "19.0.2",
 	"description": "An Angular based approach for customizable large scale datatables using Angular CDK.",
 	"keywords": [
 		"angular",
