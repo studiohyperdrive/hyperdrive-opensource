@@ -476,8 +476,14 @@ export class NgxTableComponent
 			return;
 		}
 
-		// Iben: Depending on whether we allow multiple rows to be open at the same time, we toggle the open rows accordingly
-		if (this.allowMultipleOpenRows) {
+		// Wouter: When the detail row should be shown due to global config, we add the index to the open rows
+		if (
+			this.showDetailRow === 'always' ||
+			(this.showDetailRow === 'on-single-item' && this.data.length === 1)
+		) {
+			this.openRows.add(index);
+			// Iben: Depending on whether we allow multiple rows to be open at the same time, we toggle the open rows accordingly
+		} else if (this.allowMultipleOpenRows) {
 			action === 'open' ? this.openRows.add(index) : this.openRows.delete(index);
 		} else {
 			this.openRows = action === 'open' ? new Set([index]) : new Set();
@@ -694,7 +700,19 @@ export class NgxTableComponent
 			changes.data &&
 			changes.data.previousValue?.length !== changes.data.currentValue?.length
 		) {
-			this.openRows = new Set();
+			// Wouter: If all detail rows should be shown by default, we add all indices to the open rows
+			if (this.showDetailRow === 'always') {
+				this.openRows = new Set(changes.data.currentValue.map((_, index) => index));
+			} else if (
+				// Wouter: If the detail row should be shown on single item and there is only one item, we add the first index to the open rows
+				this.showDetailRow === 'on-single-item' &&
+				changes.data.currentValue.length === 1
+			) {
+				this.openRows = new Set([0]);
+			} else {
+				// Iben: If no detail row should be shown due to global config, we reset the open rows
+				this.openRows = new Set();
+			}
 		}
 	}
 
