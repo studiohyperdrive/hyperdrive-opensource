@@ -21,6 +21,7 @@
 		[selectable]="true"
 		[currentSorting]="currentSort"
 		[resetFormOnNewData]="false"
+		[contextRowKeys]="contextRowKeys"
 		(rowClicked)="rowEmitted($event)"
 	>
 		<ng-template #radioTmpl let-control let-row="row" let-index="index">
@@ -36,6 +37,16 @@
 			<ng-template #detailRowTmpl let-row let-index="index">
 				{{ row | json }}
 				{{ index }}
+			</ng-template>
+		}
+		@if (showContext) {
+			<ng-template #contextRowTmpl let-row let-index="index">
+				The item below has
+				<code
+					>{{ row.active ? 'active' : ''
+					}}{{ row.someKey ? (row.active ? ' and someKey' : 'someKey') : '' }}</code
+				>
+				special class.
 			</ng-template>
 		}
 
@@ -70,5 +81,7 @@
 </app-wrapper>
 
 <button (click)="setFormValue()">Set form value</button>
+<button (click)="toggleContextView()">Toggle context row</button>
 <button (click)="toggleDetailView()">Toggle detail row</button>
 <button (click)="toggleDataSet()">Toggle dataset</button>
+<button (click)="toggleContextKeysSet()">Toggle context set</button>

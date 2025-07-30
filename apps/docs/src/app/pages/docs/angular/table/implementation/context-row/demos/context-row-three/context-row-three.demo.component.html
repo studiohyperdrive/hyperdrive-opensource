@@ -1,0 +1,12 @@
+<ngx-table
+	[data]="[
+		{ name: 'World', firstName: 'Hello', favorite: true, favoriteSince: '2023-01-01' },
+		{ name: 'Tools', firstName: 'NGX', favorite: false },
+		{ name: 'Angular', firstName: 'Framework', favorite: true, favoriteSince: '2022-05-15' },
+	]"
+	[columns]="['name', 'firstName']"
+	[contextRowKeys]="['favorite']"
+>
+	<ng-template #contextRowTmpl let-row> Favorite since {{ row.favoriteSince }} </ng-template>
+	<ng-template #detailRowTmpl let-row> {{ row | json }} </ng-template>
+</ngx-table>

@@ -74,4 +74,10 @@
 			display: none;
 		}
 	}
+
+	.ngx-table-context-row {
+		&:not(.ngx-table-context-row-open) {
+			display: none;
+		}
+	}
 }

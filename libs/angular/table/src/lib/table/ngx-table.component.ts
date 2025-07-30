@@ -17,6 +17,7 @@ import {
 	QueryList,
 	SimpleChanges,
 	TemplateRef,
+	ViewChild,
 	WritableSignal,
 	signal,
 } from '@angular/core';
@@ -32,7 +33,7 @@ import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
 import { NgTemplateOutlet, NgClass } from '@angular/common';
-import { CdkTableModule } from '@angular/cdk/table';
+import { CdkTable, CdkTableModule } from '@angular/cdk/table';
 import { NgxAbstractTableCellDirective } from '../cell/cell.directive';
 import { NgxTableCypressDataTags, NgxTableSortEvent } from '../interfaces';
 import {
@@ -194,6 +195,22 @@ export class NgxTableComponent
 	public focussedCell: string;
 
 	/**
+	 * A record of keys that define whether a row requires a context row. If the key is present, the value
+	 * will be a string that defines the class(es) to add to the context row of said dataIndex.
+	 *
+	 * This property is required to match the provided data with the context row keys and store the index of
+	 * the rows that match at least one context key.
+	 */
+	public contextRowClasses: Record<number, string> = {};
+
+	/**
+	 * This `cdkTable` viewChild property is needed to re-render the rows when the context row classes change.
+	 * This is a clean way to trigger the change detection for the table rows, as per the documentation of CdkTable:
+	 * https://github.com/angular/components/blob/9e14c5566535601620c9bfa29786c828ddf3dc2d/src/cdk/table/table.ts#L483-L486
+	 */
+	@ViewChild(CdkTable) public readonly cdkTable: CdkTable<any>;
+
+	/**
 	 * A QueryList of all the table cell templates
 	 */
 	@ContentChildren(NgxAbstractTableCellDirective)
@@ -204,6 +221,12 @@ export class NgxTableComponent
 	 */
 	@ContentChild('detailRowTmpl', { static: false })
 	public detailRowTemplate: TemplateRef<any>;
+
+	/**
+	 * A template to provide an additional context row above the main data row.
+	 */
+	@ContentChild('contextRowTmpl', { static: false })
+	public contextRowTemplate: TemplateRef<any>;
 
 	/**
 	 * A template to provide an empty view
@@ -258,7 +281,7 @@ export class NgxTableComponent
 
 	/**
 	 * An optional property that defines whether multiple rows can be open at once.
-	 * By default, this is false. The default can be overwritten in the NgxTableConfig.
+	 * By default, this is false. The default can be overwritten in the `NgxTableConfig`.
 	 */
 	@Input() public allowMultipleOpenRows: boolean =
 		this.ngxTableConfig?.allowMultipleRowsOpen || false;
@@ -274,15 +297,37 @@ export class NgxTableComponent
 	@Input() public selectableKey: string;
 
 	/**
+	 * An array of keys in the provided data that, when not empty in a data object (AKA row), define whether a row requires
+	 * a context row. The values of this array should match keys of the data objects in the `data` input. If a key is
+	 * passed here that is not present in the data, it will be ignored. By default, this is an empty array. The default
+	 * can be overwritten in the `NgxTableConfig`.
+	 *
+	 * **Note:** The order in which the keys are passed here will be used to determine the order of the classes that are
+	 * added to the context row.
+	 *
+	 * **Note:** If the key is present in the data object, its value is boolean-evaluated. Be aware that falsy values
+	 * **including `0`** will therefore not result in this key's class onto the context row.
+	 *
+	 * @example
+	 * ```
+	 * contextRowKeys = ['isActive', 'isImportant']
+	 * ```
+	 * Will result in a row with the classes `ngx-table-context-key--isActive` and `ngx-table-context-key--isImportant`
+	 * **in this order** if the corresponding data fields are present and truthy.
+	 */
+	@Input() public contextRowKeys: string[];
+
+	/**
 	 * In case the rows are selectable, we pass whether we want a radio button or a checkbox. By default, this is a checkbox
 	 */
 	@Input() public selectableType: 'checkbox' | 'radio' = 'checkbox';
 
 	/**
-	 * In case the rows are selectable, we can determine whether we want to reset the form based on new data. Setting this to false will add new controls to the FormGroup; but will not remove the earlier controls from the form.
-	 * This is a useful feature for when the data is being filtered or new data is added through a load more mechanic
+	 * In case the rows are selectable, we can determine whether we want to reset the form based on new data. Setting this to
+	 * false will add new controls to the FormGroup; but will not remove the earlier controls from the form.
+	 * This is a useful feature for when the data is being filtered or new data is added through a load more mechanic.
 	 *
-	 * By default, this is true. This default cannot be overwritten in the NgxTableConfig.
+	 * By default, this is true. This default cannot be overwritten in the `NgxTableConfig`.
 	 */
 	@Input() public resetFormOnNewData: boolean = true;
 
@@ -298,7 +343,7 @@ export class NgxTableComponent
 
 	/**
 	 * An optional property to define whether we want to add a class to the currently opened row.
-	 * By default this is false. The default can be overwritten in the NgxTableConfig.
+	 * By default this is false. The default can be overwritten in the `NgxTableConfig`.
 	 */
 	@Input() public showSelectedOpenRow: boolean =
 		this.ngxTableConfig?.showSelectedOpenRow || false;
@@ -310,13 +355,13 @@ export class NgxTableComponent
 
 	/**
 	 * An optional key that can be used in the data in order to highlight a row. If this property is present and true, the highlight class will be provided.
-	 * By default, this key is ngx-highlight. The default can be overwritten in the NgxTableConfig
+	 * By default, this key is ngx-highlight. The default can be overwritten in the `NgxTableConfig`
 	 */
 	@Input() public highlightKey: string = this.ngxTableConfig?.highlightKey || 'ngx-highlight';
 
 	/**
 	 * An optional property to define whether we want to show a visual indicator of the open and closed state of a detail row.
-	 * By default this is false. The default can be overwritten in the NgxTableConfig.
+	 * By default this is false. The default can be overwritten in the `NgxTableConfig`.
 	 */
 	@Input() public showOpenRowState: boolean = this.ngxTableConfig?.showOpenRowState || false;
 
@@ -649,12 +694,76 @@ export class NgxTableComponent
 		this.tableColumns.set([...(this.columns || []), ...(this.actions || [])]);
 	}
 
+	/**
+	 * Handle the rendering and calculation of the context rows.
+	 *
+	 * @param data - The data to use for the context rows. If undefined, the component's `data` input value will be used.
+	 * @param contextRowKeys - The keys to use for the context rows. If undefined, the component's `contextRowKeys` input value will be used.
+	 */
+	private handleContextRows(): void {
+		// Wouter: Get the data and contextRowKeys to use, falling back to the component's inputs if not provided (in the ngOnChanges, for example)
+		const dataToUse = this.data;
+		const contextRowKeysToUse = this.contextRowKeys || this.ngxTableConfig?.contextRowKeys;
+
+		// Wouter: If the required data, keys, or template are not provided, we early exit
+		if (isEmpty(contextRowKeysToUse) || isEmpty(dataToUse) || !this.contextRowTemplate) {
+			// Wouter: Reset the context row classes to an empty object
+			this.contextRowClasses = {};
+
+			// Wouter: Apply changes to the table.
+			this.safeRerenderTable();
+
+			// Wouter: Early exit, as there are no context rows to handle
+			return;
+		}
+
+		this.contextRowClasses = dataToUse.reduce((acc, curr, index) => {
+			const rowClasses = contextRowKeysToUse
+				// Wouter: For each row, we check if it has a truthy value for any of the contextRowKeys
+				// If so, we add it as a modifier to the context-key row class
+				.map((key) => (curr[key] ? `ngx-table-context-key--${key}` : undefined))
+				// Wouter: We strip out any falsy values
+				.filter(Boolean)
+				// Wouter: Make the array one string to store as value of the index.
+				.join(' ');
+
+			return {
+				...acc,
+				...(rowClasses && { [index]: rowClasses }),
+			};
+		}, {});
+
+		// Wouter: Apply changes to the table.
+		this.safeRerenderTable();
+	}
+
+	/**
+	 * This method will re-render the table rows to apply certain changes in contentChild template definitions. It will then
+	 * schedule a change detection to notify the Angular Engine that the structural directive context variables of the CDK
+	 * need to be re-evaluated.
+	 *
+	 * It uses `cdRef.markForCheck` instead of `cdRef.detectChanges` to safely trigger change detection without immediately running it,
+	 * allowing Angular to handle the change detection cycle cleanly and properly.
+	 */
+	private safeRerenderTable(): void {
+		/*
+		 * Wouter: This is needed to re-render the rows when the context row classes change.
+		 * This is a clean way to trigger the change detection for the table rows, as per the documentation of CdkTable:
+		 * https://github.com/angular/components/blob/9e14c5566535601620c9bfa29786c828ddf3dc2d/src/cdk/table/table.ts#L483-L486
+		 */
+		this.cdkTable?.renderRows();
+		// Wouter: Schedule a change detection run to have Angular re-evaluate the structural directive context variables of the CDK. (first, last, etc.)
+		this.cdRef.markForCheck();
+	}
+
 	// Lifecycle methods
 	// ==============================
 	public ngAfterContentChecked(): void {
 		// Iben: Run with content check so that we can dynamically add templates/columns
 		this.handleRowColumns();
 		this.handleTableCellTemplates();
+		// Wouter: The context rows should be checked after the content is checked so that the templates and the CdkTable are available
+		this.handleContextRows();
 	}
 
 	public ngOnChanges(changes: SimpleChanges) {
@@ -681,6 +790,11 @@ export class NgxTableComponent
 			}
 		}
 
+		// Wouter: If the contextRowKeys are provided or changed, we recalculate the context rows
+		if (changes.data || changes.contextRowKeys) {
+			this.handleContextRows();
+		}
+
 		// Iben: Add the selectableColumn if the rows are selectable and add an open row state when needed
 		if (changes.selectable || changes.columns || changes.showOpenRowState) {
 			this.handleRowColumns();
@@ -702,7 +816,7 @@ export class NgxTableComponent
 		) {
 			// Wouter: If all detail rows should be shown by default, we add all indices to the open rows
 			if (this.showDetailRow === 'always') {
-				this.openRows = new Set(changes.data.currentValue.map((_, index) => index));
+				this.openRows = new Set(changes.data.currentValue.map((_, index: number) => index));
 			} else if (
 				// Wouter: If the detail row should be shown on single item and there is only one item, we add the first index to the open rows
 				this.showDetailRow === 'on-single-item' &&
