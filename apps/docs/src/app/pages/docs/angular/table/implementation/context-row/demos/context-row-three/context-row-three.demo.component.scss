@@ -1,0 +1,67 @@
+$fav-border: 1px solid gold;
+
+::ng-deep {
+	.ngx-table {
+		border: none !important;
+	}
+	.cdk-header-row * {
+		border: none !important;
+		text-align: left;
+		text-transform: capitalize;
+	}
+
+	.ngx-table-row-cell {
+		border: none !important;
+	}
+
+	.ngx-table-detail-cell {
+		background-color: rgb(250, 250, 250);
+		border: none !important;
+	}
+
+	.ngx-table-context-key--favorite {
+		background-color: rgb(255, 247, 199);
+
+		> * {
+			padding: 3px 10px !important;
+			border: $fav-border !important;
+			border-bottom: none !important;
+			font-style: italic;
+			font-size: 0.8em;
+
+			&::before {
+				content: '★';
+				color: darkgoldenrod;
+				margin-right: 5px;
+			}
+		}
+
+		+ .ngx-table-row {
+			.ngx-table-row-cell {
+				border-bottom: $fav-border !important;
+
+				&:first-child {
+					border-left: $fav-border !important;
+				}
+
+				&:last-child {
+					border-right: $fav-border !important;
+				}
+			}
+
+			&:has(+ .ngx-table-detail-row-open) {
+				.ngx-table-row-cell {
+					border-bottom: none !important;
+				}
+			}
+
+			+ .ngx-table-detail-row-open {
+				.ngx-table-detail-cell {
+					border-left: $fav-border !important;
+					border-right: $fav-border !important;
+					border-bottom: $fav-border !important;
+				}
+			}
+		}
+	}
+}

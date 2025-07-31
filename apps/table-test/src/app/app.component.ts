@@ -31,6 +31,7 @@ export class AppComponent {
 			hello: 'world',
 			amount: 37,
 			date: '12/02/2023',
+			someKey: true,
 		},
 		{
 			name: 'Hyperdrive',
@@ -40,6 +41,7 @@ export class AppComponent {
 			hello: 'world',
 			amount: 5000,
 			date: '12/02/2023',
+			someKey: false,
 		},
 		{
 			name: 'Hyperdrive',
@@ -49,6 +51,7 @@ export class AppComponent {
 			hello: 'world',
 			amount: 5000,
 			date: '12/02/2023',
+			someKey: true,
 		},
 	];
 
@@ -61,6 +64,7 @@ export class AppComponent {
 			hello: 'world',
 			amount: 0.5,
 			date: '12/02/2023',
+			someKey: false,
 		},
 	];
 
@@ -68,7 +72,11 @@ export class AppComponent {
 
 	public readonly columns = ['firstName', 'name', 'date', 'button', 'amount', 'active'];
 
+	public contextRowKeys = undefined;
+
 	public showDetail = true;
+
+	public showContext = true;
 
 	public form = new FormControl();
 
@@ -82,6 +90,10 @@ export class AppComponent {
 
 	public toggleDetailView() {
 		this.showDetail = !this.showDetail;
+	}
+
+	public toggleContextView() {
+		this.showContext = !this.showContext;
 	}
 
 	public toggleDataSet() {
@@ -100,5 +112,9 @@ export class AppComponent {
 
 	public sort(event: NgxTableSortEvent) {
 		this.currentSort = event;
+	}
+
+	public toggleContextKeysSet(): void {
+		this.contextRowKeys = this.contextRowKeys ? null : ['someKey', 'active'];
 	}
 }

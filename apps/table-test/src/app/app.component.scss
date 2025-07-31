@@ -7,14 +7,26 @@
 		color: darkred;
 	}
 }
+code {
+	background-color: #f0f0f0;
+	padding: 2px 5px;
+	border-radius: 3px;
+	font-family: monospace;
+}
 
 ::ng-deep {
 	.ngx-table-row-selected {
 		outline: 2px dashed red;
 	}
 
+	.ngx-table-context-row {
+		padding: 3px !important;
+		font-size: 0.9em;
+		font-style: italic;
+	}
+
 	.ngx-table-row-first {
-		background-color: lightblue;
+		color: rgb(60, 164, 58);
 
 		> :first-child {
 			border-top-left-radius: 10px;
@@ -33,6 +45,20 @@
 
 		> :last-child {
 			border-bottom-right-radius: 10px;
+		}
+	}
+
+	.ngx-table-context-key {
+		&--active,
+		&--active + .ngx-table-row,
+		&--active + .ngx-table-row + .ngx-table-detail-row {
+			background-color: rgb(241, 241, 193);
+		}
+
+		&--someKey,
+		&--someKey + .ngx-table-row,
+		&--someKey + .ngx-table-row + .ngx-table-detail-row {
+			background-color: rgb(206, 250, 206);
 		}
 	}
 }

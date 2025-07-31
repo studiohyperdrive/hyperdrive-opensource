@@ -1,0 +1,12 @@
+<ngx-table
+	[data]="[
+		{ name: 'World', firstName: 'Hello', active: true },
+		{ name: 'Tools', firstName: 'NGX', active: false },
+	]"
+	[columns]="['name', 'firstName']"
+	[contextRowKeys]="['active']"
+>
+	<ng-template #contextRowTmpl let-row>
+		{{ row | json }}
+	</ng-template>
+</ngx-table>

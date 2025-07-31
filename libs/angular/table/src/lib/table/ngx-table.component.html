@@ -10,6 +10,9 @@
 	[attr.aria-multiselectable]="selectableType === 'checkbox'"
 	[dataSource]="!loading ? data : []"
 >
+	<!-- ---------------------- -->
+	<!-- TABLE CELL DEFINITIONS -->
+	<!-- ---------------------- -->
 	@if (selectable) {
 		<ng-container cdkColumnDef="ngxTableSelectColumn">
 			<th
@@ -31,16 +34,16 @@
 				}
 			</th>
 			<td
-				*cdkCellDef="let row; let index = dataIndex"
+				*cdkCellDef="let row; let dataIndex = dataIndex"
 				class="ngx-table-cell ngx-table-row-cell ngx-table-selectable-cell"
 				[ngxTreeGridCell]="0"
-				[ngxTreeGridCellRow]="index"
+				[ngxTreeGridCellRow]="dataIndex"
 			>
 				@if (
 					selectableType === 'radio' ||
 						(selectableType === 'checkbox' &&
 							rowsFormGroup.controls[
-								this.selectableKey ? row[selectableKey] : index
+								this.selectableKey ? row[selectableKey] : dataIndex
 							]);
 					as control
 				) {
@@ -51,7 +54,7 @@
 						[ngTemplateOutletContext]="{
 							$implicit: control,
 							row: row,
-							index: index,
+							index: dataIndex,
 						}"
 					>
 					</ng-template>
@@ -68,11 +71,11 @@
 		<ng-container cdkColumnDef="ngxOpenRowStateColumn">
 			<th *cdkHeaderCellDef class="ngx-table-cell ngx-table-header-cell" cdk-header-cell></th>
 			<td
-				*cdkCellDef="let row; let index = dataIndex"
+				*cdkCellDef="let row; let dataIndex = dataIndex"
 				class="ngx-table-cell ngx-table-row-cell ngx-table-open-row-state-cell"
 				[ngxTreeGridCell]="selectable ? columns.length + 1 : columns.length + 2"
-				[ngxTreeGridCellRow]="index"
-				(click)="handleRowClicked(row, index)"
+				[ngxTreeGridCellRow]="dataIndex"
+				(click)="handleRowClicked(row, dataIndex)"
 			>
 				<ng-template
 					[ngTemplateOutlet]="openRowStateTemplate || defaultOpenRowStateTmpl"
@@ -80,9 +83,9 @@
 						$implicit:
 							showDetailRow === 'always' ||
 							(showDetailRow === 'on-single-item' && data?.length === 1) ||
-							openRows.has(index),
+							openRows.has(dataIndex),
 						row: row,
-						index: index,
+						index: dataIndex,
 					}"
 				>
 				</ng-template>
@@ -162,7 +165,7 @@
 				}
 			</th>
 			<td
-				*cdkCellDef="let row; let index = dataIndex"
+				*cdkCellDef="let row; let dataIndex = dataIndex"
 				cdk-cell
 				[ngClass]="[
 					'ngx-table-cell',
@@ -170,11 +173,11 @@
 					tableCellTemplateRecord()[column]?.cellClass || '',
 				]"
 				[ngxTreeGridCell]="selectable ? columnIndex + 1 : columnIndex"
-				[ngxTreeGridCellRow]="index"
+				[ngxTreeGridCellRow]="dataIndex"
 				[attr.data-cy]="tableCypressRecord()[column]?.cell || ''"
 				[attr.role]="detailRowTemplate ? 'gridcell' : 'cell'"
 				[attr.aria-readonly]="!editableTableCellRecord()[column]"
-				(click)="handleRowClicked(row, index)"
+				(click)="handleRowClicked(row, dataIndex)"
 			>
 				@if (tableCellTemplateRecord()[column]?.cellTemplate) {
 					<ng-template
@@ -182,11 +185,11 @@
 						[ngTemplateOutletContext]="{
 							$implicit: row[column],
 							row: row,
-							index: index,
+							index: dataIndex,
 							isRowOpen:
 								showDetailRow === 'always' ||
 								(showDetailRow === 'on-single-item' && data?.length === 1) ||
-								openRows.has(index),
+								openRows.has(dataIndex),
 						}"
 					>
 					</ng-template>
@@ -209,26 +212,66 @@
 			</td>
 		</ng-container>
 	}
+	@if (contextRowTemplate) {
+		<ng-container cdkColumnDef="ngxTableContextColumn">
+			<td
+				*cdkCellDef="let row; let dataIndex = dataIndex"
+				class="ngx-table-cell ngx-table-context-cell"
+				cdk-cell
+				[attr.colspan]="definedColumns().length"
+			>
+				<ng-template
+					[ngTemplateOutlet]="contextRowTmpl"
+					[ngTemplateOutletContext]="{ $implicit: row, index: dataIndex }"
+				>
+				</ng-template>
+			</td>
+		</ng-container>
+	}
 	@if (detailRowTemplate) {
 		<ng-container cdkColumnDef="ngxTableDetailColumn">
 			<td
-				*cdkCellDef="let row; let index = dataIndex"
+				*cdkCellDef="let row; let dataIndex = dataIndex"
 				class="ngx-table-cell ngx-table-detail-cell"
 				cdk-cell
 				[attr.colspan]="definedColumns().length"
 			>
 				<ng-template
 					[ngTemplateOutlet]="detailRowTmpl"
-					[ngTemplateOutletContext]="{ $implicit: row, index: index }"
+					[ngTemplateOutletContext]="{ $implicit: row, index: dataIndex }"
 				>
 				</ng-template>
 			</td>
 		</ng-container>
 	}
+	<!-- --------------------- -->
+	<!-- TABLE ROW DEFINITIONS -->
+	<!-- --------------------- -->
 	@if ({ isLoading: loading, isEmpty: data?.length === 0 } | ngxTableShowHeader: hideHeaderWhen) {
 		<tr *cdkHeaderRowDef="definedColumns()" cdk-header-row></tr>
 	}
 	@if (data) {
+		@if (contextRowTemplate) {
+			<!-- Wouter: A context row can be used to display additional information about a row, but it should not contain any data used to define the main row.
+			 This context row gets stripped, as per the docs, of its accessibility features and be excluded from the accessibility tree.
+			 DOCS: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/presentation_role -->
+			<tr
+				*cdkRowDef="
+					let row;
+					columns: ['ngxTableContextColumn'];
+					let first = first;
+					let dataIndex = dataIndex
+				"
+				class="ngx-table-context-row"
+				cdk-row
+				role="none"
+				[ngClass]="[
+					first && contextRowClasses?.[dataIndex] ? 'ngx-table-row-first' : '',
+					contextRowClasses?.[dataIndex] ?? '',
+				]"
+				[class.ngx-table-context-row-open]="contextRowClasses?.[dataIndex]"
+			></tr>
+		}
 		<!-- Wouter: An explanation for the ngx-table-row-last class calculation:
 			- If there is a detail row template, we only want to apply the class if the row is not open. Additionally, it must be the second-to-last
 				rendered row. This is because the length of the data and the indexes are already off by one, and we want the second-to-last row, so minus another one.
@@ -237,7 +280,7 @@
 			*cdkRowDef="
 				let row;
 				columns: definedColumns();
-				let rowIndex = dataIndex;
+				let dataIndex = dataIndex;
 				let last = last;
 				let first = first;
 				let count = count;
@@ -251,9 +294,13 @@
 				'ngx-table-row',
 				rowClass || '',
 				row[highlightKey] ? 'ngx-table-row-highlight' : '',
-				first ? 'ngx-table-row-first' : '',
+				first
+					? 'ngx-table-row-first'
+					: !contextRowClasses[dataIndex] && dataIndex === 0
+						? 'ngx-table-row-first'
+						: '',
 				detailRowTemplate
-					? openRows.has(rowIndex)
+					? openRows.has(dataIndex)
 						? ''
 						: renderIndex === count - 2
 							? 'ngx-table-row-last'
@@ -262,30 +309,30 @@
 						? 'ngx-table-row-last'
 						: '',
 			]"
-			[class.ngx-table-row-odd]="rowIndex % 2 !== 0"
-			[class.ngx-table-row-even]="rowIndex % 2 === 0"
+			[class.ngx-table-row-odd]="dataIndex % 2 !== 0"
+			[class.ngx-table-row-even]="dataIndex % 2 === 0"
 			[class.ngx-table-row-selected]="
 				showSelectedOpenRow &&
-				(selectedRow === rowIndex ||
+				(selectedRow === dataIndex ||
 					(showDetailRow === 'on-single-item' && data?.length === 1))
 			"
-			[ngxTreeGridRow]="rowIndex"
+			[ngxTreeGridRow]="dataIndex"
 			[ngxTreeGridRowSelectable]="selectable"
-			[ngxTreeGridRowExpanded]="openRows.has(rowIndex)"
+			[ngxTreeGridRowExpanded]="openRows.has(dataIndex)"
 			[attr.aria-selected]="
 				rowsFormGroup.get(
-					selectableKey ? '' + data[rowIndex][selectableKey] : '' + rowIndex
+					selectableKey ? '' + data[dataIndex][selectableKey] : '' + dataIndex
 				)?.value
 			"
-			(ngxTreeGridRowSelectRow)="selectRow(rowIndex)"
-			(ngxTreeGridRowExpandRow)="handleRowState(rowIndex, $event ? 'open' : 'close')"
-			(keydown.enter)="handleRowClicked(row, rowIndex)"
+			(ngxTreeGridRowSelectRow)="selectRow(dataIndex)"
+			(ngxTreeGridRowExpandRow)="handleRowState(dataIndex, $event ? 'open' : 'close')"
+			(keydown.enter)="handleRowClicked(row, dataIndex)"
 		></tr>
 		@if (detailRowTemplate) {
 			<tr
 				*cdkRowDef="
 					let row;
-					let index = dataIndex;
+					let dataIndex = dataIndex;
 					columns: ['ngxTableDetailColumn'];
 					let last = last
 				"
@@ -298,12 +345,12 @@
 						last &&
 						(showDetailRow === 'always' ||
 							(showDetailRow === 'on-single-item' && data?.length === 1) ||
-							openRows.has(index)),
+							openRows.has(dataIndex)),
 				}"
 				[class.ngx-table-detail-row-open]="
 					showDetailRow === 'always' ||
 					(showDetailRow === 'on-single-item' && data?.length === 1) ||
-					openRows.has(index)
+					openRows.has(dataIndex)
 				"
 			></tr>
 		}
@@ -340,6 +387,14 @@
 		>
 		</ng-template>
 	}
+</ng-template>
+
+<ng-template #contextRowTmpl let-row let-index="index">
+	<ng-template
+		[ngTemplateOutlet]="contextRowTemplate"
+		[ngTemplateOutletContext]="{ $implicit: row, index }"
+	>
+	</ng-template>
 </ng-template>
 
 <ng-template #checkboxTmpl let-control let-row="row" let-index="index">
