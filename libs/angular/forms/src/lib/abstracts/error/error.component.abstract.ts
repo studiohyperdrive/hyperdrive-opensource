@@ -15,4 +15,8 @@ export class NgxFormsErrorAbstractComponent {
 	 * The error object provided by the control
 	 */
 	@Input({ required: true }) public data: ValidationErrors;
+	/**
+	 * An object containing custom error messages
+	 */
+	@Input() public customErrorMessages: Record<string, string>;
 }
