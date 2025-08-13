@@ -1,6 +1,6 @@
 {
 	"name": "@studiohyperdrive/utils",
-	"version": "2.0.1",
+	"version": "2.0.2",
 	"description": "A package containing common Javascript utils.",
 	"keywords": [
 		"file",
@@ -12,6 +12,7 @@
 		"merge",
 		"search-recursively",
 		"camel-case-to-sentence",
+		"pascal-case-to-sentence",
 		"normalize-string",
 		"replace-whitespace",
 		"search-string",
