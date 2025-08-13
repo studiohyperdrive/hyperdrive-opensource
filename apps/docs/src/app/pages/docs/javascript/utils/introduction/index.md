@@ -30,6 +30,10 @@ Converts a camelCase string to a human-readable sentence.
 
 Replace all special characters to their normal counterparts.
 
+### `*pascalCaseToSentencePage`
+
+Converts a PascalCase string to a human-readable sentence.
+
 ### `*replaceHtmlWhitespacePage`
 
 Returns the filtered html as a string that has replaced the non-breakable whitespaces with regular spaces.

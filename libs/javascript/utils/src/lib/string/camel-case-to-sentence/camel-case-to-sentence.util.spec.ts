@@ -3,6 +3,14 @@ import { camelCaseToSentence } from './camel-case-to-sentence.util';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 describe('camelCaseToSentence', () => {
 	it('should convert a camelCase string to a sentence', () => {
+		expect(camelCaseToSentence('subscribeForMore')).toEqual('Subscribe for more');
+		expect(camelCaseToSentence('string')).toEqual('String');
+		expect(camelCaseToSentence('someExtraLongDescription')).toEqual(
+			'Some extra long description'
+		);
+	});
+
+	it('should also convert a PascalCase string to a sentence', () => {
 		expect(camelCaseToSentence('SubscribeForMore')).toEqual('Subscribe for more');
 	});
 
