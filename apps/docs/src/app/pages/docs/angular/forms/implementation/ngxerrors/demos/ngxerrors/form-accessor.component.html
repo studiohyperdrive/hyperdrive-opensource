@@ -1,10 +1,26 @@
 <ng-container [formGroup]="form">
-	<p>Hello</p>
+	<!-- Structural syntax example -->
+	<p>Hello (structural)</p>
 	<input *ngxFormsErrors="'hello'" formControlName="hello" type="text" />
 
-	<p>World</p>
-	<input *ngxFormsErrors="'world'" formControlName="world" type="text" />
+	<!-- Attribute syntax example with per-control custom messages -->
+	<p>World (attribute w/ overrides)</p>
+	<input
+		formControlName="world"
+		type="text"
+		[ngxFormsErrors]="'world'"
+		[ngxFormsErrorsCustomErrorMessages]="{
+			required: 'Please fill out the world field',
+			minlength: 'World must be at least 3 characters',
+			pattern: 'World must start with a capital letter',
+		}"
+	/>
 
-	<p>Date</p>
-	<app-date-input *ngxFormsErrors="'date'" formControlName="date" />
+	<!-- Custom accessor component (attribute syntax) with override for required -->
+	<p>Date (custom component + override)</p>
+	<app-date-input
+		formControlName="date"
+		[ngxFormsErrors]="'date'"
+		[ngxFormsErrorsCustomErrorMessages]="{ required: 'Pick a date please' }"
+	/>
 </ng-container>

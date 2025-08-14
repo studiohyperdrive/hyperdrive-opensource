@@ -15,13 +15,17 @@ import { FormAccessorContainer, NgxFormsErrorsConfigurationToken } from '@ngx/fo
 		{
 			provide: NgxFormsErrorsConfigurationToken,
 			useValue: {
+				// Global (default) error messages. Individual controls can override these.
 				errors: {
 					required: 'This field is required',
-					minlength: 'Too short',
+					minlength: 'Value is too short (min 3 chars)',
+					pattern: 'Must start with an uppercase letter',
 					dependedDates: 'Something broke',
 				},
 				component: FormErrorComponent,
 				showWhen: 'touched',
+				// Showcase multiple errors rendering
+				show: 'all',
 			},
 		},
 	],
