@@ -58,10 +58,85 @@ export class FormErrorComponent extends NgxFormsErrorAbstractComponent {}
 
 describe('NgxFormsErrorsDirective', () => {
 	const errors = {
-		required: 'Dit veld is verplicht',
-		email: 'Dit veld is geen e-mail',
-		minlength: 'Dit veld moet minstens 3 lang zijn',
+		required: 'This field is required',
+		email: 'This field is not a valid email',
+		minlength: 'This field must be at least 3 characters long',
 	};
+
+	@Component({
+		selector: 'kp-attr-usage',
+		template: `
+			<!-- Attribute usage: binding an AbstractControl directly (not structural) -->
+			<input type="text" [formControl]="control" [ngxFormsErrors]="control" />
+		`,
+		imports: [ReactiveFormsModule, NgxFormsErrorsDirective],
+	})
+	class AttributeUsageComponent {
+		public control = new FormControl('', [Validators.email, Validators.minLength(10)]);
+	}
+
+	@Component({
+		selector: 'kp-multi-errors',
+		template: `
+			<ng-container [formGroup]="form">
+				<!-- Validators chosen so an invalid short non-email triggers BOTH email & minlength -->
+				<input *ngxFormsErrors="'multi'" formControlName="multi" type="text" />
+			</ng-container>
+		`,
+		imports: [ReactiveFormsModule, NgxFormsErrorsDirective],
+	})
+	class MultiErrorsComponent extends FormAccessor<any, any> {
+		initForm() {
+			return new FormGroup({
+				multi: new FormControl('', [Validators.email, Validators.minLength(10)]),
+			});
+		}
+	}
+
+	@Component({
+		selector: 'kp-multi-errors-component',
+		template: `
+			<ng-container [formGroup]="form">
+				<input *ngxFormsErrors="'multi'" formControlName="multi" type="text" />
+			</ng-container>
+		`,
+		imports: [ReactiveFormsModule, NgxFormsErrorsDirective, FormErrorComponent],
+	})
+	class MultiErrorsWithComponent extends FormAccessor<any, any> {
+		initForm() {
+			return new FormGroup({
+				multi: new FormControl('', [Validators.email, Validators.minLength(10)]),
+			});
+		}
+	}
+
+	@Component({
+		selector: 'kp-no-control',
+		template: `
+			<!-- Missing control input entirely; should log an error & render nothing extra -->
+			<input type="text" ngxFormsErrors />
+		`,
+		imports: [ReactiveFormsModule, NgxFormsErrorsDirective],
+	})
+	class NoControlProvidedComponent {
+		public dummy = new FormControl('');
+	}
+
+	@Component({
+		selector: 'kp-invalid-string',
+		template: `
+			<ng-container [formGroup]="form">
+				<!-- Refers to a control name that doesn't exist -->
+				<input *ngxFormsErrors="'doesNotExist'" formControlName="exists" type="text" />
+			</ng-container>
+		`,
+		imports: [ReactiveFormsModule, NgxFormsErrorsDirective],
+	})
+	class InvalidControlStringComponent extends FormAccessor<any, any> {
+		initForm() {
+			return new FormGroup({ exists: new FormControl('') });
+		}
+	}
 	describe('Without component', () => {
 		let fixture: ComponentFixture<FormAccessorComponent>;
 
@@ -165,6 +240,178 @@ describe('NgxFormsErrorsDirective', () => {
 			const errorElements = fixture.nativeElement.querySelectorAll('.ngx-forms-error');
 
 			expect(errorElements.length).toBe(0);
+		});
+	});
+
+	describe('Attribute usage with multiple errors (show variations)', () => {
+		const multiErrors = {
+			email: 'Email invalid',
+			minlength: 'Minimum length not reached',
+		};
+
+		describe('show = default (1)', () => {
+			let fixture: ComponentFixture<MultiErrorsComponent>;
+			beforeEach(() => {
+				TestBed.configureTestingModule({
+					imports: [ReactiveFormsModule, MultiErrorsComponent],
+					providers: [
+						{
+							provide: NgxFormsErrorsConfigurationToken,
+							useValue: { showWhen: 'dirty', errors: multiErrors },
+						},
+					],
+				});
+				fixture = TestBed.createComponent(MultiErrorsComponent);
+				fixture.detectChanges();
+			});
+
+			it('should show only the first error when multiple are present by default', () => {
+				const control = fixture.componentRef.instance.form.get('multi');
+				control.setValue('abc'); // triggers email + minlength
+				control.markAsDirty();
+				control.updateValueAndValidity();
+				fixture.detectChanges();
+				const error = fixture.nativeElement.querySelector('.ngx-forms-error');
+				expect(error.textContent).toBe(multiErrors.email); // first validator supplied
+			});
+		});
+
+		describe('show = 2', () => {
+			let fixture: ComponentFixture<MultiErrorsComponent>;
+			beforeEach(() => {
+				TestBed.configureTestingModule({
+					imports: [ReactiveFormsModule, MultiErrorsComponent],
+					providers: [
+						{
+							provide: NgxFormsErrorsConfigurationToken,
+							useValue: { showWhen: 'dirty', show: 2, errors: multiErrors },
+						},
+					],
+				});
+				fixture = TestBed.createComponent(MultiErrorsComponent);
+				fixture.detectChanges();
+			});
+
+			it('should show both errors when show = 2', () => {
+				const control = fixture.componentRef.instance.form.get('multi');
+				control.setValue('abc');
+				control.markAsDirty();
+				control.updateValueAndValidity();
+				fixture.detectChanges();
+				const error = fixture.nativeElement.querySelector('.ngx-forms-error');
+				expect(error.textContent).toBe(`${multiErrors.email}, ${multiErrors.minlength}`);
+			});
+		});
+
+		describe("show = 'all'", () => {
+			let fixture: ComponentFixture<MultiErrorsComponent>;
+			beforeEach(() => {
+				TestBed.configureTestingModule({
+					imports: [ReactiveFormsModule, MultiErrorsComponent],
+					providers: [
+						{
+							provide: NgxFormsErrorsConfigurationToken,
+							useValue: { showWhen: 'dirty', show: 'all', errors: multiErrors },
+						},
+					],
+				});
+				fixture = TestBed.createComponent(MultiErrorsComponent);
+				fixture.detectChanges();
+			});
+
+			it('should show all errors when show = all', () => {
+				const control = fixture.componentRef.instance.form.get('multi');
+				control.setValue('abc');
+				control.markAsDirty();
+				control.updateValueAndValidity();
+				fixture.detectChanges();
+				const error = fixture.nativeElement.querySelector('.ngx-forms-error');
+				expect(error.textContent).toBe(`${multiErrors.email}, ${multiErrors.minlength}`);
+			});
+		});
+	});
+
+	describe('Custom error messages override', () => {
+		const baseErrors = {
+			email: 'Base email',
+			minlength: 'Base minlength',
+		};
+		let fixture: ComponentFixture<MultiErrorsWithComponent>;
+
+		beforeEach(() => {
+			TestBed.configureTestingModule({
+				imports: [ReactiveFormsModule, MultiErrorsWithComponent, FormErrorComponent],
+				providers: [
+					{
+						provide: NgxFormsErrorsConfigurationToken,
+						useValue: {
+							showWhen: 'dirty',
+							show: 'all',
+							errors: baseErrors,
+							component: FormErrorComponent,
+						},
+					},
+				],
+			});
+			fixture = TestBed.createComponent(MultiErrorsWithComponent);
+			// Provide custom overrides dynamically
+			const inputEl: HTMLInputElement = fixture.nativeElement.querySelector('input');
+			// Patch the directive instance to set customErrorMessages input
+			const directiveInstance: any = (fixture.debugElement.childNodes as any[])
+				.map((n) => n.injector?.get?.(NgxFormsErrorsDirective, null))
+				.filter(Boolean)[0];
+			if (directiveInstance) {
+				directiveInstance.customErrorMessages = { email: 'Custom email override' };
+			}
+			fixture.detectChanges();
+		});
+
+		it('should use custom message overrides when provided (component flow)', () => {
+			const control = fixture.componentRef.instance.form.get('multi');
+			control.setValue('abc');
+			control.markAsDirty();
+			control.updateValueAndValidity();
+			fixture.detectChanges();
+			const errorCmp = fixture.nativeElement.querySelector('.kp-error');
+			expect(errorCmp.textContent).toContain('Custom email override');
+		});
+	});
+
+	describe('Early exit & error logging scenarios', () => {
+		it('logs an error when no control input is provided', () => {
+			spyOn(console, 'error');
+			TestBed.configureTestingModule({
+				imports: [ReactiveFormsModule, NoControlProvidedComponent],
+				providers: [
+					{
+						provide: NgxFormsErrorsConfigurationToken,
+						useValue: { showWhen: 'dirty', errors },
+					},
+				],
+			});
+			const fixture = TestBed.createComponent(NoControlProvidedComponent);
+			fixture.detectChanges();
+			expect(console.error).toHaveBeenCalled();
+			const errEl = fixture.nativeElement.querySelector('.ngx-forms-error');
+			expect(errEl).toBeNull();
+		});
+
+		it('logs an error when provided control string does not resolve', () => {
+			spyOn(console, 'error');
+			TestBed.configureTestingModule({
+				imports: [ReactiveFormsModule, InvalidControlStringComponent],
+				providers: [
+					{
+						provide: NgxFormsErrorsConfigurationToken,
+						useValue: { showWhen: 'dirty', errors },
+					},
+				],
+			});
+			const fixture = TestBed.createComponent(InvalidControlStringComponent);
+			fixture.detectChanges();
+			expect(console.error).toHaveBeenCalled();
+			const errEl = fixture.nativeElement.querySelector('.ngx-forms-error');
+			expect(errEl).toBeNull();
 		});
 	});
 });

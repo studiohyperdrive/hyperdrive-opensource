@@ -62,7 +62,7 @@ export class NgxFormsErrorsDirective implements AfterViewInit, OnDestroy {
 	/**
 	 * Custom error messages to override default ones
 	 */
-	private _customErrorMessages: Record<string, string>;
+	private customMessages: Record<string, string>;
 
 	/**
 	 * A reference to a control or a string reference to the control
@@ -73,7 +73,7 @@ export class NgxFormsErrorsDirective implements AfterViewInit, OnDestroy {
 	 */
 	@Input('ngxFormsErrorsCustomErrorMessages')
 	public set customErrorMessages(value: Record<string, string>) {
-		this._customErrorMessages = value ?? {};
+		this.customMessages = value ?? {};
 	}
 
 	constructor(
@@ -104,6 +104,7 @@ export class NgxFormsErrorsDirective implements AfterViewInit, OnDestroy {
 		// Iben: Render the actual input so that it is always visible
 		this.viewContainer.clear();
 
+		// Abdurrahman: Only render template if this directive is used in structural form
 		if (this.template) {
 			this.viewContainer.createEmbeddedView(this.template);
 		}
@@ -194,13 +195,13 @@ export class NgxFormsErrorsDirective implements AfterViewInit, OnDestroy {
 
 		// Abdurrahman: Merge defaults with custom overrides if provided
 		const errors = errorKeys.map(
-			(key) => this._customErrorMessages?.[key] || this.config.errors[key]
+			(key) => this.customMessages?.[key] || this.config.errors[key]
 		);
 
 		this.errorComponent.errors = errors;
 		this.errorComponent.errorKeys = errorKeys;
 		this.errorComponent.data = data;
-		this.errorComponent.customErrorMessages = this._customErrorMessages;
+		this.errorComponent.customErrorMessages = this.customMessages;
 	}
 
 	/**
@@ -230,7 +231,7 @@ export class NgxFormsErrorsDirective implements AfterViewInit, OnDestroy {
 
 		// Abdurrahman: Merge defaults with custom overrides if provided
 		const errors = errorKeys.map(
-			(key) => this._customErrorMessages?.[key] || this.config.errors[key]
+			(key) => this.customMessages?.[key] || this.config.errors[key]
 		);
 
 		this.renderer.setProperty(this.errorsElement, 'textContent', errors.join(', '));
