@@ -13,7 +13,7 @@ describe('phoneBelgiumBinFormatted', () => {
 			expect(bePhoneBinFormatted.mobilePattern.test('0470 12 34 56')).toBe(true);
 		});
 
-		it('should not test true to non-BIN formatted mobile phone numbers;', () => {
+		it('should not test true to non-BIN formatted mobile phone numbers', () => {
 			expect(bePhoneBinFormatted.mobilePattern.test('003212345678')).toBe(false);
 			expect(bePhoneBinFormatted.mobilePattern.test('+3212345678')).toBe(false);
 			expect(bePhoneBinFormatted.mobilePattern.test('012345678')).toBe(false);
