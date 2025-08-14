@@ -19,7 +19,7 @@ import {
 	ValidationErrors,
 } from '@angular/forms';
 
-import { Observable, Subject, combineLatest, startWith, takeUntil, tap } from 'rxjs';
+import { Subject, combineLatest, startWith, takeUntil, tap } from 'rxjs';
 import { NgxFormsErrorsConfigurationToken } from '../../tokens';
 import { NgxFormsErrorConfigurationOptions } from '../../interfaces';
 import { NgxFormsErrorAbstractComponent } from '../../abstracts';
@@ -32,7 +32,7 @@ import { touchedEventListener } from '../../utils';
 export class NgxFormsErrorsDirective implements AfterViewInit, OnDestroy {
 	// Iben: Handle the OnDestroy flow
 	private readonly onDestroySubject$ = new Subject<void>();
-	private readonly onDestroy$ = new Observable<boolean>();
+	private readonly onDestroy$ = this.onDestroySubject$.asObservable();
 
 	/**
 	 *  The actual template of the input element
@@ -60,24 +60,38 @@ export class NgxFormsErrorsDirective implements AfterViewInit, OnDestroy {
 	private componentRef: ComponentRef<NgxFormsErrorAbstractComponent>;
 
 	/**
+	 * Custom error messages to override default ones
+	 */
+	private customMessages: Record<string, string>;
+
+	/**
 	 * A reference to a control or a string reference to the control
 	 */
 	@Input('ngxFormsErrors') public control: AbstractControl | string;
+	/**
+	 * Custom error messages to override default ones
+	 */
+	@Input('ngxFormsErrorsCustomErrorMessages')
+	public set customErrorMessages(value: Record<string, string>) {
+		this.customMessages = value ?? {};
+	}
 
 	constructor(
 		@Optional() private readonly formGroupDirective: FormGroupDirective,
 		@Optional() private readonly formNameDirective: FormGroupName,
+		@Optional() private readonly templateRef: TemplateRef<any>,
 		@Optional()
 		@Inject(NgxFormsErrorsConfigurationToken)
 		private readonly config: NgxFormsErrorConfigurationOptions,
 		private readonly viewContainer: ViewContainerRef,
 		private readonly elementRef: ElementRef,
 		private readonly renderer: Renderer2,
-		private readonly templateRef: TemplateRef<any>,
 		private readonly cdRef: ChangeDetectorRef
 	) {
 		// Iben: Set the current template ref at constructor time so we actually have the provided template (as done in the *ngIf directive)
-		this.template = this.templateRef;
+		if (this.templateRef) {
+			this.template = this.templateRef;
+		}
 	}
 
 	public ngOnDestroy(): void {
@@ -89,7 +103,11 @@ export class NgxFormsErrorsDirective implements AfterViewInit, OnDestroy {
 	public ngAfterViewInit(): void {
 		// Iben: Render the actual input so that it is always visible
 		this.viewContainer.clear();
-		this.viewContainer.createEmbeddedView(this.template);
+
+		// Abdurrahman: Only render template if this directive is used in structural form
+		if (this.template) {
+			this.viewContainer.createEmbeddedView(this.template);
+		}
 
 		// Iben: If no control was provided, we early exit and log an error
 		if (!this.control) {
@@ -173,11 +191,17 @@ export class NgxFormsErrorsDirective implements AfterViewInit, OnDestroy {
 		this.errorComponent = this.componentRef.instance;
 
 		// Iben: Set the data of the error component
-		const { errors, errorKeys, data } = this.getErrors(this.abstractControl.errors);
+		const { errorKeys, data } = this.getErrors(this.abstractControl.errors);
+
+		// Abdurrahman: Merge defaults with custom overrides if provided
+		const errors = errorKeys.map(
+			(key) => this.customMessages?.[key] || this.config.errors[key]
+		);
 
 		this.errorComponent.errors = errors;
 		this.errorComponent.errorKeys = errorKeys;
 		this.errorComponent.data = data;
+		this.errorComponent.customErrorMessages = this.customMessages;
 	}
 
 	/**
@@ -203,11 +227,14 @@ export class NgxFormsErrorsDirective implements AfterViewInit, OnDestroy {
 		this.renderer.setAttribute(this.errorsElement, 'class', 'ngx-forms-error');
 
 		// Iben: Set the errors based on the keys
-		this.renderer.setProperty(
-			this.errorsElement,
-			'innerHTML',
-			this.getErrors(this.abstractControl.errors).errors.join(', ')
+		const { errorKeys } = this.getErrors(this.abstractControl.errors);
+
+		// Abdurrahman: Merge defaults with custom overrides if provided
+		const errors = errorKeys.map(
+			(key) => this.customMessages?.[key] || this.config.errors[key]
 		);
+
+		this.renderer.setProperty(this.errorsElement, 'textContent', errors.join(', '));
 
 		// Iben: insert the paragraph underneath the input component
 		this.renderer.insertBefore(

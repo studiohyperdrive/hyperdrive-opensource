@@ -14,7 +14,11 @@ export class FormAccessorComponent extends FormAccessor<any, any> {
 	initForm() {
 		return new FormGroup({
 			hello: new FormControl(null, [Validators.required]),
-			world: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+			world: new FormControl(null, [
+				Validators.required,
+				Validators.minLength(3),
+				Validators.pattern(/^[A-Z].*/),
+			]),
 			date: new FormControl(null, Validators.required),
 		});
 	}
