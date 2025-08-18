@@ -15,7 +15,7 @@ The error message is always rendered right below the element the `ngxErrors` dir
 - **Consistency** – Define your application's error messages once at a root level.
 - **Flexibility** – Render errors using the default DOM element or your own custom component.
 - **Context-aware** – Override default error messages for specific form controls without changing the global configuration.
-- **Integration-friendly** – Works with both _structural directive_ syntax (`*ngxFormsErrors`) and _attribute syntax_ (`[ngxFormsErrors]`).
+- **Integration-friendly** – Works with both _structural directive_ syntax (`\* ngxFormsErrors`) and _attribute syntax_ (`[ngxFormsErrors]`).
 
 ---
 
