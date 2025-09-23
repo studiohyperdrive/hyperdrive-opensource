@@ -12,8 +12,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideClientHydration } from '@angular/platform-browser';
-import { appRoutes } from './app.routes';
 import { NG_DOC_ROUTING, provideNgDocContext } from '@ng-doc/generated';
+import { appRoutes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
 	providers: [

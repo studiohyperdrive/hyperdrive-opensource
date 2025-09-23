@@ -87,7 +87,7 @@
 			}
 		},
 		{
-			"files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+			"files": ["*.ts", "*.tsx", "*.js", "*.jsx", "*.mts", "*.cts", "*.cjs", "*.mjs"],
 			"rules": {
 				"@nx/enforce-module-boundaries": [
 					"error",

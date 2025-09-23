@@ -92,7 +92,6 @@
 			"unitTestRunner": "jest"
 		}
 	},
-	"useLegacyCache": true,
 	"release": {
 		"version": {
 			"preVersionCommand": "npx nx run-many -t build"

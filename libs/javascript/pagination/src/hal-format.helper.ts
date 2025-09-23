@@ -44,7 +44,6 @@ export function calculateNextPage(totalPages: number, currentPage: number): numb
 	return currentPage < totalPages ? currentPage + 1 : currentPage;
 }
 
-
 /**
  * Create the HAL-format links to self, first-, last- & next-page.
  * @param path

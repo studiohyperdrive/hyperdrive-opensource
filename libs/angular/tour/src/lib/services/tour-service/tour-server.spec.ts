@@ -10,6 +10,12 @@ describe('NgxTourService Server', () => {
 		const windowServiceMock = NgxWindowServiceMock(undefined);
 		jest.spyOn(windowServiceMock, 'isBrowser').mockReturnValue(false);
 
+		jest.spyOn(windowServiceMock, 'runInBrowser').mockImplementation(
+			(fn: ({ browserWindow }: { browserWindow: any }) => void) => {
+				fn({ browserWindow: { onresize: jest.fn() } });
+			}
+		);
+
 		service = new NgxTourService(
 			OverlayMock(new MockTourStepComponent(service)),
 			windowServiceMock as unknown as NgxWindowService,

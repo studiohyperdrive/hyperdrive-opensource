@@ -1,6 +1,6 @@
 {
 	"name": "@studiohyperdrive/ngx-gov-flanders",
-	"version": "19.0.0",
+	"version": "20.0.0",
 	"description": "An integrated Angular approach to common use-cases for applications for the Flemish Government.",
 	"keywords": [
 		"angular",
@@ -25,10 +25,10 @@
 		"directory": "libs/angular/gov/flanders/src"
 	},
 	"peerDependencies": {
-		"@angular/core": "^19.0.0",
+		"@angular/core": "^20.0.0",
 		"@govflanders/vl-widget-global-footer-types": "^1.0.22",
 		"@govflanders/vl-widget-global-header-types": "^2.0.12",
-		"@studiohyperdrive/ngx-core": "^19.1.0",
+		"@studiohyperdrive/ngx-core": "19.1.0",
 		"rxjs": "7.8.1"
 	},
 	"sideEffects": false

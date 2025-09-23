@@ -35,7 +35,7 @@
 	"peerDependencies": {
 		"obj-clean": "^3.0.1",
 		"vite": "5.4.11",
-		"@nx/vite": "20.2.2",
+		"@nx/vite": "21.4.1",
 		"vite-plugin-dts": "4.3.0"
 	}
 }
