@@ -1,6 +1,7 @@
 import { finalize, of, Subscription } from 'rxjs';
+import { TestBed } from '@angular/core/testing';
+import { NgxI18nLoadingService, NgxI18nService } from '../../services';
 import { NgxI18nTranslationLoaderResolver } from './i18n.resolver';
-import objectContaining = jasmine.objectContaining;
 
 const i18nService: any = {
 	currentLanguage: 'nl',
@@ -20,7 +21,15 @@ describe('NgxI18nTranslationLoaderResolver', () => {
 
 	describe('resolve', () => {
 		it('should trigger the initI18n method and set the translation loader to loaded', (done: DoneFn) => {
-			const resolver = new NgxI18nTranslationLoaderResolver(i18nService, i18nLoadingService);
+			TestBed.configureTestingModule({
+				providers: [
+					{ provide: NgxI18nService, useValue: i18nService },
+					{ provide: NgxI18nLoadingService, useValue: i18nLoadingService },
+					NgxI18nTranslationLoaderResolver,
+				],
+			});
+
+			const resolver = TestBed.inject(NgxI18nTranslationLoaderResolver);
 
 			subscriptions.push(
 				resolver
@@ -30,7 +39,7 @@ describe('NgxI18nTranslationLoaderResolver', () => {
 							expect(
 								i18nLoadingService.dispatchTranslationLoaderAction
 							).toHaveBeenCalledWith(
-								objectContaining({
+								jasmine.objectContaining({
 									state: 'LOADED',
 								})
 							);
@@ -42,7 +51,7 @@ describe('NgxI18nTranslationLoaderResolver', () => {
 						expect(
 							i18nLoadingService.dispatchTranslationLoaderAction
 						).toHaveBeenCalledWith(
-							objectContaining({
+							jasmine.objectContaining({
 								state: 'LOADING',
 							})
 						);

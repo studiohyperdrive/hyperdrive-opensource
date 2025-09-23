@@ -1,4 +1,7 @@
 import { of, Subscription } from 'rxjs';
+import { TestBed } from '@angular/core/testing';
+import { TranslateService } from '@ngx-translate/core';
+import { NgxI18nRootService } from '../root-i18n/root-i18n.service';
 import { NgxI18nService } from './i18n.service';
 
 const translateService: any = {
@@ -20,9 +23,20 @@ const rootI18nService: any = {
 };
 
 describe('NgxI18nService', () => {
-	const service = new NgxI18nService(translateService, rootI18nService);
-
+	let service: NgxI18nService;
 	const subscriptions: Subscription[] = [];
+
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			providers: [
+				{ provide: TranslateService, useValue: translateService },
+				{ provide: NgxI18nRootService, useValue: rootI18nService },
+				NgxI18nService,
+			],
+		});
+
+		service = TestBed.inject(NgxI18nService);
+	});
 
 	afterEach(() => {
 		subscriptions.forEach((sub: Subscription) => sub.unsubscribe());

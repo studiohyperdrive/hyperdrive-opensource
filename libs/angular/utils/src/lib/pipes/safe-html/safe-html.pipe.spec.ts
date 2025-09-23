@@ -1,12 +1,23 @@
 import { SecurityContext } from '@angular/core';
 
+import { TestBed } from '@angular/core/testing';
+import { DomSanitizer } from '@angular/platform-browser';
 import { SafeHtmlPipe } from './safe-html.pipe';
 
 describe('SafeHtmlPipe', () => {
+	let pipe: SafeHtmlPipe;
+
 	const sanitizer: any = {
 		sanitize: jasmine.createSpy().and.returnValue('Test'),
 	};
-	const pipe = new SafeHtmlPipe(sanitizer);
+
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			providers: [{ provide: DomSanitizer, useValue: sanitizer }, SafeHtmlPipe],
+		});
+
+		pipe = TestBed.inject(SafeHtmlPipe);
+	});
 
 	it('should sanitize a string', () => {
 		const test = 'Test';
