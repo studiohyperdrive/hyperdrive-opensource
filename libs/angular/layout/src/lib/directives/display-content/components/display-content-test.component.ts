@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { NgxDisplayContentDirective } from '../display-content.directive';
 import { NgxDisplayContentComponent } from '../../../abstracts';
 import { NgxDisplayContentConditions } from '../../../types';
@@ -55,7 +55,7 @@ export class TestDisplayContentComponent {
 
 		<ng-template #loadingTmpl><p class="custom-loading">Custom loading</p></ng-template>
 	`,
-	imports: [NgxDisplayContentDirective, CommonModule],
+	imports: [NgxDisplayContentDirective],
 })
 export class TestOverrideDisplayContentComponent {
 	@Input() conditions: NgxDisplayContentConditions;

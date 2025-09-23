@@ -1,11 +1,11 @@
 // snippet#component "Typescript"
-import { CommonModule } from '@angular/common';
+
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DateInputComponent } from './date-input/date-input.component';
 
 @Component({
-	imports: [CommonModule, ReactiveFormsModule, DateInputComponent],
+	imports: [ReactiveFormsModule, DateInputComponent],
 	selector: 'simple-demo',
 	templateUrl: 'simple.demo.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,

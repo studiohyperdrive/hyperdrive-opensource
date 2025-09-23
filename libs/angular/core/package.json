@@ -19,8 +19,8 @@
 	},
 	"peerDependencies": {
 		"rxjs": "7.8.1",
-		"@angular/common": "19.0.3",
-		"@angular/core": "19.0.3"
+		"@angular/common": "20.2.4",
+		"@angular/core": "20.2.4"
 	},
 	"sideEffects": false
 }

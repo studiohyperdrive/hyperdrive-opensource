@@ -25,7 +25,7 @@
 		"directory": "libs/angular/gov/flanders/src"
 	},
 	"peerDependencies": {
-		"@angular/core": "^19.0.0",
+		"@angular/core": "^20.2.4",
 		"@govflanders/vl-widget-global-footer-types": "^1.0.22",
 		"@govflanders/vl-widget-global-header-types": "^2.0.12",
 		"@studiohyperdrive/ngx-core": "^19.1.0",

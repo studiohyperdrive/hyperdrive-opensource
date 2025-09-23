@@ -6,7 +6,8 @@
 			"@ng-doc/generated/*": ["./ng-doc/cookies-test/*"],
 			"@ngx/cookies": ["libs/angular/cookies/src/index.ts"],
 			"@ngx/utils": ["libs/angular/utils/src/public-api.ts"]
-		}
+		},
+		"moduleResolution": "bundler"
 	},
 	"extends": "../../tsconfig.json",
 	"files": ["src/main.ts"],

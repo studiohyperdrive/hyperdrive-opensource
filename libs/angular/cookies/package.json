@@ -22,8 +22,8 @@
 		"directory": "libs/angular/cookies/src"
 	},
 	"peerDependencies": {
-		"@angular/common": "^19.0.0",
-		"@angular/core": "^19.0.0",
+		"@angular/common": "^20.2.4",
+		"@angular/core": "^20.2.4",
 		"lodash": "^4.17.21",
 		"vanilla-cookieconsent": "^3.0.1"
 	},

@@ -123,7 +123,8 @@
 					"serverTarget": "docs:server:production"
 				}
 			},
-			"defaultConfiguration": "development"
+			"defaultConfiguration": "development",
+			"continuous": true
 		},
 		"prerender": {
 			"executor": "@angular-devkit/build-angular:prerender",

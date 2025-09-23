@@ -1,5 +1,5 @@
 // snippet#component "Typescript"
-import { CommonModule } from '@angular/common';
+
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { FormAccessorComponent } from './form-accessor.component';
@@ -7,7 +7,7 @@ import { FormErrorComponent } from './error/error.component';
 import { FormAccessorContainer, NgxFormsErrorsConfigurationToken } from '@ngx/forms';
 
 @Component({
-	imports: [CommonModule, ReactiveFormsModule, FormAccessorComponent],
+	imports: [ReactiveFormsModule, FormAccessorComponent],
 	selector: 'ngxerrors-demo',
 	templateUrl: 'ngxerrors.demo.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,

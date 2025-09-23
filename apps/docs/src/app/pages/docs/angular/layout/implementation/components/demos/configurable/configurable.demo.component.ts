@@ -3,11 +3,11 @@
 
 // snippet#component "Typescript"
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { NgxConfigurableLayoutComponent, NgxConfigurableLayoutItemComponent } from '@ngx/layout';
 
 @Component({
-	imports: [CommonModule, NgxConfigurableLayoutComponent, NgxConfigurableLayoutItemComponent],
+	imports: [NgxConfigurableLayoutComponent, NgxConfigurableLayoutItemComponent],
 	selector: 'layout-configurable-demo',
 	templateUrl: './configurable.demo.component.html',
 	styleUrl: './configurable.demo.component.scss',

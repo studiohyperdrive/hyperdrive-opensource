@@ -36,9 +36,9 @@
 		"directory": "libs/angular/forms/src"
 	},
 	"peerDependencies": {
-		"@angular/common": "^19.0.0",
-		"@angular/core": "^19.0.0",
-		"@angular/forms": "^19.0.0",
+		"@angular/common": "^20.2.4",
+		"@angular/core": "^20.2.4",
+		"@angular/forms": "^20.2.4",
 		"obj-clean": "^3.0.1",
 		"date-fns": "^3.6.0"
 	},

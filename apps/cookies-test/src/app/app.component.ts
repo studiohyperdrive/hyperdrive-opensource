@@ -1,7 +1,7 @@
 import { NgDocRootComponent, NgDocNavbarComponent, NgDocSidebarComponent } from '@ng-doc/app';
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { CookieAlertComponent } from './cookies.component';
 import { NgxCookieService, NgxCookiesFallbackComponentToken } from '@ngx/cookies';
@@ -12,12 +12,11 @@ import { NgxStorageService } from '@ngx/utils';
 	templateUrl: './app.component.html',
 	styleUrl: './app.component.scss',
 	imports: [
-		CommonModule,
-		RouterModule,
-		NgDocRootComponent,
-		NgDocNavbarComponent,
-		NgDocSidebarComponent,
-	],
+    RouterModule,
+    NgDocRootComponent,
+    NgDocNavbarComponent,
+    NgDocSidebarComponent
+],
 	providers: [
 		{
 			provide: NgxCookiesFallbackComponentToken,

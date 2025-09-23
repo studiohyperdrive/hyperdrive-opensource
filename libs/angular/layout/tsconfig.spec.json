@@ -2,7 +2,8 @@
 	"extends": "../../../tsconfig.base.json",
 	"compilerOptions": {
 		"outDir": "../../dist/out-tsc",
-		"types": ["jasmine"]
+		"types": ["jasmine"],
+		"moduleResolution": "bundler"
 	},
 	"include": ["**/*.spec.ts", "**/*.d.ts"]
 }

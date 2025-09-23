@@ -23,11 +23,11 @@
 		"directory": "libs/angular/store/src"
 	},
 	"peerDependencies": {
-		"@angular/common": "^19.0.0",
-		"@angular/core": "^19.0.0",
-		"@ngrx/entity": "^19.2.1",
-		"@ngrx/store": "^19.2.1",
-		"@ngrx/effects": "^19.2.1",
+		"@angular/common": "^20.2.4",
+		"@angular/core": "^20.2.4",
+		"@ngrx/entity": "^20.0.1",
+		"@ngrx/store": "^20.0.1",
+		"@ngrx/effects": "^20.0.1",
 		"lodash": "^4.17.21"
 	},
 	"dependencies": {

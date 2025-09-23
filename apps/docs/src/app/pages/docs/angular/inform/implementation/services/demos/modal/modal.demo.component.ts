@@ -1,14 +1,14 @@
 // snippet-from-file="./bootstrap.demo.ts" "Application Config"
 
 // snippet#component "Typescript"
-import { CommonModule } from '@angular/common';
+
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { tap } from 'rxjs';
 import { ModalComponent } from './modal.component';
 import { NgxModalService } from '@ngx/inform';
 
 @Component({
-	imports: [CommonModule],
+	imports: [],
 	selector: 'modal-demo',
 	templateUrl: './modal.demo.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,

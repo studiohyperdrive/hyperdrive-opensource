@@ -1,13 +1,13 @@
 // snippet-from-file="./bootstrap.demo.ts" "Application Config"
 
 // snippet#component "Typescript"
-import { CommonModule } from '@angular/common';
+
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CustomTooltipComponent } from './custom-tooltip.component';
 import { NgxTooltipDirective } from '@ngx/inform';
 
 @Component({
-	imports: [CommonModule, NgxTooltipDirective],
+	imports: [NgxTooltipDirective],
 	selector: 'tooltip-demo',
 	templateUrl: './tooltip.demo.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
