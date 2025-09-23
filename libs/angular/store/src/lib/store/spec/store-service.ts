@@ -41,14 +41,6 @@ export class SpecStoreService extends NgxStoreService {
 	);
 	public readonly darkMode$: Observable<boolean> = this.selectFromStore(selectors.darkMode);
 
-	constructor() {
-		const store = inject(Store);
-
-		super(store);
-
-		this.store = store;
-	}
-
 	public getChannel(): Observable<DataType> {
 		return dispatchDataToStore(
 			actions.channel,

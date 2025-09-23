@@ -34,7 +34,7 @@
 		"@angular/common": "20.2.4",
 		"obj-clean": "3.0.1",
 		"@angular/router": "20.2.4",
-    "@studiohyperdrive/types-auth": "^2.0.0"
+		"@studiohyperdrive/types-auth": "^2.0.0"
 	},
 	"sideEffects": false
 }

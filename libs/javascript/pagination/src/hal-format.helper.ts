@@ -41,6 +41,13 @@ export function calculatePagination(
  * @param currentPage
  */
 export function calculateNextPage(totalPages: number, currentPage: number): number {
+	// Denis: If the currentPage is higher than the number of totalPages, we return totalPages.
+	// This is to handle invalid input gracefully.
+	// E.g. if there are 5 pages and the user requests page 10, we return page 5 as next-page.
+	if (currentPage > totalPages) {
+		return totalPages;
+	}
+
 	return currentPage < totalPages ? currentPage + 1 : currentPage;
 }
 
