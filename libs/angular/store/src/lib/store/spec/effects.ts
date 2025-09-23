@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect } from '@ngrx/effects';
 
 import { handleEffect } from '../operators';
@@ -7,6 +7,9 @@ import { DataType, actions } from './store-assets';
 
 @Injectable()
 export class StoreEffects {
+	private readonly actions$ = inject(Actions);
+	private readonly effectsService = inject(EffectsService);
+
 	public fetchChannel$ = createEffect(() => {
 		return this.actions$.pipe(
 			handleEffect<DataType, boolean>(
@@ -22,9 +25,4 @@ export class StoreEffects {
 			handleEffect<DataType[], string>(actions.videos, 'set', this.effectsService.fetchVideos)
 		);
 	});
-
-	constructor(
-		private readonly actions$: Actions,
-		private readonly effectsService: EffectsService
-	) {}
 }

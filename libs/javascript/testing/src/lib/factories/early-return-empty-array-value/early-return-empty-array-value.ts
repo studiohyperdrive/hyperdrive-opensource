@@ -6,7 +6,7 @@
  *
  * @param fn
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 export const earlyReturnEmptyArrayValue = (fn: Function) => () => {
 	expect(fn(undefined)).toEqual([]);
 	expect(fn(null)).toEqual([]);

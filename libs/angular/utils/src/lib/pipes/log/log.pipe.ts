@@ -12,6 +12,7 @@ export class LogPipe implements PipeTransform {
 	 * @param text An optional textual value to print before the piped value.
 	 */
 	public transform(value: any, text?: string): void {
+		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 		text ? console.log(text, value) : console.log(value);
 	}
 }

@@ -12,6 +12,7 @@ import {
 	Renderer2,
 	TemplateRef,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import { v4 as uuid } from 'uuid';
 
@@ -34,6 +35,10 @@ import { NgxAccordionComponent } from '../accordion.component';
 	},
 })
 export class NgxAccordionItemComponent implements OnInit, AfterViewInit, OnDestroy {
+	private readonly parent = inject(NgxAccordionComponent);
+	private readonly cdRef = inject(ChangeDetectorRef);
+	private readonly renderer = inject(Renderer2);
+
 	/**
 	 * The details element
 	 */
@@ -113,12 +118,6 @@ export class NgxAccordionItemComponent implements OnInit, AfterViewInit, OnDestr
 	 * Whether the accordion item is focussed
 	 */
 	private hasFocus: boolean = false;
-
-	constructor(
-		private readonly parent: NgxAccordionComponent,
-		private readonly cdRef: ChangeDetectorRef,
-		private readonly renderer: Renderer2
-	) {}
 
 	/**
 	 * Updates the current open/closed state of the accordion item, regardless of the disabled state

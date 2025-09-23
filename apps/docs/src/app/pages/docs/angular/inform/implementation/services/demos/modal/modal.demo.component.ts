@@ -2,7 +2,7 @@
 
 // snippet#component "Typescript"
 
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { tap } from 'rxjs';
 import { ModalComponent } from './modal.component';
 import { NgxModalService } from '@ngx/inform';
@@ -14,7 +14,7 @@ import { NgxModalService } from '@ngx/inform';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalDemoComponent {
-	constructor(private readonly modalService: NgxModalService) {}
+	private readonly modalService = inject(NgxModalService);
 
 	public sayHello(): void {
 		this.modalService

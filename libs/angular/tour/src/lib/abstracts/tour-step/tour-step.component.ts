@@ -129,5 +129,6 @@ export abstract class NgxTourStepComponent<DataType = any> implements OnInit, Af
 		this.titleId.set(id);
 	}
 
+	// eslint-disable-next-line @angular-eslint/prefer-inject
 	constructor(private readonly tourService: NgxTourService) {}
 }

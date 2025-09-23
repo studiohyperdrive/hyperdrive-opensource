@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { EMPTY, fromEvent, Observable } from 'rxjs';
 import { NgxWindowService } from '@studiohyperdrive/ngx-core';
 
@@ -12,12 +12,12 @@ import { NgxWindowService } from '@studiohyperdrive/ngx-core';
 	providedIn: 'root',
 })
 export class NgxBroadcastChannelService {
+	private readonly windowService = inject(NgxWindowService);
+
 	/**
 	 * A record holding all the broadcast channels
 	 */
 	private broadcastChannel: Record<string, BroadcastChannel> = {};
-
-	constructor(private readonly windowService: NgxWindowService) {}
 
 	/**
 	 * initChannel

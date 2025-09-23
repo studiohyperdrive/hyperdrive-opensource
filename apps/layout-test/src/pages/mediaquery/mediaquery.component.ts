@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { NgxMediaQueryService } from '@ngx/utils';
 
 @Component({
@@ -7,13 +7,7 @@ import { NgxMediaQueryService } from '@ngx/utils';
 	standalone: true,
 })
 export class MediaQueryComponent implements OnInit {
-	constructor(private readonly mediaService: NgxMediaQueryService) {
-		// Uncomment below to view a duplicate query error
-		// this.mediaService.registerMediaQueries(['Yeet', '(max-width: 500px)']);
-		//
-		// Uncomment below to view a duplicate id warning
-		// this.mediaService.registerMediaQueries(['small', 'randomString']);
-	}
+	private readonly mediaService = inject(NgxMediaQueryService);
 
 	public ngOnInit() {
 		this.mediaService.getMatchingQuery$('small').subscribe((small) => {

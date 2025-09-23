@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform, SecurityContext } from '@angular/core';
+import { Pipe, PipeTransform, SecurityContext, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Pipe({
@@ -6,7 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 	standalone: true,
 })
 export class SafeHtmlPipe implements PipeTransform {
-	constructor(private readonly sanitized: DomSanitizer) {}
+	private readonly sanitized = inject(DomSanitizer);
 
 	/**
 	 * Maps a provided string value to a sanitized string

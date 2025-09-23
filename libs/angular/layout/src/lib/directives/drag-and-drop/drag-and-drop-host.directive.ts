@@ -5,6 +5,7 @@ import {
 	Input,
 	QueryList,
 	AfterViewInit,
+	inject,
 } from '@angular/core';
 
 import {
@@ -22,6 +23,9 @@ import { NgxAccessibleDragAndDropContainerDirective } from './drag-and-drop-cont
 	standalone: true,
 })
 export class NgxAccessibleDragAndDropHostDirective implements AfterViewInit {
+	private readonly dragAndDropService = inject(NgxAccessibleDragAndDropAbstractService);
+	readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
 	/**
 	 * A list of all the drag and drop items
 	 */
@@ -37,11 +41,6 @@ export class NgxAccessibleDragAndDropHostDirective implements AfterViewInit {
 	 * An optional description describing how the drag and drop works.
 	 */
 	@Input({ alias: 'ngxAccessibleDragAndDropHostDescription' }) public description: string;
-
-	constructor(
-		private readonly dragAndDropService: NgxAccessibleDragAndDropAbstractService,
-		public readonly elementRef: ElementRef<HTMLElement>
-	) {}
 
 	/**
 	 * Mark a specific drag and drop item as active

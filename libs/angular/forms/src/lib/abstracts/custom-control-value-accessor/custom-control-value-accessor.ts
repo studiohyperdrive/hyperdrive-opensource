@@ -241,6 +241,7 @@ export abstract class NgxFormsControlValueAccessor<
 					this.markAsPristine(options);
 				};
 			} catch (error) {
+				// eslint-disable-line unused-imports/no-unused-vars
 				console.warn(
 					'NgxForms: No parent control was found while trying to set up the form accessor.'
 				);
@@ -251,8 +252,8 @@ export abstract class NgxFormsControlValueAccessor<
 	/**
 	 * Sets up the ControlValueAccessor connectors
 	 */
-	public onTouch: Function = () => {}; // tslint:disable-line:no-empty
-	public onChange: Function = (_: any) => {}; // tslint:disable-line:no-empty
+	public onTouch: Function = () => {}; // eslint-disable-line @typescript-eslint/no-unsafe-function-type
+	public onChange: Function = (_: any) => {}; // eslint-disable-line @typescript-eslint/no-unsafe-function-type
 
 	public registerOnChange(fn: any): void {
 		this.onChange = fn;

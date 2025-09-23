@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { MarkerArea, MarkerAreaState } from 'markerjs2';
 import { MarkerView } from 'markerjs-live';
 import { NgxWindowService } from '@studiohyperdrive/ngx-core';
@@ -23,12 +23,12 @@ import {
 	providedIn: 'root',
 })
 export class NgxImageMarkerService implements OnDestroy {
+	private readonly windowService = inject(NgxWindowService);
+
 	/**
 	 * A record with all markers
 	 */
 	private readonly markers: Record<string, NgxImageMarker> = {};
-
-	constructor(private readonly windowService: NgxWindowService) {}
 
 	/**
 	 * Create an image with markers

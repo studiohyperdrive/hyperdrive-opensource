@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import * as CookieConsent from 'vanilla-cookieconsent';
 import { NgxWindowService } from '@studiohyperdrive/ngx-core';
 
@@ -25,6 +25,8 @@ import {
  */
 @Injectable({ providedIn: 'root' })
 export class NgxCookieService {
+	private readonly windowsService = inject(NgxWindowService);
+
 	/**
 	 * Subject to hold the onFirstConsent event
 	 */
@@ -80,8 +82,6 @@ export class NgxCookieService {
 	 */
 	public readonly cookiesChanged$: Observable<Record<string, any>> =
 		this.cookiesChangedSubject.asObservable();
-
-	constructor(private readonly windowsService: NgxWindowService) {}
 
 	/**
 	 * Sets up the CookieConsent.

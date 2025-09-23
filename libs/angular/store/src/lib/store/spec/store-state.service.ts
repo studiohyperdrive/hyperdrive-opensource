@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of, throwError, switchMap } from 'rxjs';
 import { BaseStoreAssets, EntityStoreAssets, StoreFlowAssets } from '../interfaces';
@@ -29,8 +29,14 @@ export const { actions, reducers, selectors } = createStoreAssets<StoreState>('s
 
 @Injectable()
 export class StoreStateService extends NgxStoreService<StoreState> {
-	constructor(protected readonly store: Store) {
+	protected readonly store: Store;
+
+	constructor() {
+		const store = inject(Store);
+
 		super(store, selectors);
+
+		this.store = store;
 	}
 
 	setWithError(): Observable<never> {

@@ -55,5 +55,6 @@ export abstract class NgxTooltipAbstractComponent {
 	 */
 	@Input({ required: true }) public text: string;
 
+	// eslint-disable-next-line @angular-eslint/prefer-inject
 	constructor(private readonly ngxTooltipService: NgxTooltipService) {}
 }

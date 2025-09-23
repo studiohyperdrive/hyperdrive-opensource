@@ -1,4 +1,4 @@
-import { ComponentRef, Inject, Injectable, OnDestroy } from '@angular/core';
+import { ComponentRef, Injectable, OnDestroy, inject } from '@angular/core';
 import {
 	BehaviorSubject,
 	Observable,
@@ -43,6 +43,10 @@ import { elementIsVisibleInViewport } from '../../utils';
 	providedIn: 'root',
 })
 export class NgxTourService implements OnDestroy {
+	private readonly cdkOverlayService = inject(Overlay);
+	private readonly windowService = inject(NgxWindowService);
+	private readonly configuration = inject<NgxTourTokenConfiguration>(NgxTourStepToken);
+
 	/**
 	 * A subject to hold the destroyed event
 	 */
@@ -183,11 +187,7 @@ export class NgxTourService implements OnDestroy {
 		.asObservable()
 		.pipe(map(Boolean));
 
-	constructor(
-		private readonly cdkOverlayService: Overlay,
-		private readonly windowService: NgxWindowService,
-		@Inject(NgxTourStepToken) private readonly configuration: NgxTourTokenConfiguration
-	) {
+	constructor() {
 		// Iben: We use a subject with concatMap here because we want each event to be handled correctly and the elements record should finish updating before updating it again.
 		this.registerElementSubject
 			.pipe(

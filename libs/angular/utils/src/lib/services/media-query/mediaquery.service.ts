@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { filter, map, Observable, ReplaySubject } from 'rxjs';
 import { NgxWindowService } from '@studiohyperdrive/ngx-core';
 
@@ -10,6 +10,8 @@ import { NgxWindowService } from '@studiohyperdrive/ngx-core';
  */
 @Injectable({ providedIn: 'root' })
 export class NgxMediaQueryService implements OnDestroy {
+	private readonly windowService = inject(NgxWindowService);
+
 	/**
 	 * A map of media queries that are registered with the service.
 	 */
@@ -33,8 +35,6 @@ export class NgxMediaQueryService implements OnDestroy {
 	 * A subject that emits the id of the media query that has changed.
 	 */
 	private readonly queryChangedSubject: ReplaySubject<string> = new ReplaySubject();
-
-	constructor(private readonly windowService: NgxWindowService) {}
 
 	/**
 	 * Register a list of media queries that need to be tracked by the service.

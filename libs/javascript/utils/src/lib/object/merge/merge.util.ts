@@ -6,8 +6,7 @@ import { default as clean } from 'obj-clean';
  * @param start - The start property we wish to merge our data into
  * @param  properties - A series of single value objects that are merged based on whether the value exists
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const merge = <ResultType extends Object>(
+export const merge = <ResultType extends object>(
 	start: Partial<ResultType>,
 	...properties: KeyValuePair<ResultType>[]
 ): ResultType => {

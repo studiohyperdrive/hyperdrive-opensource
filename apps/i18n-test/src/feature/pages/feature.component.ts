@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxI18nService } from '@ngx/i18n';
 
@@ -8,7 +8,7 @@ import { NgxI18nService } from '@ngx/i18n';
 	imports: [TranslateModule],
 })
 export class FeaturePageComponent {
-	public readonly currentLanguage = this.i18nService.currentLanguage;
+	private readonly i18nService = inject(NgxI18nService);
 
-	constructor(private readonly i18nService: NgxI18nService) {}
+	public readonly currentLanguage = this.i18nService.currentLanguage;
 }

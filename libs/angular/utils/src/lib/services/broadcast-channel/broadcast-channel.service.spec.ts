@@ -3,6 +3,7 @@ import { NgxWindowServiceMock } from '@studiohyperdrive/ngx-core';
 import { NgxBroadcastChannelService } from './broadcast-channel.service';
 
 class MockBroadcastChannel {
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 	private listeners: { [key: string]: Function[] } = {};
 
 	constructor(public name: string) {}
@@ -16,7 +17,7 @@ class MockBroadcastChannel {
 	public close(): void {
 		this.listeners = {};
 	}
-
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 	public addEventListener(event: string, listener: Function): void {
 		if (!this.listeners[event]) {
 			this.listeners[event] = [];
@@ -24,7 +25,7 @@ class MockBroadcastChannel {
 
 		this.listeners[event].push(listener);
 	}
-
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 	public removeEventListener(event: string, listener: Function): void {
 		if (!this.listeners[event]) {
 			return;

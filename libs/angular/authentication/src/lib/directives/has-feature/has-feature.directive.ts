@@ -2,11 +2,11 @@ import {
 	ChangeDetectorRef,
 	Directive,
 	EmbeddedViewRef,
-	Inject,
 	Input,
 	OnDestroy,
 	TemplateRef,
 	ViewContainerRef,
+	inject,
 } from '@angular/core';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { NgxAuthenticationAbstractService } from '../../abstracts';
@@ -24,6 +24,13 @@ import { NgxAuthenticationServiceToken } from '../../tokens';
 	selector: '[ngxHasFeature]',
 })
 export class NgxHasFeatureDirective<FeatureType extends string> implements OnDestroy {
+	templateRef = inject<TemplateRef<any>>(TemplateRef);
+	private viewContainer = inject(ViewContainerRef);
+	private readonly authenticationService = inject<NgxAuthenticationAbstractService>(
+		NgxAuthenticationServiceToken
+	);
+	private readonly cdRef = inject(ChangeDetectorRef);
+
 	/**
 	 * The destroyed state of the directive
 	 */
@@ -85,13 +92,9 @@ export class NgxHasFeatureDirective<FeatureType extends string> implements OnDes
 		this.updateView();
 	}
 
-	constructor(
-		public templateRef: TemplateRef<any>,
-		private viewContainer: ViewContainerRef,
-		@Inject(NgxAuthenticationServiceToken)
-		private readonly authenticationService: NgxAuthenticationAbstractService,
-		private readonly cdRef: ChangeDetectorRef
-	) {
+	constructor() {
+		const templateRef = this.templateRef;
+
 		this.thenTemplateRef = templateRef;
 	}
 

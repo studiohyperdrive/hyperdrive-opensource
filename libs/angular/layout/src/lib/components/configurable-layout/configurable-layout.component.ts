@@ -313,8 +313,8 @@ export class NgxConfigurableLayoutComponent
 	// Component methods
 	// ==============================
 	// TODO: use the ngx-forms formAccessor instead of copying its internal way of working
-	private onChanged: Function = () => {};
-	private onTouched: Function = () => {};
+	private onChanged: Function = () => {}; // eslint-disable-line @typescript-eslint/no-unsafe-function-type
+	private onTouched: Function = () => {}; // eslint-disable-line @typescript-eslint/no-unsafe-function-type
 
 	writeValue(value: NgxConfigurableLayoutGrid): void {
 		// Iben: Update the inner form.

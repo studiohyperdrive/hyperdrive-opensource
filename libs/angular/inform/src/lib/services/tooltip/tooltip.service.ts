@@ -4,7 +4,7 @@ import {
 	OverlayPositionBuilder,
 	OverlayRef,
 } from '@angular/cdk/overlay';
-import { Inject, Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { ComponentPortal } from '@angular/cdk/portal';
 
 import { BehaviorSubject, pairwise, Subject, takeUntil, tap } from 'rxjs';
@@ -20,6 +20,10 @@ import {
 	providedIn: 'root',
 })
 export class NgxTooltipService implements OnDestroy {
+	private readonly configuration = inject<NgxTooltipConfiguration>(NgxTooltipConfigurationToken);
+	private readonly overlayService = inject(Overlay);
+	private readonly overlayPositionBuilder = inject(OverlayPositionBuilder);
+
 	// Iben: The id of the active tooltip
 	private activeTooltip: string = undefined;
 
@@ -49,12 +53,7 @@ export class NgxTooltipService implements OnDestroy {
 		right: { originX: 'end', originY: 'bottom', overlayX: 'start', overlayY: 'bottom' },
 	};
 
-	constructor(
-		@Inject(NgxTooltipConfigurationToken)
-		private readonly configuration: NgxTooltipConfiguration,
-		private readonly overlayService: Overlay,
-		private readonly overlayPositionBuilder: OverlayPositionBuilder
-	) {
+	constructor() {
 		// Iben: Listen to the tooltip events and handle accordingly
 		this.tooltipEventsSubject
 			.pipe(

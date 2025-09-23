@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -10,6 +10,9 @@ import { DataType, actions, selectors } from './store-assets';
 
 @Injectable()
 export class SpecStoreService extends NgxStoreService {
+	readonly store: Store;
+	private readonly httpClient = inject(HttpClient);
+
 	public readonly channel$: Observable<DataType> = this.selectFromStore<DataType>(
 		selectors.channel
 	);
@@ -38,11 +41,12 @@ export class SpecStoreService extends NgxStoreService {
 	);
 	public readonly darkMode$: Observable<boolean> = this.selectFromStore(selectors.darkMode);
 
-	constructor(
-		public readonly store: Store,
-		private readonly httpClient: HttpClient
-	) {
+	constructor() {
+		const store = inject(Store);
+
 		super(store);
+
+		this.store = store;
 	}
 
 	public getChannel(): Observable<DataType> {

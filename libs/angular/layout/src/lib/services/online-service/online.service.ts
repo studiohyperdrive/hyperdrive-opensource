@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Observable, Subject, fromEvent, takeUntil, tap } from 'rxjs';
 import { NgxWindowService } from '@studiohyperdrive/ngx-core';
 
@@ -7,6 +7,8 @@ import { NgxWindowService } from '@studiohyperdrive/ngx-core';
  */
 @Injectable({ providedIn: 'root' })
 export class NgxOnlineService implements OnDestroy {
+	private readonly windowService = inject(NgxWindowService);
+
 	/**
 	 * A subject that emits whenever the application is on or offline
 	 */
@@ -22,7 +24,7 @@ export class NgxOnlineService implements OnDestroy {
 	 */
 	public readonly online$: Observable<boolean> = this.onlineSubject.asObservable();
 
-	constructor(private readonly windowService: NgxWindowService) {
+	constructor() {
 		// Iben: When we're in the browser, listen to the online and offline status of the application
 		if (this.windowService.isBrowser()) {
 			// Iben: Handle the on and offline status of the application

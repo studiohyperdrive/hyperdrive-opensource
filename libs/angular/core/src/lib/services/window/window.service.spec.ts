@@ -18,7 +18,6 @@ describe('NgxWindowService', () => {
 		});
 
 		describe('hasDocument', () => {
-			``;
 			it('should return false', () => {
 				expect(service.hasDocument()).toBe(false);
 			});

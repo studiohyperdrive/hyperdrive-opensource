@@ -4,13 +4,12 @@ import {
 	ComponentRef,
 	Directive,
 	ElementRef,
-	Inject,
 	Input,
 	OnDestroy,
-	Optional,
 	Renderer2,
 	TemplateRef,
 	ViewContainerRef,
+	inject,
 } from '@angular/core';
 import {
 	AbstractControl,
@@ -30,6 +29,18 @@ import { touchedEventListener } from '../../utils';
 	standalone: true,
 })
 export class NgxFormsErrorsDirective implements AfterViewInit, OnDestroy {
+	private readonly formGroupDirective = inject(FormGroupDirective, { optional: true });
+	private readonly formNameDirective = inject(FormGroupName, { optional: true });
+	private readonly templateRef = inject<TemplateRef<any>>(TemplateRef, { optional: true });
+	private readonly config = inject<NgxFormsErrorConfigurationOptions>(
+		NgxFormsErrorsConfigurationToken,
+		{ optional: true }
+	);
+	private readonly viewContainer = inject(ViewContainerRef);
+	private readonly elementRef = inject(ElementRef);
+	private readonly renderer = inject(Renderer2);
+	private readonly cdRef = inject(ChangeDetectorRef);
+
 	// Iben: Handle the OnDestroy flow
 	private readonly onDestroySubject$ = new Subject<void>();
 	private readonly onDestroy$ = this.onDestroySubject$.asObservable();
@@ -76,18 +87,7 @@ export class NgxFormsErrorsDirective implements AfterViewInit, OnDestroy {
 		this.customMessages = value ?? {};
 	}
 
-	constructor(
-		@Optional() private readonly formGroupDirective: FormGroupDirective,
-		@Optional() private readonly formNameDirective: FormGroupName,
-		@Optional() private readonly templateRef: TemplateRef<any>,
-		@Optional()
-		@Inject(NgxFormsErrorsConfigurationToken)
-		private readonly config: NgxFormsErrorConfigurationOptions,
-		private readonly viewContainer: ViewContainerRef,
-		private readonly elementRef: ElementRef,
-		private readonly renderer: Renderer2,
-		private readonly cdRef: ChangeDetectorRef
-	) {
+	constructor() {
 		// Iben: Set the current template ref at constructor time so we actually have the provided template (as done in the *ngIf directive)
 		if (this.templateRef) {
 			this.template = this.templateRef;

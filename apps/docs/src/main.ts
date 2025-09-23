@@ -20,7 +20,7 @@ import { tooltipAppConfig } from './app/pages/docs/angular/inform/implementation
 import { layoutComponentsConfig } from './app/pages/docs/angular/layout/implementation/components/demos/app.config';
 import { layoutDirectivesConfig } from './app/pages/docs/angular/layout/implementation/directives/demos/app.config';
 import { tourAppConfig } from './app/pages/docs/angular/tour/implementation/demos/app.config';
-import { provideNgDocContext } from '@ng-doc/generated';
+import { provideNgDocContext } from '@ng-doc/generated'; // eslint-disable-line @nx/enforce-module-boundaries
 // import { environment } from './environments/environment';
 
 // if (environment.production) {

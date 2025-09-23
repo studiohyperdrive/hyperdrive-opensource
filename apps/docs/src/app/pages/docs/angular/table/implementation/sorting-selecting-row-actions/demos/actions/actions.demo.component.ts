@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NgDocNotifyService } from '@ng-doc/ui-kit';
 import { NgxTable } from '@ngx/table';
@@ -9,7 +9,7 @@ import { NgxTable } from '@ngx/table';
 	templateUrl: './actions.demo.component.html',
 })
 export class ActionsDemoComponent {
-	constructor(private readonly notifyService: NgDocNotifyService) {}
+	private readonly notifyService = inject(NgDocNotifyService);
 
 	public control: FormControl<number[]> = new FormControl();
 	public customControl: FormControl<number[]> = new FormControl();

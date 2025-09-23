@@ -3,12 +3,12 @@ import {
 	ChangeDetectorRef,
 	Directive,
 	ElementRef,
-	Inject,
 	Input,
 	OnDestroy,
 	TemplateRef,
 	Type,
 	ViewContainerRef,
+	inject,
 } from '@angular/core';
 import { Subject, distinctUntilChanged, takeUntil, tap } from 'rxjs';
 import {
@@ -30,6 +30,15 @@ import { NgxDisplayContentComponent } from '../../abstracts';
 	standalone: true,
 })
 export class NgxDisplayContentDirective implements AfterViewInit, OnDestroy {
+	private readonly elementRef = inject(ElementRef);
+	private readonly templateRef = inject<TemplateRef<any>>(TemplateRef);
+	private readonly cdRef = inject(ChangeDetectorRef);
+	private readonly viewContainer = inject(ViewContainerRef);
+	private readonly onlineService = inject(NgxOnlineService);
+	private readonly configuration = inject<NgxDisplayContentConfiguration>(
+		NgxDisplayContentConfigurationToken
+	);
+
 	/**
 	 * A subject to handle the destroyed flow
 	 */
@@ -81,15 +90,9 @@ export class NgxDisplayContentDirective implements AfterViewInit, OnDestroy {
 	 */
 	@Input() displayContentAriaLive: NgxDisplayContentAriaLive = 'polite';
 
-	constructor(
-		private readonly elementRef: ElementRef,
-		private readonly templateRef: TemplateRef<any>,
-		private readonly cdRef: ChangeDetectorRef,
-		private readonly viewContainer: ViewContainerRef,
-		private readonly onlineService: NgxOnlineService,
-		@Inject(NgxDisplayContentConfigurationToken)
-		private readonly configuration: NgxDisplayContentConfiguration
-	) {
+	constructor() {
+		const configuration = this.configuration;
+
 		// Iben: If we want to listen to the online status, we set up a listener to the status of the application
 		if (configuration.listenToOnlineStatus) {
 			this.onlineService.online$

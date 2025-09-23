@@ -51,7 +51,7 @@ describe('HAL Format Tools', () => {
 		it('should return 1 if there is only one page', () => {
 			expect(calculateNextPage(1, 1)).toBe(1);
 		});
-	
+
 		it('should handle invalid input gracefully: currentPage > totalPages', () => {
 			expect(calculateNextPage(3, 5)).toBe(3);
 		});

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NgDocRootComponent, NgDocNavbarComponent, NgDocSidebarComponent } from '@ng-doc/app';
-import { NG_DOC_ROUTING } from '@ng-doc/generated';
+import { NG_DOC_ROUTING } from '@ng-doc/generated'; // eslint-disable-line @nx/enforce-module-boundaries
 
 @Component({
 	imports: [RouterModule, NgDocRootComponent, NgDocNavbarComponent, NgDocSidebarComponent],

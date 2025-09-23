@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Inject, Injectable, PLATFORM_ID, DOCUMENT } from '@angular/core';
+import { Injectable, PLATFORM_ID, DOCUMENT, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 // @dynamic
@@ -10,6 +10,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 	providedIn: 'root',
 })
 export class WindowService {
+	document = inject<Document>(DOCUMENT);
+	private platformId = inject(PLATFORM_ID);
+
 	/* eslint-disable @typescript-eslint/member-ordering */
 	private widthSubject$: BehaviorSubject<number> = new BehaviorSubject<number>(1200);
 	private scrollingUpSubject$: BehaviorSubject<boolean> = new BehaviorSubject(true);
@@ -38,11 +41,7 @@ export class WindowService {
 	public window: Window;
 	/* eslint-enable */
 
-	constructor(
-		@Inject(DOCUMENT) public document: Document,
-		// tslint:disable-next-line: ban-types
-		@Inject(PLATFORM_ID) private platformId: string
-	) {
+	constructor() {
 		if (this.isBrowser() && this.hasDocument()) {
 			this.window = this.document.defaultView;
 			this.document.addEventListener('scroll', this.handleContentScroll.bind(this));

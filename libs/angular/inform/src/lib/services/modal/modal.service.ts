@@ -1,4 +1,4 @@
-import { Inject, Injectable, Optional, Type } from '@angular/core';
+import { Injectable, Type, inject } from '@angular/core';
 import { Dialog } from '@angular/cdk/dialog';
 import {
 	BehaviorSubject,
@@ -24,6 +24,11 @@ import { NgxModalAbstractComponent } from '../../abstracts';
  */
 @Injectable({ providedIn: 'root' })
 export class NgxModalService {
+	private readonly configuration = inject<NgxModalConfiguration>(NgxModalConfigurationToken, {
+		optional: true,
+	});
+	private readonly dialogService = inject(Dialog);
+
 	/**
 	 * A subject that keeps track of whether a modal is currently active
 	 */
@@ -33,13 +38,6 @@ export class NgxModalService {
 	 * An observable that keeps track of whether a modal is currently active.
 	 */
 	public readonly hasActiveModal$: Observable<boolean> = this.hasModalSubject.asObservable();
-
-	constructor(
-		@Optional()
-		@Inject(NgxModalConfigurationToken)
-		private readonly configuration: NgxModalConfiguration,
-		private readonly dialogService: Dialog
-	) {}
 
 	/**
 	 * Opens a modal based on the provided options

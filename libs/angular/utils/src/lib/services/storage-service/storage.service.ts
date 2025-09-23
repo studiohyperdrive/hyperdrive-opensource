@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, NEVER, Observable, Subject } from 'rxjs';
 import { NgxWindowService } from '@studiohyperdrive/ngx-core';
 import {
@@ -16,6 +16,8 @@ import {
  */
 @Injectable({ providedIn: 'root' })
 export class NgxStorageService {
+	private readonly windowService = inject(NgxWindowService);
+
 	/**
 	 * A record to hold the properties in the sessionStorage
 	 */
@@ -35,7 +37,9 @@ export class NgxStorageService {
 	public readonly storageEvents$: Observable<NgxStorageEvent> =
 		this.storageEventSubject.asObservable();
 
-	constructor(private readonly windowService: NgxWindowService) {
+	constructor() {
+		const windowService = this.windowService;
+
 		// Iben: Get the initial values of the session and the local storage
 		windowService.runInBrowser(() => {
 			this.setupStorage(sessionStorage, this.sessionStorageRecord);
