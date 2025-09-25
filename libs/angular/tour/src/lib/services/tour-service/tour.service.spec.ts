@@ -1,6 +1,6 @@
 import { subscribeSpyTo } from '@hirez_io/observer-spy';
 
-import { NgxWindowService, NgxWindowServiceMock } from '@studiohyperdrive/ngx-core';
+import { NgxWindowService } from '@studiohyperdrive/ngx-core';
 import { TestBed } from '@angular/core/testing';
 import { Overlay } from '@angular/cdk/overlay';
 import { MockTourStepComponent, OverlayMock } from '../../mocks';
@@ -10,16 +10,15 @@ import { NgxTourService } from './tour.service';
 window.scrollTo = jest.fn();
 
 //TODO: Iben: Add Cypress tests so we can test the actual flow and the remaining methods
-
 //TODO: Wouter: Fix the failing tests, the currentStep$ is not emitting the correct values at the correct time for the tests to intercept.
 describe('NgxTourService Browser', () => {
 	let service: NgxTourService;
+	let windowService: NgxWindowService;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			providers: [
 				{ provide: Overlay, useValue: OverlayMock(new MockTourStepComponent(service)) },
-				{ provide: NgxWindowService, useValue: NgxWindowServiceMock(undefined) },
 				{
 					provide: NgxTourStepToken,
 					useValue: {
@@ -31,6 +30,20 @@ describe('NgxTourService Browser', () => {
 		});
 
 		service = TestBed.inject(NgxTourService);
+		windowService = TestBed.inject(NgxWindowService);
+
+		windowService.document = {
+			body: {
+				classList: {
+					add: jest.fn(),
+					remove: jest.fn(),
+				},
+				style: {
+					overflow: '',
+				},
+			},
+		} as unknown as Document;
+		windowService.isBrowser = () => true;
 	});
 
 	afterAll(() => {

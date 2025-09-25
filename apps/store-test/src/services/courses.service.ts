@@ -12,7 +12,7 @@ export class CoursesService extends NgxStoreService<CoursesStore> {
 	constructor() {
 		const store = inject(Store);
 
-		super(store, selectors);
+		super(selectors);
 
 		this.store = store;
 	}

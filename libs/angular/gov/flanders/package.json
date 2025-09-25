@@ -28,7 +28,7 @@
 		"@angular/core": "^20.2.4",
 		"@govflanders/vl-widget-global-footer-types": "^1.0.22",
 		"@govflanders/vl-widget-global-header-types": "^2.0.12",
-		"@studiohyperdrive/ngx-core": "^19.1.0",
+		"@studiohyperdrive/ngx-core": "20.0.0-beta.0",
 		"rxjs": "7.8.1"
 	},
 	"sideEffects": false
