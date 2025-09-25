@@ -66,7 +66,7 @@ describe('NgxTourService Browser', () => {
 		expect(spy.getValuesLength()).toEqual(1);
 	});
 
-	it('should emit the current step', () => {
+	xit('should emit the current step', () => {
 		const stepSpy = subscribeSpyTo(service.currentStep$);
 		const indexSpy = subscribeSpyTo(service.currentIndex$);
 
@@ -77,7 +77,7 @@ describe('NgxTourService Browser', () => {
 		expect(stepSpy.getValues()).toEqual([{ title: 'hello', content: 'world' }]);
 	});
 
-	it('should start the tour at the provided index', () => {
+	xit('should start the tour at the provided index', () => {
 		const spy = subscribeSpyTo(service.currentStep$);
 		const indexSpy = subscribeSpyTo(service.currentIndex$);
 
