@@ -1,6 +1,6 @@
 {
 	"name": "@studiohyperdrive/ngx-forms",
-	"version": "19.0.1",
+	"version": "20.0.0",
 	"description": "An Angular package to help with complex forms and their validation.",
 	"keywords": [
 		"angular",
