@@ -53,7 +53,7 @@
 		"@ngx-translate/core": "15.0.0",
 		"@nx/eslint-plugin": "21.5.3",
 		"@studiohyperdrive/env": "1.0.4",
-		"@studiohyperdrive/ngx-core": "20.0.0-beta.0",
+		"@studiohyperdrive/ngx-core": "20.0.0",
 		"@studiohyperdrive/types-auth": "^2.0.0",
 		"@studiohyperdrive/utils": "2.0.3",
 		"@types/lodash": "4.17.12",
