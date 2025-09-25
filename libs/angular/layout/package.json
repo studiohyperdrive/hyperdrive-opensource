@@ -1,6 +1,6 @@
 {
 	"name": "@studiohyperdrive/ngx-layout",
-	"version": "19.2.0",
+	"version": "20.0.0",
 	"description": "A lightweight customizable approach for common and complex layouts in Angular.",
 	"keywords": [
 		"angular",
