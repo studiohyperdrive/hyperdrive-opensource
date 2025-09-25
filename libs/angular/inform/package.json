@@ -1,6 +1,6 @@
 {
 	"name": "@studiohyperdrive/ngx-inform",
-	"version": "19.0.0",
+	"version": "20.0.0",
 	"description": "A lightweight ARIA compliant customizable approach for common and complex inform flows in Angular.",
 	"keywords": [
 		"angular",
