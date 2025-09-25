@@ -7,14 +7,10 @@ import { NgxStoreService, dispatchDataToStore } from '@ngx/store';
 
 @Injectable()
 export class CoursesService extends NgxStoreService<CoursesStore> {
-	protected readonly store: Store;
+	protected readonly store: Store = inject(Store);
 
 	constructor() {
-		const store = inject(Store);
-
 		super(selectors);
-
-		this.store = store;
 	}
 
 	setCompleted() {
