@@ -1,6 +1,6 @@
 {
 	"name": "@studiohyperdrive/ngx-utils",
-	"version": "19.0.1",
+	"version": "20.0.0",
 	"description": "A series of abstracts, utils, pipes and services for Angular applications.",
 	"keywords": [
 		"angular",
@@ -52,7 +52,7 @@
 	"peerDependencies": {
 		"@angular/common": "^20.2.4",
 		"@angular/core": "^20.2.4",
-		"@studiohyperdrive/utils": "^2.0.0"
+		"@studiohyperdrive/utils": "~2.0.0"
 	},
 	"allowedNonPeerDependencies": {
 		"rxjs": "^7.5.6",
