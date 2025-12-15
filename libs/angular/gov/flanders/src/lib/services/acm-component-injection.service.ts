@@ -1,8 +1,16 @@
-import { inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import {
+	inject,
+	Injectable,
+	Renderer2,
+	RendererFactory2,
+	Signal,
+	signal,
+	WritableSignal,
+} from '@angular/core';
 import { GlobalFooterClient } from '@govflanders/vl-widget-global-footer-types';
 import { GlobalHeaderClient } from '@govflanders/vl-widget-global-header-types';
 import { NgxWindowService } from '@studiohyperdrive/ngx-core';
-import { first, from, fromEvent, Observable, of, retry, switchMap, throwError } from 'rxjs';
+import { first, from, fromEvent, Observable, of, retry, switchMap, tap, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
 	NgxAcmComponentConfiguration,
@@ -17,6 +25,17 @@ import {
 	providedIn: 'root',
 })
 export class NgxAcmComponentInjectionService {
+	public globalHeaderClient: GlobalHeaderClient;
+	private readonly _globalHeaderClientInitialized: WritableSignal<boolean> =
+		signal<boolean>(false);
+	public readonly globalHeaderClientInitialized: Signal<boolean> =
+		this._globalHeaderClientInitialized.asReadonly();
+
+	public globalFooterClient: GlobalFooterClient;
+	private readonly _globalFooterClientInitialized: WritableSignal<boolean> =
+		signal<boolean>(false);
+	public readonly globalFooterClientInitialized: Signal<boolean> =
+		this._globalFooterClientInitialized.asReadonly();
 	/**
 	 * An instance of the RendererFactory2
 	 */
@@ -82,7 +101,14 @@ export class NgxAcmComponentInjectionService {
 						// Denis: Set the provided ProfileConfig
 						return headerClient.accessMenu.setProfile(configuration.profile);
 					}),
-					map(() => browserWindow.globalHeaderClient)
+					map(() => browserWindow.globalHeaderClient),
+					tap((client: GlobalHeaderClient) => {
+						if (client) {
+							this.globalHeaderClient = client;
+
+							this._globalHeaderClientInitialized.set(true);
+						}
+					})
 				);
 			}
 		);
@@ -132,7 +158,14 @@ export class NgxAcmComponentInjectionService {
 						// Denis: Set the provided navigation links
 						return from(footerClient.setNavigationLinks(links));
 					}),
-					map(() => browserWindow.globalFooterClient)
+					map(() => browserWindow.globalFooterClient),
+					tap((client: GlobalFooterClient) => {
+						if (client) {
+							this.globalFooterClient = client;
+
+							this._globalFooterClientInitialized.set(true);
+						}
+					})
 				);
 			}
 		);
