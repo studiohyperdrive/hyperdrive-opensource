@@ -37,6 +37,10 @@ export class TestComponent implements AfterViewInit {
             },
             links: [];
         }).subscribe()
+        // After initializing the header, the client will be available on the service for further use:
+        // => this.acmComponentInjectionService.globalHeaderClient
+        // To check if it has been initialized, you can use the signal:
+        // => this.acmComponentInjectionService.globalHeaderClientInitialized()
 
 
         this.acmComponentInjectionService.injectGlobalHeaderComponent({
@@ -47,6 +51,10 @@ export class TestComponent implements AfterViewInit {
             },
             links: [];
         }).subscribe()
+        // After initializing the footer, the client will be available on the service for further use:
+        // => this.acmComponentInjectionService.globalFooterClient
+        // To check if it has been initialized, you can use the signal:
+        // => this.acmComponentInjectionService.globalFooterClientInitialized()
     }
 }
 ```
