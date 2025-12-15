@@ -11,4 +11,4 @@ then
     fnm use
 fi
 
-npm run lint:all && npm run format && npm run test:all
+npm run format:check && npm run lint:check && npm run test

@@ -2,13 +2,12 @@ import {
 	ChangeDetectorRef,
 	ComponentRef,
 	Directive,
-	Inject,
 	Input,
-	Optional,
 	TemplateRef,
 	Type,
 	ViewContainerRef,
 	OnDestroy,
+	inject,
 } from '@angular/core';
 import { Subject, tap, takeUntil, combineLatest, map } from 'rxjs';
 import { flatten } from 'lodash';
@@ -26,6 +25,14 @@ import { NgxCookiesFallbackComponentToken } from '../../tokens';
 	standalone: true,
 })
 export class NgxHasCookieDirective implements OnDestroy {
+	private viewContainer = inject(ViewContainerRef);
+	private readonly ngxCookieService = inject(NgxCookieService);
+	private readonly cdRef = inject(ChangeDetectorRef);
+	private readonly component = inject<Type<NgxCookiesFallBackComponent>>(
+		NgxCookiesFallbackComponentToken,
+		{ optional: true }
+	);
+
 	//TODO: Iben: Replace this with the OnDestroyComponent flow once we have a shared lib
 	/**
 	 * The destroyed state of the directive
@@ -64,15 +71,9 @@ export class NgxHasCookieDirective implements OnDestroy {
 		this.updateView();
 	}
 
-	constructor(
-		templateRef: TemplateRef<any>,
-		private viewContainer: ViewContainerRef,
-		private readonly ngxCookieService: NgxCookieService,
-		private readonly cdRef: ChangeDetectorRef,
-		@Optional()
-		@Inject(NgxCookiesFallbackComponentToken)
-		private readonly component: Type<NgxCookiesFallBackComponent>
-	) {
+	constructor() {
+		const templateRef = inject<TemplateRef<any>>(TemplateRef);
+
 		this.thenTemplateRef = templateRef;
 	}
 

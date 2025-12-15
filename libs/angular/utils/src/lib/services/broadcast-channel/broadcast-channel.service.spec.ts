@@ -1,8 +1,10 @@
 import { Subscription } from 'rxjs';
-import { NgxWindowServiceMock } from '@studiohyperdrive/ngx-core';
+import { NgxWindowService, NgxWindowServiceMock } from '@studiohyperdrive/ngx-core';
+import { TestBed } from '@angular/core/testing';
 import { NgxBroadcastChannelService } from './broadcast-channel.service';
 
 class MockBroadcastChannel {
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 	private listeners: { [key: string]: Function[] } = {};
 
 	constructor(public name: string) {}
@@ -16,7 +18,7 @@ class MockBroadcastChannel {
 	public close(): void {
 		this.listeners = {};
 	}
-
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 	public addEventListener(event: string, listener: Function): void {
 		if (!this.listeners[event]) {
 			this.listeners[event] = [];
@@ -24,7 +26,7 @@ class MockBroadcastChannel {
 
 		this.listeners[event].push(listener);
 	}
-
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 	public removeEventListener(event: string, listener: Function): void {
 		if (!this.listeners[event]) {
 			return;
@@ -45,7 +47,14 @@ describe('NgxBroadcastChannelService', () => {
 		let subscriptions: Subscription[] = [];
 
 		beforeEach(() => {
-			service = new NgxBroadcastChannelService(NgxWindowServiceMock(undefined) as any);
+			TestBed.configureTestingModule({
+				providers: [
+					{ provide: NgxWindowService, useValue: NgxWindowServiceMock(undefined) },
+					NgxBroadcastChannelService,
+				],
+			});
+
+			service = TestBed.inject(NgxBroadcastChannelService);
 		});
 
 		afterEach(() => {
@@ -229,7 +238,14 @@ describe('NgxBroadcastChannelService', () => {
 		};
 
 		beforeEach(() => {
-			service = new NgxBroadcastChannelService(windowService as any);
+			TestBed.configureTestingModule({
+				providers: [
+					{ provide: NgxWindowService, useValue: windowService },
+					NgxBroadcastChannelService,
+				],
+			});
+
+			service = TestBed.inject(NgxBroadcastChannelService);
 		});
 
 		describe('initChannel', () => {

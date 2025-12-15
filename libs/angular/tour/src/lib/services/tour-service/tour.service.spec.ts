@@ -1,26 +1,49 @@
 import { subscribeSpyTo } from '@hirez_io/observer-spy';
 
-import { NgxWindowService, NgxWindowServiceMock } from '@studiohyperdrive/ngx-core';
+import { NgxWindowService } from '@studiohyperdrive/ngx-core';
+import { TestBed } from '@angular/core/testing';
+import { Overlay } from '@angular/cdk/overlay';
 import { MockTourStepComponent, OverlayMock } from '../../mocks';
+import { NgxTourStepToken } from '../../tokens';
 import { NgxTourService } from './tour.service';
 
 window.scrollTo = jest.fn();
 
 //TODO: Iben: Add Cypress tests so we can test the actual flow and the remaining methods
-
 //TODO: Wouter: Fix the failing tests, the currentStep$ is not emitting the correct values at the correct time for the tests to intercept.
-xdescribe('NgxTourService Browser', () => {
+describe('NgxTourService Browser', () => {
 	let service: NgxTourService;
+	let windowService: NgxWindowService;
 
 	beforeEach(() => {
-		service = new NgxTourService(
-			OverlayMock(new MockTourStepComponent(service)),
-			NgxWindowServiceMock(undefined) as unknown as NgxWindowService,
-			{
-				component: MockTourStepComponent,
-				offset: {},
-			}
-		);
+		TestBed.configureTestingModule({
+			providers: [
+				{ provide: Overlay, useValue: OverlayMock(new MockTourStepComponent(service)) },
+				{
+					provide: NgxTourStepToken,
+					useValue: {
+						component: MockTourStepComponent,
+						offset: {},
+					},
+				},
+			],
+		});
+
+		service = TestBed.inject(NgxTourService);
+		windowService = TestBed.inject(NgxWindowService);
+
+		windowService.document = {
+			body: {
+				classList: {
+					add: jest.fn(),
+					remove: jest.fn(),
+				},
+				style: {
+					overflow: '',
+				},
+			},
+		} as unknown as Document;
+		windowService.isBrowser = () => true;
 	});
 
 	afterAll(() => {
@@ -43,7 +66,7 @@ xdescribe('NgxTourService Browser', () => {
 		expect(spy.getValuesLength()).toEqual(1);
 	});
 
-	it.only('should emit the current step', () => {
+	xit('should emit the current step', () => {
 		const stepSpy = subscribeSpyTo(service.currentStep$);
 		const indexSpy = subscribeSpyTo(service.currentIndex$);
 
@@ -54,7 +77,7 @@ xdescribe('NgxTourService Browser', () => {
 		expect(stepSpy.getValues()).toEqual([{ title: 'hello', content: 'world' }]);
 	});
 
-	it.only('should start the tour at the provided index', () => {
+	xit('should start the tour at the provided index', () => {
 		const spy = subscribeSpyTo(service.currentStep$);
 		const indexSpy = subscribeSpyTo(service.currentIndex$);
 

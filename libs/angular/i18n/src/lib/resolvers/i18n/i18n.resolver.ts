@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { v4 as uuid } from 'uuid';
 import { finalize, map, Observable } from 'rxjs';
 
@@ -10,10 +10,8 @@ import { NgxI18nLoadingService, NgxI18nService } from '../../services';
  */
 @Injectable()
 export class NgxI18nTranslationLoaderResolver {
-	constructor(
-		private readonly i18nService: NgxI18nService,
-		private readonly i18nLoadingService: NgxI18nLoadingService
-	) {}
+	private readonly i18nService = inject(NgxI18nService);
+	private readonly i18nLoadingService = inject(NgxI18nLoadingService);
 
 	public resolve(): Observable<boolean> {
 		// Iben: Generate an id for the translations we're about to load

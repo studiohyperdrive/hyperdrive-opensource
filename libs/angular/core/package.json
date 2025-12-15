@@ -1,6 +1,6 @@
 {
 	"name": "@studiohyperdrive/ngx-core",
-	"version": "19.1.0",
+	"version": "20.0.0",
 	"description": "A library of core functionality used by the Studio Hyperdrive ngx-tools.",
 	"keywords": [
 		"angular",
@@ -18,9 +18,9 @@
 		"directory": "libs/angular/core/src"
 	},
 	"peerDependencies": {
-		"rxjs": "7.8.1",
-		"@angular/common": "19.0.3",
-		"@angular/core": "19.0.3"
+		"rxjs": "^7.8.1",
+		"@angular/common": "^20.2.4",
+		"@angular/core": "^20.2.4"
 	},
 	"sideEffects": false
 }

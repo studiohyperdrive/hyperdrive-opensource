@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, filter, Observable } from 'rxjs';
 import { NgxWindowService } from '@studiohyperdrive/ngx-core';
 
@@ -8,6 +8,9 @@ import { NgxI18nConfigurationToken } from '../../tokens';
 //TODO: Iben: Once we have a shared lib we should replace the storage and the browser approaches with their corresponding implementations
 @Injectable({ providedIn: 'root' })
 export class NgxI18nRootService {
+	private readonly configuration = inject<NgxI18nConfiguration>(NgxI18nConfigurationToken);
+	private readonly windowsService = inject(NgxWindowService);
+
 	/**
 	 * A subject to hold the current language
 	 */
@@ -39,11 +42,9 @@ export class NgxI18nRootService {
 	 */
 	public languageRouteParam: string;
 
-	constructor(
-		@Inject(NgxI18nConfigurationToken)
-		private readonly configuration: NgxI18nConfiguration,
-		private readonly windowsService: NgxWindowService
-	) {
+	constructor() {
+		const configuration = this.configuration;
+
 		// Iben: Set the initial values so that we can refer to the services as the source of truth
 		this.defaultLanguage = configuration.defaultLanguage;
 		this.languageRouteParam = configuration.languageRouteParam || 'language';

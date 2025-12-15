@@ -9,6 +9,7 @@ import {
 	signal,
 	WritableSignal,
 	OnInit,
+	inject,
 } from '@angular/core';
 import { CdkDropList } from '@angular/cdk/drag-drop';
 
@@ -35,6 +36,12 @@ export class NgxAccessibleDragAndDropItemDirective
 	extends NgxAccessibleAbstractDragAndDropItemDirective
 	implements OnInit
 {
+	private readonly dragAndDropService = inject(NgxAccessibleDragAndDropAbstractService);
+	private readonly dropList = inject(CdkDropList);
+	private readonly dropContainer = inject(NgxAccessibleDragAndDropContainerDirective);
+	private readonly dropHost = inject(NgxAccessibleDragAndDropHostDirective);
+	public readonly elementRef: ElementRef<HTMLElement>;
+
 	/**
 	 * The tab index of the item
 	 */
@@ -122,14 +129,12 @@ export class NgxAccessibleDragAndDropItemDirective
 	public ngxAccessibleDragAndDropItemMove: EventEmitter<NgxAccessibleDragAndDropMoveEvent> =
 		new EventEmitter<NgxAccessibleDragAndDropMoveEvent>();
 
-	constructor(
-		private readonly dragAndDropService: NgxAccessibleDragAndDropAbstractService,
-		private readonly dropList: CdkDropList,
-		private readonly dropContainer: NgxAccessibleDragAndDropContainerDirective,
-		private readonly dropHost: NgxAccessibleDragAndDropHostDirective,
-		public readonly elementRef: ElementRef<HTMLElement>
-	) {
+	constructor() {
+		const elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
 		super(elementRef);
+
+		this.elementRef = elementRef;
 	}
 
 	/**

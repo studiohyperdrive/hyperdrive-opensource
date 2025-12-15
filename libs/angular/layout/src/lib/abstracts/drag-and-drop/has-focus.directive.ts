@@ -36,6 +36,7 @@ export abstract class NgxHasFocusDragAndDropAbstractDirective {
 		}
 	}
 
+	// eslint-disable-next-line @angular-eslint/prefer-inject
 	constructor(public readonly elementRef: ElementRef<HTMLElement>) {}
 
 	public focus(): void {

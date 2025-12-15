@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { useMockDataDuringTour } from '../operators';
 import { NgxTourService } from '../services';
@@ -10,13 +10,13 @@ import { NgxTourService } from '../services';
 	standalone: true,
 })
 export class MockTourHolderComponent {
+	private readonly tourService = inject(NgxTourService);
+
 	private readonly dataSourceSubject = new BehaviorSubject('Hello world!');
 
 	public readonly data$ = this.dataSourceSubject
 		.asObservable()
 		.pipe(useMockDataDuringTour('World hello!'));
-
-	constructor(private readonly tourService: NgxTourService) {}
 
 	public startTour() {
 		this.tourService.startTour([{ title: 'Mock', content: 'Mock' }]).subscribe();

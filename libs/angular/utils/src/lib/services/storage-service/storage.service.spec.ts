@@ -1,12 +1,24 @@
 import { subscribeSpyTo } from '@hirez_io/observer-spy';
-import { NgxWindowServiceMock } from '@studiohyperdrive/ngx-core';
+import { NgxWindowService, NgxWindowServiceMock } from '@studiohyperdrive/ngx-core';
+import { TestBed } from '@angular/core/testing';
 import { NgxStorageService } from './storage.service';
 
 describe('NgxStorageService', () => {
 	let service: NgxStorageService;
 
 	beforeEach(() => {
-		service = new NgxStorageService(NgxWindowServiceMock(undefined) as any);
+		TestBed.configureTestingModule({
+			providers: [
+				{
+					provide: NgxWindowService,
+					useValue: NgxWindowServiceMock(undefined),
+				},
+				NgxStorageService,
+			],
+		});
+
+		service = TestBed.inject(NgxStorageService);
+
 		localStorage.clear();
 		sessionStorage.clear();
 	});

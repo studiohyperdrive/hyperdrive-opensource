@@ -153,12 +153,20 @@ export const { actions, reducers, selectors } = createStoreAssets<StoreState>('s
 	},
 ]);
 
+// For an example where the selectors do not need to be provided:
 @Injectable()
 export class StoreStateService extends NgxStoreService<StoreState> {
-	constructor(protected readonly store: Store) {
-		super(store, selectors);
-	}
+    private readonly store = inject(Store);
 }
+
+// When the selectors need to be provided:
+@Injectable()
+export class StoreStateService extends NgxStoreService<StoreState> {
+    private readonly store = inject(Store);
+
+    constructor() {
+        super(store, selectors);
+    }
 
 const storeStateService = new StoreStateService(store);
 

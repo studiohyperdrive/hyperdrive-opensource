@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { NgxFormsErrorAbstractComponent } from '@ngx/forms';
 
 @Component({
@@ -15,6 +15,5 @@ import { NgxFormsErrorAbstractComponent } from '@ngx/forms';
 	`,
 	styleUrls: ['./error.component.scss'],
 	standalone: true,
-	imports: [CommonModule],
 })
 export class FormErrorComponent extends NgxFormsErrorAbstractComponent {}

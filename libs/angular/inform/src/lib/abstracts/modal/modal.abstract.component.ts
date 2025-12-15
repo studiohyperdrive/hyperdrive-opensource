@@ -6,6 +6,7 @@ import {
 	HostListener,
 	Input,
 	Output,
+	inject,
 } from '@angular/core';
 
 import { NgxWindowService } from '@studiohyperdrive/ngx-core';
@@ -18,6 +19,9 @@ import { NgxModalActionType } from '../../types';
 export class NgxModalAbstractComponent<ActionType extends NgxModalActionType, DataType = any>
 	implements AfterViewInit
 {
+	private readonly windowService = inject(NgxWindowService);
+	private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
 	/**
 	 * Remove the modal on escape pressed
 	 */
@@ -48,12 +52,8 @@ export class NgxModalAbstractComponent<ActionType extends NgxModalActionType, Da
 	/**
 	 * An emitter that will emit if the modal is closed
 	 */
+	// eslint-disable-next-line @angular-eslint/no-output-native
 	@Output() public close: EventEmitter<void> = new EventEmitter<void>();
-
-	constructor(
-		private readonly windowService: NgxWindowService,
-		private readonly elementRef: ElementRef<HTMLElement>
-	) {}
 
 	public ngAfterViewInit(): void {
 		// Iben: If we are in the browser, check if either of the two accessibility labels are set

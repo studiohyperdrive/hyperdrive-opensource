@@ -1,4 +1,4 @@
-import { Inject, Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { WithRouterLinksConfig, LinkReference } from '../../types';
@@ -12,10 +12,8 @@ import { WITH_ROUTER_LINKS_CONFIG } from './with-router-links.config';
 	standalone: true,
 })
 export class WithRouterLinkPipe implements PipeTransform {
-	constructor(
-		@Inject(WITH_ROUTER_LINKS_CONFIG) private readonly config: WithRouterLinksConfig,
-		private readonly sanitizer: DomSanitizer
-	) {}
+	private readonly config = inject<WithRouterLinksConfig>(WITH_ROUTER_LINKS_CONFIG);
+	private readonly sanitizer = inject(DomSanitizer);
 
 	/**
 	 * transform

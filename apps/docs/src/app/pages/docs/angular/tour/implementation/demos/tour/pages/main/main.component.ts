@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	OnInit,
+	inject,
+} from '@angular/core';
 
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { from, map, of, tap } from 'rxjs';
@@ -31,6 +37,11 @@ import { NgxTourItemDirective, NgxTourService, useMockDataDuringTour } from '@ng
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainComponent implements OnInit {
+	private readonly tourService = inject(NgxTourService);
+	private readonly router = inject(Router);
+	private readonly route = inject(ActivatedRoute);
+	private readonly cdRef = inject(ChangeDetectorRef);
+
 	public control: FormControl<NgxConfigurableLayoutGrid> = new FormControl([]);
 	public isActive: FormControl<boolean> = new FormControl(false);
 	public dragAndDrop: FormControl<boolean> = new FormControl(true);
@@ -45,13 +56,6 @@ export class MainComponent implements OnInit {
 	public dataString$ = of('Start the tour!').pipe(
 		useMockDataDuringTour<string>('The tour is running!')
 	);
-
-	constructor(
-		private readonly tourService: NgxTourService,
-		private readonly router: Router,
-		private readonly route: ActivatedRoute,
-		private readonly cdRef: ChangeDetectorRef
-	) {}
 
 	ngOnInit() {
 		this.control.patchValue([

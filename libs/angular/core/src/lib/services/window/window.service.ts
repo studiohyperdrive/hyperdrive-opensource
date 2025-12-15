@@ -1,5 +1,5 @@
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Injectable, PLATFORM_ID, DOCUMENT, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 /**
@@ -9,6 +9,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 	providedIn: 'root',
 })
 export class NgxWindowService {
+	public readonly document = inject<Document>(DOCUMENT);
+	private platformId = inject(PLATFORM_ID);
+
 	/**
 	 * Subject to hold the window-width, defaults to 1200 when no window is defined
 	 */
@@ -50,10 +53,7 @@ export class NgxWindowService {
 	 */
 	public window: Window;
 
-	constructor(
-		@Inject(DOCUMENT) public document: Document,
-		@Inject(PLATFORM_ID) private platformId: string
-	) {
+	constructor() {
 		// Iben: Handle the initial setup of the service
 		if (this.isBrowser() && this.hasDocument()) {
 			// Iben: Set the window using the default view
@@ -108,7 +108,7 @@ export class NgxWindowService {
 	public runInBrowser<ReturnType = void>(
 		action: (data: { browserWindow: Window; browserDocument: Document }) => ReturnType
 	): ReturnType {
-		if (this.isBrowser) {
+		if (this.isBrowser()) {
 			return action({ browserWindow: this.window, browserDocument: this.document });
 		}
 		console.warn('Browser depended function has not run.');

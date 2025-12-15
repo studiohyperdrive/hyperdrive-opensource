@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Input, Optional, AfterViewInit } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, AfterViewInit, inject } from '@angular/core';
 
 import { NgxHasFocusDirective } from '../has-focus-action';
 import { NgxTreeGridCellTarget, NgxTreeGridRowTarget } from '../../interfaces';
@@ -19,6 +19,9 @@ import { NgxTreeGridDirective } from './tree-grid.directive';
 	},
 })
 export class NgxTreeGridCellDirective extends NgxHasFocusDirective implements AfterViewInit {
+	private readonly parent = inject(NgxTreeGridDirective, { optional: true });
+	private readonly elementRef = inject(ElementRef);
+
 	/**
 	 * The parent row of the cell
 	 */
@@ -111,13 +114,6 @@ export class NgxTreeGridCellDirective extends NgxHasFocusDirective implements Af
 	 * The index of the row
 	 */
 	@Input({ required: true }) public ngxTreeGridCellRow: number;
-
-	constructor(
-		@Optional() private readonly parent: NgxTreeGridDirective,
-		private readonly elementRef: ElementRef
-	) {
-		super();
-	}
 
 	/**
 	 * Sets focus on the cell or on the first focusable item in the cell

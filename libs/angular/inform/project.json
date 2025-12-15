@@ -10,15 +10,14 @@
 			"executor": "@nx/angular:package",
 			"outputs": ["{workspaceRoot}/dist/{projectRoot}"],
 			"options": {
-				"project": "libs/angular/inform/ng-package.json"
+				"project": "libs/angular/inform/ng-package.json",
+				"tsConfig": "libs/angular/inform/tsconfig.lib.json"
 			},
 			"configurations": {
 				"production": {
 					"tsConfig": "libs/angular/inform/tsconfig.lib.prod.json"
 				},
-				"development": {
-					"tsConfig": "libs/angular/inform/tsconfig.lib.json"
-				}
+				"development": {}
 			},
 			"defaultConfiguration": "production"
 		},
@@ -26,7 +25,8 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
 			"options": {
-				"jestConfig": "libs/angular/inform/jest.config.ts"
+				"jestConfig": "libs/angular/inform/jest.config.ts",
+				"tsConfig": "libs/angular/inform/tsconfig.spec.json"
 			}
 		},
 		"lint": {

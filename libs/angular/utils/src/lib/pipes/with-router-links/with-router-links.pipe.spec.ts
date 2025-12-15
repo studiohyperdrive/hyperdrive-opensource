@@ -1,7 +1,9 @@
 import { DomSanitizer } from '@angular/platform-browser';
 
+import { TestBed } from '@angular/core/testing';
 import { WithRouterLinksConfig } from '../../types';
 import { WithRouterLinkPipe } from './with-router-links.pipe';
+import { WITH_ROUTER_LINKS_CONFIG } from './with-router-links.config';
 
 describe('WithRouterLinkPipe', () => {
 	let config: WithRouterLinksConfig;
@@ -17,7 +19,15 @@ describe('WithRouterLinkPipe', () => {
 			dataLinkIdAttributeName: 'data-link-id',
 		};
 
-		pipe = new WithRouterLinkPipe(config, sanitizer);
+		TestBed.configureTestingModule({
+			providers: [
+				{ provide: WITH_ROUTER_LINKS_CONFIG, useValue: config },
+				{ provide: DomSanitizer, useValue: sanitizer },
+				WithRouterLinkPipe,
+			],
+		});
+
+		pipe = TestBed.inject(WithRouterLinkPipe);
 	});
 
 	it('should convert a single link with a an array link & global config', () => {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NgDocNotifyService } from '@ng-doc/ui-kit';
 import { FocusClickDirective } from '@ngx/utils';
 
@@ -8,7 +8,7 @@ import { FocusClickDirective } from '@ngx/utils';
 	templateUrl: 'click-focus.demo.component.html',
 })
 export class ClickFocusDemoComponent {
-	constructor(private readonly notifyService: NgDocNotifyService) {}
+	private readonly notifyService = inject(NgDocNotifyService);
 
 	public doSomething(): void {
 		this.notifyService.notify('Done something');

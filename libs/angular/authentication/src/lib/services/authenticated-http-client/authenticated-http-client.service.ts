@@ -1,9 +1,8 @@
 import { HttpClient, HttpContext, HttpResponse } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import clean from 'obj-clean';
 
 import { map, Observable } from 'rxjs';
-import { NgxAuthenticatedHttpClientConfiguration } from '../../types';
 import { NgxAuthenticationUrlHandlerToken } from '../../tokens';
 
 /**
@@ -11,13 +10,13 @@ import { NgxAuthenticationUrlHandlerToken } from '../../tokens';
  */
 @Injectable({ providedIn: 'root' })
 export class NgxAuthenticatedHttpClient {
+	private readonly httpClient = inject(HttpClient);
+
 	private baseUrl: string;
 
-	constructor(
-		private readonly httpClient: HttpClient,
-		@Inject(NgxAuthenticationUrlHandlerToken)
-		baseUrlHandler: NgxAuthenticatedHttpClientConfiguration['baseUrl']
-	) {
+	constructor() {
+		const baseUrlHandler = inject(NgxAuthenticationUrlHandlerToken);
+
 		// Iben: Setup the base url
 		this.baseUrl = baseUrlHandler ? baseUrlHandler() : '';
 	}

@@ -62,7 +62,14 @@ export const createEntityAdapterStoreAssets = <
 	});
 
 	// Iben: Create the initial state
-	const initialState: BasicEntityState<StateInterface> = adapter.getInitialState({
+	const initialState: BasicEntityState<StateInterface> = {
+		...adapter.getInitialState<BasicEntityState<StateInterface>>({
+			entityStatus: {
+				loading: false,
+				error: false,
+				errorMessage: undefined,
+			},
+		}),
 		ids: (initialStateValue || []).map((item) => {
 			return selectId ? selectId(item) : item['id'];
 		}),
@@ -72,12 +79,7 @@ export const createEntityAdapterStoreAssets = <
 				[selectId ? selectId(current) : current['id']]: current,
 			};
 		}, {}),
-		entityStatus: {
-			loading: false,
-			error: false,
-			errorMessage: undefined,
-		},
-	});
+	};
 
 	// Iben: Create state selectors
 	const featureSelector = (state): any => get(state, slice);

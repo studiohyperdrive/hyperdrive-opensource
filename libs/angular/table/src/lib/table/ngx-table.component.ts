@@ -7,12 +7,10 @@ import {
 	ContentChildren,
 	EventEmitter,
 	HostBinding,
-	Inject,
 	Input,
 	OnChanges,
 	OnDestroy,
 	OnInit,
-	Optional,
 	Output,
 	QueryList,
 	SimpleChanges,
@@ -20,6 +18,7 @@ import {
 	ViewChild,
 	WritableSignal,
 	signal,
+	inject,
 } from '@angular/core';
 import {
 	ControlValueAccessor,
@@ -89,6 +88,11 @@ interface TableCellTemplate {
 export class NgxTableComponent
 	implements AfterContentChecked, ControlValueAccessor, OnInit, OnChanges, OnDestroy
 {
+	private cdRef = inject(ChangeDetectorRef);
+	private readonly ngxTableConfig = inject<NgxTableConfig>(NgxTableConfigToken, {
+		optional: true,
+	});
+
 	/**
 	 * Default class that will be put on the ngx-table component
 	 */
@@ -107,11 +111,12 @@ export class NgxTableComponent
 	/**
 	 * onTouch function for the control value accessor
 	 */
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 	private onTouch: Function = () => {};
 	/**
 	 * onChanged function for the control value accessor
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 	private onChanged: Function = (_: any) => {};
 
 	/**
@@ -408,11 +413,6 @@ export class NgxTableComponent
 	 * Returns the data of the row that was clicked
 	 */
 	@Output() public rowClicked = new EventEmitter<any>();
-
-	constructor(
-		private cdRef: ChangeDetectorRef,
-		@Optional() @Inject(NgxTableConfigToken) private readonly ngxTableConfig: NgxTableConfig
-	) {}
 
 	/**
 	 * WriteValue method for the value accessor

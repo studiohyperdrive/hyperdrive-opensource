@@ -7,6 +7,7 @@ import {
 	Input,
 	OnDestroy,
 	Output,
+	inject,
 } from '@angular/core';
 
 import { NgxTreeGridCellTarget, NgxTreeGridRowTarget } from '../../interfaces';
@@ -24,6 +25,9 @@ import { NgxTreeGridCellDirective } from './tree-grid.cell.directive';
 	standalone: true,
 })
 export class NgxTreeGridRowDirective extends NgxHasFocusDirective implements OnDestroy {
+	private readonly parent = inject(NgxTreeGridDirective);
+	private readonly elementRef = inject(ElementRef);
+
 	/**
 	 * An array of all cells in the row
 	 */
@@ -179,10 +183,7 @@ export class NgxTreeGridRowDirective extends NgxHasFocusDirective implements OnD
 	 */
 	@Output() public ngxTreeGridRowExpandRow: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-	constructor(
-		private readonly parent: NgxTreeGridDirective,
-		private readonly elementRef: ElementRef
-	) {
+	constructor() {
 		super();
 
 		this.parent.registerRow(this);

@@ -7,7 +7,7 @@
  * @param fn
  * @param returnValue
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 export const earlyReturnOnFalsyValue = (fn: Function, returnValue?: unknown) => () => {
 	expect(fn(undefined)).toEqual(returnValue);
 	expect(fn(null)).toEqual(returnValue);

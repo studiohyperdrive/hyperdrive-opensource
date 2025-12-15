@@ -1,11 +1,11 @@
 import {
 	Directive,
 	EmbeddedViewRef,
-	Inject,
 	Input,
 	OnDestroy,
 	TemplateRef,
 	ViewContainerRef,
+	inject,
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
@@ -21,6 +21,11 @@ import { NgxAuthenticationAbstractService } from '../../abstracts';
 	selector: '[ngxIsAuthenticated]',
 })
 export class NgxIsAuthenticatedDirective implements OnDestroy {
+	private readonly authenticationService = inject<NgxAuthenticationAbstractService>(
+		NgxAuthenticationServiceToken
+	);
+	private viewContainer = inject(ViewContainerRef);
+
 	/**
 	 * The destroyed state of the directive
 	 */
@@ -39,12 +44,9 @@ export class NgxIsAuthenticatedDirective implements OnDestroy {
 	 */
 	private shouldBeAuthenticated: boolean = true;
 
-	constructor(
-		@Inject(NgxAuthenticationServiceToken)
-		private readonly authenticationService: NgxAuthenticationAbstractService,
-		templateRef: TemplateRef<any>,
-		private viewContainer: ViewContainerRef
-	) {
+	constructor() {
+		const templateRef = inject<TemplateRef<any>>(TemplateRef);
+
 		this.thenTemplateRef = templateRef;
 	}
 

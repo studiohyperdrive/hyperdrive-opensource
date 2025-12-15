@@ -1,20 +1,19 @@
 // snippet-from-file="./bootstrap.demo.ts" "Application Config"
 
 // snippet#component "Typescript"
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { tap } from 'rxjs';
 import { ModalComponent } from './modal.component';
 import { NgxModalService } from '@ngx/inform';
 
 @Component({
-	imports: [CommonModule],
 	selector: 'modal-demo',
 	templateUrl: './modal.demo.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalDemoComponent {
-	constructor(private readonly modalService: NgxModalService) {}
+	private readonly modalService = inject(NgxModalService);
 
 	public sayHello(): void {
 		this.modalService

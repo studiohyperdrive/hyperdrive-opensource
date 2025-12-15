@@ -6,6 +6,7 @@ import {
 	HostBinding,
 	Input,
 	OnDestroy,
+	inject,
 } from '@angular/core';
 import { v4 as uuid } from 'uuid';
 
@@ -19,6 +20,10 @@ import { NgxTourService } from '../../services';
 	standalone: true,
 })
 export class NgxTourItemDirective implements AfterViewInit, OnDestroy {
+	public readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+	private readonly tourService = inject(NgxTourService);
+	private readonly cdRef = inject(ChangeDetectorRef);
+
 	/**
 	 * A class added to the currently active item
 	 */
@@ -28,12 +33,6 @@ export class NgxTourItemDirective implements AfterViewInit, OnDestroy {
 	 * The id of the item that corresponds with the step
 	 */
 	@Input() public tourItem: string;
-
-	constructor(
-		public readonly elementRef: ElementRef<HTMLElement>,
-		private readonly tourService: NgxTourService,
-		private readonly cdRef: ChangeDetectorRef
-	) {}
 
 	/**
 	 * Mark an element as active or inactive

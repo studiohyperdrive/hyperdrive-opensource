@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
 import { select, Store } from '@ngrx/store';
@@ -12,9 +12,7 @@ export class AuthenticationService extends NgxAuthenticationAbstractService<
 	SignInData,
 	SignOutData
 > {
-	constructor(private readonly store: Store) {
-		super();
-	}
+	private readonly store = inject(Store);
 
 	signInUser(signInData: SignInData): Observable<SignInResponse> {
 		return of({

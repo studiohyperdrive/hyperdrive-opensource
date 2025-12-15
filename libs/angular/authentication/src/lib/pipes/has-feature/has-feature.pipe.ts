@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Inject, OnDestroy, Pipe, PipeTransform } from '@angular/core';
+import { ChangeDetectorRef, OnDestroy, Pipe, PipeTransform, inject } from '@angular/core';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { NgxAuthenticationAbstractService } from '../../abstracts';
 import { convertToArray } from '../../utils';
@@ -12,6 +12,11 @@ import { NgxAuthenticationServiceToken } from '../../tokens';
 	pure: false,
 })
 export class NgxHasFeaturePipe<FeatureType extends string> implements PipeTransform, OnDestroy {
+	private readonly authenticationService = inject<NgxAuthenticationAbstractService>(
+		NgxAuthenticationServiceToken
+	);
+	private readonly cdRef = inject(ChangeDetectorRef);
+
 	/**
 	 * Subject to hold the destroyed state of the current observable
 	 */
@@ -26,11 +31,9 @@ export class NgxHasFeaturePipe<FeatureType extends string> implements PipeTransf
 	 */
 	private changeDetectorRef: ChangeDetectorRef | null;
 
-	constructor(
-		@Inject(NgxAuthenticationServiceToken)
-		private readonly authenticationService: NgxAuthenticationAbstractService,
-		private readonly cdRef: ChangeDetectorRef
-	) {
+	constructor() {
+		const cdRef = this.cdRef;
+
 		// Iben: Use instance of cdRef like this to prevent memory leaks (see Angular async Pipe implementation)
 		this.changeDetectorRef = cdRef;
 	}

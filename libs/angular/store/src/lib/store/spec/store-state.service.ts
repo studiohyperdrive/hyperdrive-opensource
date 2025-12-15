@@ -29,8 +29,10 @@ export const { actions, reducers, selectors } = createStoreAssets<StoreState>('s
 
 @Injectable()
 export class StoreStateService extends NgxStoreService<StoreState> {
-	constructor(protected readonly store: Store) {
-		super(store, selectors);
+	protected readonly store: Store;
+
+	constructor() {
+		super(selectors);
 	}
 
 	setWithError(): Observable<never> {

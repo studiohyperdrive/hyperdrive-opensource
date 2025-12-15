@@ -1,23 +1,32 @@
 import { subscribeSpyTo } from '@hirez_io/observer-spy';
-import { NgxWindowService, NgxWindowServiceMock } from '@studiohyperdrive/ngx-core';
+import { NgxWindowService } from '@studiohyperdrive/ngx-core';
+import { TestBed } from '@angular/core/testing';
+import { Overlay } from '@angular/cdk/overlay';
 import { MockTourStepComponent, OverlayMock } from '../../mocks';
+import { NgxTourStepToken } from '../../tokens';
 import { NgxTourService } from './tour.service';
 
 describe('NgxTourService Server', () => {
 	let service: NgxTourService;
+	let windowService: NgxWindowService;
 
 	beforeEach(() => {
-		const windowServiceMock = NgxWindowServiceMock(undefined);
-		jest.spyOn(windowServiceMock, 'isBrowser').mockReturnValue(false);
+		TestBed.configureTestingModule({
+			providers: [
+				NgxWindowService,
+				{ provide: Overlay, useValue: OverlayMock(new MockTourStepComponent(service)) },
+				{
+					provide: NgxTourStepToken,
+					useValue: {
+						component: MockTourStepComponent,
+						offset: {},
+					},
+				},
+			],
+		});
 
-		service = new NgxTourService(
-			OverlayMock(new MockTourStepComponent(service)),
-			windowServiceMock as unknown as NgxWindowService,
-			{
-				component: MockTourStepComponent,
-				offset: {},
-			}
-		);
+		service = TestBed.inject(NgxTourService);
+		windowService = TestBed.inject(NgxWindowService);
 	});
 
 	it('should not start the tour', (done) => {
@@ -25,6 +34,8 @@ describe('NgxTourService Server', () => {
 		const tourEndedSpy = subscribeSpyTo(service.tourEnded$);
 		const tourActiveSpy = subscribeSpyTo(service.tourActive$);
 		const consoleSpy = jest.spyOn(console, 'warn');
+
+		jest.spyOn(windowService, 'isBrowser').mockReturnValue(false);
 
 		service.startTour([{ title: 'hello', content: 'world' }]).subscribe(() => done());
 

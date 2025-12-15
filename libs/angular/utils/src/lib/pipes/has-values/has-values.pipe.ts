@@ -12,7 +12,7 @@ export class HasValuesPipe implements PipeTransform {
 	 *
 	 * @param value - The provided value
 	 */
-	public transform(value: Object): boolean {
+	public transform(value: object): boolean {
 		// Iben: If the value is not an object, return valse
 		if (!value || !isObject(value) || Array.isArray(value)) {
 			return false;

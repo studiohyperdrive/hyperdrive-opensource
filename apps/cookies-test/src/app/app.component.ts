@@ -1,7 +1,7 @@
 import { NgDocRootComponent, NgDocNavbarComponent, NgDocSidebarComponent } from '@ng-doc/app';
-import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { CookieAlertComponent } from './cookies.component';
 import { NgxCookieService, NgxCookiesFallbackComponentToken } from '@ngx/cookies';
@@ -11,13 +11,7 @@ import { NgxStorageService } from '@ngx/utils';
 	selector: 'app-root',
 	templateUrl: './app.component.html',
 	styleUrl: './app.component.scss',
-	imports: [
-		CommonModule,
-		RouterModule,
-		NgDocRootComponent,
-		NgDocNavbarComponent,
-		NgDocSidebarComponent,
-	],
+	imports: [RouterModule, NgDocRootComponent, NgDocNavbarComponent, NgDocSidebarComponent],
 	providers: [
 		{
 			provide: NgxCookiesFallbackComponentToken,
@@ -26,6 +20,9 @@ import { NgxStorageService } from '@ngx/utils';
 	],
 })
 export class AppComponent implements AfterViewInit, OnInit {
+	private readonly ngxCookieService = inject(NgxCookieService);
+	private readonly sessionService = inject(NgxStorageService);
+
 	title = 'cookies-test';
 
 	generalAccepted$: Observable<boolean> = this.ngxCookieService.hasAcceptedCategory('general');
@@ -38,11 +35,6 @@ export class AppComponent implements AfterViewInit, OnInit {
 	);
 	isAuthenticated$: Observable<boolean> =
 		this.ngxCookieService.getCookieObservable<boolean>('authenticated');
-
-	constructor(
-		private readonly ngxCookieService: NgxCookieService,
-		private readonly sessionService: NgxStorageService
-	) {}
 
 	ngAfterViewInit() {
 		this.ngxCookieService.setupCookiesHandler(

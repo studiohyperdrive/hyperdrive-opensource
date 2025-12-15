@@ -1,5 +1,7 @@
 import { DomSanitizer } from '@angular/platform-browser';
+import { TestBed } from '@angular/core/testing';
 import { NgxReplaceElementsConfiguration } from '../../types';
+import { NgxReplaceElementsConfigurationToken } from '../../tokens';
 import { NgxReplaceElementsPipe } from './replace-elements.pipe';
 
 describe('NgxReplaceElementsPipe', () => {
@@ -22,7 +24,18 @@ describe('NgxReplaceElementsPipe', () => {
 	let pipe: NgxReplaceElementsPipe;
 
 	beforeEach(() => {
-		pipe = new NgxReplaceElementsPipe(configuration, sanitizer);
+		TestBed.configureTestingModule({
+			providers: [
+				{ provide: NgxReplaceElementsConfigurationToken, useValue: configuration },
+				{
+					provide: DomSanitizer,
+					useValue: sanitizer,
+				},
+				NgxReplaceElementsPipe,
+			],
+		});
+
+		pipe = TestBed.inject(NgxReplaceElementsPipe);
 	});
 
 	it('should return the original value if there is nothing to replace', () => {

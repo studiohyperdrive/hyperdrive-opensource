@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { UserService } from '../services/users.service';
@@ -8,6 +8,9 @@ import { handleEffect } from '@ngx/store';
 
 @Injectable()
 export class UserEffects {
+	private readonly actions$ = inject(Actions);
+	private readonly userService = inject(UserService);
+
 	public fetchUsers$ = createEffect(() => {
 		return this.actions$.pipe(
 			handleEffect<User[]>(actions.users, 'set', this.userService.fetchUsers)
@@ -23,9 +26,4 @@ export class UserEffects {
 	public setPaging$ = createEffect(() => {
 		return this.actions$.pipe(handleEffect<string>(actions.paging, 'set', () => of('hello')));
 	});
-
-	constructor(
-		private readonly actions$: Actions,
-		private readonly userService: UserService
-	) {}
 }

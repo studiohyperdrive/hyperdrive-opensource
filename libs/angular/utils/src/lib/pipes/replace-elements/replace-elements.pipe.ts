@@ -1,4 +1,4 @@
-import { Inject, Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 import { NgxReplaceElementsConfigurationToken } from '../../tokens';
@@ -12,11 +12,10 @@ import { NgxReplaceElementsConfiguration, NgxReplaceElementsItem } from '../../t
 	standalone: true,
 })
 export class NgxReplaceElementsPipe implements PipeTransform {
-	constructor(
-		@Inject(NgxReplaceElementsConfigurationToken)
-		private readonly configuration: NgxReplaceElementsConfiguration,
-		private readonly sanitizer: DomSanitizer
-	) {}
+	private readonly configuration = inject<NgxReplaceElementsConfiguration>(
+		NgxReplaceElementsConfigurationToken
+	);
+	private readonly sanitizer = inject(DomSanitizer);
 
 	/**
 	 * Replaces all matches of a specific selector with provided WebComponents

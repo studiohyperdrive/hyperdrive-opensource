@@ -1,6 +1,9 @@
 import { BehaviorSubject, of } from 'rxjs';
 
+import { TestBed } from '@angular/core/testing';
+import { ChangeDetectorRef } from '@angular/core';
 import { NgxAuthenticationResponseMock, NgxAuthenticationServiceMock } from '../../mocks';
+import { NgxAuthenticationServiceToken } from '../../tokens';
 import { NgxHasPermissionPipe } from './has-permission.pipe';
 
 describe('NgxHasPermissionPipe', () => {
@@ -19,7 +22,15 @@ describe('NgxHasPermissionPipe', () => {
 
 	describe('transform', () => {
 		beforeEach(() => {
-			pipe = new NgxHasPermissionPipe(authenticationService, cdRef);
+			TestBed.configureTestingModule({
+				providers: [
+					{ provide: NgxAuthenticationServiceToken, useValue: authenticationService },
+					{ provide: ChangeDetectorRef, useValue: cdRef },
+					NgxHasPermissionPipe,
+				],
+			});
+
+			pipe = TestBed.inject(NgxHasPermissionPipe);
 		});
 
 		it('should transform a single permission to a boolean', () => {

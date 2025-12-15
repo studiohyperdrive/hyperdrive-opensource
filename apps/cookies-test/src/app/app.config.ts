@@ -11,8 +11,9 @@ import { provideHttpClient, withInterceptorsFromDi, withFetch } from '@angular/c
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
+
 import { appRoutes } from './app.routes';
-import { NG_DOC_ROUTING, provideNgDocContext } from '@ng-doc/generated';
+import { NG_DOC_ROUTING, provideNgDocContext } from '@ng-doc/generated'; // eslint-disable-line @nx/enforce-module-boundaries
 
 export const appConfig: ApplicationConfig = {
 	providers: [

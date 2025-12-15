@@ -1,14 +1,40 @@
+import { TestBed } from '@angular/core/testing';
+import {
+	createEnvironmentInjector,
+	DOCUMENT,
+	EnvironmentInjector,
+	inject,
+	PLATFORM_ID,
+	runInInjectionContext,
+} from '@angular/core';
 import { NgxWindowService } from './window.service';
 import { NgxWindowMock } from './window.service.mock';
 
 describe('NgxWindowService', () => {
 	describe('with no document', () => {
 		let service: NgxWindowService;
-		const document: any = null;
-		const platform = 'server';
 
 		beforeEach(() => {
-			service = new NgxWindowService(document, platform);
+			TestBed.configureTestingModule({
+				// IMPORTANT: Do NOT override DOCUMENT here.
+				// Leave TestBed’s own document intact.
+				providers: [
+					// nothing special
+				],
+			});
+
+			// Create a CHILD injector that only applies to constructing the service.
+			const parent = TestBed.inject(EnvironmentInjector);
+			const child = createEnvironmentInjector(
+				[
+					{ provide: DOCUMENT, useValue: null },
+					{ provide: PLATFORM_ID, useValue: 'server' },
+					NgxWindowService,
+				],
+				parent
+			);
+
+			service = runInInjectionContext(child, () => inject(NgxWindowService));
 		});
 
 		describe('construct', () => {
@@ -18,7 +44,6 @@ describe('NgxWindowService', () => {
 		});
 
 		describe('hasDocument', () => {
-			``;
 			it('should return false', () => {
 				expect(service.hasDocument()).toBe(false);
 			});
@@ -33,11 +58,21 @@ describe('NgxWindowService', () => {
 
 	describe('with a document', () => {
 		let service: NgxWindowService;
-		const document: any = NgxWindowMock(jest.fn());
-		const platform = 'browser';
 
 		beforeEach(() => {
-			service = new NgxWindowService(document, platform);
+			// Use the real browser document but force PLATFORM_ID to 'browser'
+			// Provide a mock window via the document.defaultView like your mock does.
+			const mockDoc = NgxWindowMock(jest.fn()) as unknown as Document;
+
+			TestBed.configureTestingModule({
+				providers: [
+					{ provide: DOCUMENT, useValue: mockDoc },
+					{ provide: PLATFORM_ID, useValue: 'browser' },
+					NgxWindowService,
+				],
+			});
+
+			service = TestBed.inject(NgxWindowService);
 		});
 
 		describe('construct', () => {

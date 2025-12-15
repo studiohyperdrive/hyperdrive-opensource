@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -7,8 +7,10 @@ import { NgxStoreService, dispatchDataToStore } from '@ngx/store';
 
 @Injectable()
 export class CoursesService extends NgxStoreService<CoursesStore> {
-	constructor(protected readonly store: Store) {
-		super(store, selectors);
+	protected readonly store: Store = inject(Store);
+
+	constructor() {
+		super(selectors);
 	}
 
 	setCompleted() {

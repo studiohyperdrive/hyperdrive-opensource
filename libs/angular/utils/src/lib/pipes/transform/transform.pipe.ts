@@ -14,6 +14,7 @@ export class TransformPipe implements PipeTransform {
 	 * @param value - The provided value we wish to transform
 	 * @param transformer - A provided transform function
 	 */
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 	public transform<TransformerType = any>(value: any, transformer: Function): TransformerType {
 		// Iben: If no transformer is passed, we return the original value
 		if (!transformer) {

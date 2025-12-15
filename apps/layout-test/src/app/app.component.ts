@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { RouterModule } from '@angular/router';
 import { tap } from 'rxjs';
@@ -13,10 +13,10 @@ import { NgxAccordion } from '@ngx/layout';
 	imports: [RouterModule, NgxAccordion],
 })
 export class AppComponent {
-	constructor(
-		private readonly mediaService: NgxMediaQueryService,
-		private readonly modalService: NgxModalService
-	) {
+	private readonly mediaService = inject(NgxMediaQueryService);
+	private readonly modalService = inject(NgxModalService);
+
+	constructor() {
 		// Wouter: To see these in action, navigate to '/queries' in the browser
 		this.mediaService.registerMediaQueries(
 			['small', '(max-width: 500px)'],

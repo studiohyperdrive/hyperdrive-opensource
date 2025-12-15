@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { tap } from 'rxjs';
@@ -18,16 +18,16 @@ import {
 	imports: [NgxHasFeatureDirective, NgxHasPermissionDirective, NgxIsAuthenticatedDirective],
 })
 export class AppComponent implements OnInit {
+	private readonly store = inject(Store);
+	private readonly courseService = inject(CoursesService);
+	private readonly authenticationService = inject(AuthenticationService);
+
 	title = 'store-test';
 
 	user = toSignal(this.authenticationService.user$);
 	session = toSignal(this.authenticationService.session$);
 
-	constructor(
-		private readonly store: Store,
-		private readonly courseService: CoursesService,
-		private readonly authenticationService: AuthenticationService
-	) {
+	constructor() {
 		this.authenticationService.setGlobalFeatures(['B']);
 	}
 

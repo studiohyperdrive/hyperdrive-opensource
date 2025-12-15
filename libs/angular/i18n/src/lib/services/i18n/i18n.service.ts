@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 
@@ -7,10 +7,8 @@ import { NgxI18nRootService } from '../root-i18n/root-i18n.service';
 
 @Injectable()
 export class NgxI18nService implements NgxI18nAbstractService {
-	constructor(
-		private readonly translateService: TranslateService,
-		private readonly rootI18nService: NgxI18nRootService
-	) {}
+	private readonly translateService = inject(TranslateService);
+	private readonly rootI18nService = inject(NgxI18nRootService);
 
 	/**
 	 * Returns the current language of the application

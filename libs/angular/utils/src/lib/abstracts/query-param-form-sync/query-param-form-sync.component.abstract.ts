@@ -28,8 +28,8 @@ export abstract class NgxQueryParamFormSyncComponent<
 		.queryParams as Observable<StringifiedQueryParamsType<QueryParamsType>>;
 
 	constructor(
-		protected readonly route: ActivatedRoute,
-		protected readonly router: Router
+		protected readonly route: ActivatedRoute, // eslint-disable-line @angular-eslint/prefer-inject
+		protected readonly router: Router // eslint-disable-line @angular-eslint/prefer-inject
 	) {}
 
 	public ngOnInit(): void {

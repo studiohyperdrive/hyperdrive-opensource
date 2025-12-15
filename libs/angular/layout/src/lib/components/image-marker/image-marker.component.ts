@@ -10,6 +10,7 @@ import {
 	Output,
 	SimpleChanges,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { NgxWindowService, simpleChangeHasChanged } from '@studiohyperdrive/ngx-core';
@@ -44,6 +45,10 @@ import {
 	},
 })
 export class NgxImageMarkerComponent implements AfterViewInit, OnChanges, OnDestroy {
+	private readonly imageMarkerService = inject(NgxImageMarkerService);
+	private readonly windowService = inject(NgxWindowService);
+	private readonly elementRef = inject(ElementRef);
+
 	/**
 	 * The currently created marker
 	 */
@@ -105,12 +110,6 @@ export class NgxImageMarkerComponent implements AfterViewInit, OnChanges, OnDest
 	 */
 	@Output() public markerClicked: EventEmitter<NgxImageMarkerItem> =
 		new EventEmitter<NgxImageMarkerItem>();
-
-	constructor(
-		private readonly imageMarkerService: NgxImageMarkerService,
-		private readonly windowService: NgxWindowService,
-		private readonly elementRef: ElementRef
-	) {}
 
 	ngAfterViewInit(): void {
 		// Iben: Create the initial marker

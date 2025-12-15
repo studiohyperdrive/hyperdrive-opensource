@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterOutlet } from '@angular/router';
 import { NgxI18nRootService, NgxI18nService } from '@ngx/i18n';
@@ -10,10 +10,13 @@ import { NgxI18nRootService, NgxI18nService } from '@ngx/i18n';
 	imports: [RouterOutlet, TranslateModule],
 })
 export class AppComponent {
-	constructor(
-		private readonly i18nService: NgxI18nService,
-		private readonly rootService: NgxI18nRootService
-	) {
+	private readonly i18nService = inject(NgxI18nService);
+	private readonly rootService = inject(NgxI18nRootService);
+
+	constructor() {
+		const i18nService = this.i18nService;
+		const rootService = this.rootService;
+
 		setTimeout(() => {
 			rootService.setAvailableLanguages(['nl', 'fr']);
 		}, 3000);

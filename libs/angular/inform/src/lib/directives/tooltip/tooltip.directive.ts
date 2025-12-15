@@ -1,4 +1,12 @@
-import { Directive, ElementRef, HostBinding, HostListener, Input, Type } from '@angular/core';
+import {
+	Directive,
+	ElementRef,
+	HostBinding,
+	HostListener,
+	Input,
+	Type,
+	inject,
+} from '@angular/core';
 import { v4 as uuid } from 'uuid';
 
 import { NgxTooltipAbstractComponent } from '../../abstracts';
@@ -16,6 +24,9 @@ import { NgxTooltipService } from '../../services';
 	standalone: true,
 })
 export class NgxTooltipDirective {
+	private readonly tooltipService = inject(NgxTooltipService);
+	private readonly elementRef = inject(ElementRef);
+
 	/**
 	 * Show the tooltip on hover
 	 */
@@ -81,11 +92,6 @@ export class NgxTooltipDirective {
 	 * Prevent the tooltip from being shown, by default this is false.
 	 */
 	@Input() public ngxTooltipDisabled: boolean = false;
-
-	constructor(
-		private readonly tooltipService: NgxTooltipService,
-		private readonly elementRef: ElementRef
-	) {}
 
 	/**
 	 * Show the tooltip if it is not visible yet
