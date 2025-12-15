@@ -1,6 +1,6 @@
 {
 	"name": "@studiohyperdrive/ngx-gov-flanders",
-	"version": "20.0.0",
+	"version": "20.1.0",
 	"description": "An integrated Angular approach to common use-cases for applications for the Flemish Government.",
 	"keywords": [
 		"angular",
