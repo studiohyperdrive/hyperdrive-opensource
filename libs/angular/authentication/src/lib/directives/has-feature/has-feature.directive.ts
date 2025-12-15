@@ -24,8 +24,8 @@ import { NgxAuthenticationServiceToken } from '../../tokens';
 	selector: '[ngxHasFeature]',
 })
 export class NgxHasFeatureDirective<FeatureType extends string> implements OnDestroy {
-	templateRef = inject<TemplateRef<any>>(TemplateRef);
-	private viewContainer = inject(ViewContainerRef);
+	private readonly templateRef = inject<TemplateRef<any>>(TemplateRef);
+	private readonly viewContainer = inject(ViewContainerRef);
 	private readonly authenticationService = inject<NgxAuthenticationAbstractService>(
 		NgxAuthenticationServiceToken
 	);

@@ -35,8 +35,6 @@ describe('NgxWindowService', () => {
 			);
 
 			service = runInInjectionContext(child, () => inject(NgxWindowService));
-
-			// service = runInInjectionContext(parent, () => inject(NgxWindowService));
 		});
 
 		describe('construct', () => {

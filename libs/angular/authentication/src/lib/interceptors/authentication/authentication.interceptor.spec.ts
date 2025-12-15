@@ -13,7 +13,6 @@ describe('NgxAuthenticatedHttpInterceptor', () => {
 		handler = jest.fn();
 
 		TestBed.configureTestingModule({
-			imports: [],
 			providers: [{ provide: NgxAuthenticationInterceptorToken, useValue: handler }],
 		});
 	});

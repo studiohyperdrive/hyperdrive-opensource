@@ -20,7 +20,7 @@ import { NgxTourService } from '../../services';
 	standalone: true,
 })
 export class NgxTourItemDirective implements AfterViewInit, OnDestroy {
-	readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+	public readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 	private readonly tourService = inject(NgxTourService);
 	private readonly cdRef = inject(ChangeDetectorRef);
 

@@ -16,7 +16,6 @@ describe('NgxAuthenticatedHttpClient', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			imports: [],
 			providers: [
 				{ provide: HttpClient, useValue: httpClient },
 				{ provide: NgxAuthenticationUrlHandlerToken, useValue: baseUrl },

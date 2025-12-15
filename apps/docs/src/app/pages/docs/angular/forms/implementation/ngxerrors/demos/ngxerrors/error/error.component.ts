@@ -15,6 +15,5 @@ import { NgxFormsErrorAbstractComponent } from '@ngx/forms';
 	`,
 	styleUrls: ['./error.component.scss'],
 	standalone: true,
-	imports: [],
 })
 export class FormErrorComponent extends NgxFormsErrorAbstractComponent {}

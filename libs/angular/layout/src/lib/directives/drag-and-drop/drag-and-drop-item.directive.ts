@@ -40,7 +40,7 @@ export class NgxAccessibleDragAndDropItemDirective
 	private readonly dropList = inject(CdkDropList);
 	private readonly dropContainer = inject(NgxAccessibleDragAndDropContainerDirective);
 	private readonly dropHost = inject(NgxAccessibleDragAndDropHostDirective);
-	readonly elementRef: ElementRef<HTMLElement>;
+	public readonly elementRef: ElementRef<HTMLElement>;
 
 	/**
 	 * The tab index of the item

@@ -9,7 +9,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 	providedIn: 'root',
 })
 export class NgxWindowService {
-	document = inject<Document>(DOCUMENT);
+	public readonly document = inject<Document>(DOCUMENT);
 	private platformId = inject(PLATFORM_ID);
 
 	/**

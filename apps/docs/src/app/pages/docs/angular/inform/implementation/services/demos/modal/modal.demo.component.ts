@@ -8,7 +8,6 @@ import { ModalComponent } from './modal.component';
 import { NgxModalService } from '@ngx/inform';
 
 @Component({
-	imports: [],
 	selector: 'modal-demo',
 	templateUrl: './modal.demo.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
