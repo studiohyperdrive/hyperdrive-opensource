@@ -15,7 +15,6 @@ export {
 	StoreFlowAssets,
 	BasicEntityAdapterActions,
 } from './lib/store/interfaces';
-export type {} from './';
 export {
 	createStoreAssets,
 	dispatchDataToStore,
