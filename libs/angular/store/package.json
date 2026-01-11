@@ -1,6 +1,6 @@
 {
 	"name": "@studiohyperdrive/ngx-store",
-	"version": "20.0.1",
+	"version": "20.0.2",
 	"description": "A set of utils and services to plug into a Redux/NGRX Angular workflow.",
 	"keywords": [
 		"angular",
