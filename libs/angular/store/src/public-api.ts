@@ -6,6 +6,8 @@ export {
 	BaseStoreAssets,
 	EntityStoreAssets,
 	NgxStore,
+	NgxStoreActions,
+	NgxStoreSelectors,
 	BaseStoreActions,
 	BaseStoreSelectors,
 	EntityStoreActions,
@@ -13,6 +15,7 @@ export {
 	StoreFlowAssets,
 	BasicEntityAdapterActions,
 } from './lib/store/interfaces';
+export type {} from './';
 export {
 	createStoreAssets,
 	dispatchDataToStore,
