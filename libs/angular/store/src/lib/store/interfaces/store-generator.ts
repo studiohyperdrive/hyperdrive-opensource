@@ -34,7 +34,7 @@ export type NgxStoreSelectors<ResultType extends StoreFlowAssets> = {
 
 // Iben: Type to extract the actions from the provided ResultType, so that we know if we have a BaseStoreAction or an EntityStoreAction, this way
 // we get correct typing in our services
-type NgxStoreActions<ResultType extends StoreFlowAssets> = {
+export type NgxStoreActions<ResultType extends StoreFlowAssets> = {
 	[Key in keyof ResultType]: ResultType[Key]['actions'];
 };
 
