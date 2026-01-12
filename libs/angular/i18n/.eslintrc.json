@@ -15,18 +15,20 @@
 						"suffixes": ["Component", "Container", "Page"]
 					}
 				],
-				"@angular-eslint/component-selector": [
-					"error",
-					{
-						"type": "element",
-						"style": "kebab-case"
-					}
-				],
 				"@angular-eslint/directive-selector": [
 					"error",
 					{
 						"type": "attribute",
-						"style": "camelCase"
+						"style": "camelCase",
+						"prefix": ["ngx"]
+					}
+				],
+				"@angular-eslint/component-selector": [
+					"error",
+					{
+						"type": "element",
+						"style": "kebab-case",
+						"prefix": ["ngx"]
 					}
 				],
 				"@typescript-eslint/no-inferrable-types": "off",

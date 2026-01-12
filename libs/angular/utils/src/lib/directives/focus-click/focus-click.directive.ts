@@ -22,11 +22,11 @@ export class FocusClickDirective {
 		new EventEmitter<void | Event>();
 
 	// Make every tag that uses this directive by default tabbable
-	@HostBinding('attr.tabindex') private readonly tabIndex: number = 0;
+	@HostBinding('attr.tabindex') protected readonly tabIndex: number = 0;
 
 	// Add eventhandler to the click event
 	@HostListener('click', ['$event'])
-	private isClicked(event: Event): void {
+	protected isClicked(event: Event): void {
 		if (!this.disabled) {
 			this.focusClick.emit(event);
 		}
@@ -35,7 +35,7 @@ export class FocusClickDirective {
 	// Add eventhandler to keydown event When enter is pressed and the event
 	// isn't blocked, execute the click function of the host
 	@HostListener('keydown.enter')
-	private isEntered(): void {
+	protected isEntered(): void {
 		if (!this.disabled) {
 			this.focusClick.emit();
 		}

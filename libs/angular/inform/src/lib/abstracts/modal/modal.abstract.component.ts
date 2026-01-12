@@ -25,7 +25,7 @@ export class NgxModalAbstractComponent<ActionType extends NgxModalActionType, Da
 	/**
 	 * Remove the modal on escape pressed
 	 */
-	@HostListener('document:keydown.escape') private onEscape() {
+	@HostListener('document:keydown.escape') protected onEscape() {
 		this.close.emit();
 	}
 

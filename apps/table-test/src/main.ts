@@ -1,4 +1,4 @@
-import { importProvidersFrom } from '@angular/core';
+import { importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
@@ -6,6 +6,7 @@ import { NgxTableConfig, NgxTableConfigToken } from '@ngx/table';
 
 bootstrapApplication(AppComponent, {
 	providers: [
+		provideZoneChangeDetection(),
 		importProvidersFrom(BrowserModule, ReactiveFormsModule),
 		{
 			provide: NgxTableConfigToken,

@@ -6,7 +6,8 @@
 		"declarationMap": true,
 		"inlineSources": true,
 		"types": [],
-		"moduleResolution": "bundler"
+		"moduleResolution": "bundler",
+		"module": "preserve"
 	},
 	"exclude": ["**/*.spec.ts"],
 	"include": ["**/*.ts"]

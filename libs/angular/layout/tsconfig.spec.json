@@ -3,7 +3,9 @@
 	"compilerOptions": {
 		"outDir": "../../dist/out-tsc",
 		"types": ["jasmine"],
-		"moduleResolution": "bundler"
+		"moduleResolution": "bundler",
+		"module": "preserve",
+		"isolatedModules": true
 	},
 	"include": ["**/*.spec.ts", "**/*.d.ts"]
 }

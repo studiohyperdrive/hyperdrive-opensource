@@ -4,7 +4,8 @@
 		"allowSyntheticDefaultImports": true,
 		"outDir": "../../dist/out-tsc",
 		"types": [],
-		"moduleResolution": "bundler"
+		"moduleResolution": "bundler",
+		"module": "preserve"
 	},
 	"files": ["src/main.ts", "server.ts"],
 	"include": ["src/**/*.d.ts", "src/**/*.ts", "server.ts"],

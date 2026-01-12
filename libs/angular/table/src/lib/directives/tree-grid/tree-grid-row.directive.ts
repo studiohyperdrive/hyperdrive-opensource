@@ -36,7 +36,7 @@ export class NgxTreeGridRowDirective extends NgxHasFocusDirective implements OnD
 	/**
 	 * Sets focus on to the previous row
 	 */
-	@HostListener('keydown.ArrowUp') private moveUp(): void {
+	@HostListener('keydown.ArrowUp') protected moveUp(): void {
 		this.handleWhenFocussed(() => {
 			this.parent.getRow(this.ngxTreeGridRow - 1)?.focus();
 		});
@@ -45,7 +45,7 @@ export class NgxTreeGridRowDirective extends NgxHasFocusDirective implements OnD
 	/**
 	 * Sets focus to the next row
 	 */
-	@HostListener('keydown.ArrowDown') private moveDown(): void {
+	@HostListener('keydown.ArrowDown') protected moveDown(): void {
 		this.handleWhenFocussed(() => {
 			this.parent.getRow(this.ngxTreeGridRow + 1)?.focus();
 		});
@@ -54,7 +54,7 @@ export class NgxTreeGridRowDirective extends NgxHasFocusDirective implements OnD
 	/**
 	 * Sets the focus on the first cell in the row or closes the row when expanded
 	 */
-	@HostListener('keydown.ArrowRight') private arrowRight(): void {
+	@HostListener('keydown.ArrowRight') protected arrowRight(): void {
 		this.handleWhenFocussed(() => {
 			// Iben: Only when the row is not expanded we can move to the next cell, as by WCAG design
 			if (this.parent.ngxTreeGridExpandable && this.ngxTreeGridRowExpanded) {
@@ -70,7 +70,7 @@ export class NgxTreeGridRowDirective extends NgxHasFocusDirective implements OnD
 	/**
 	 * Expand the row when closed
 	 */
-	@HostListener('keydown.ArrowLeft') private arrowLeft(): void {
+	@HostListener('keydown.ArrowLeft') protected arrowLeft(): void {
 		this.handleWhenFocussed(() => {
 			this.ngxTreeGridRowExpandRow.emit(true);
 		});
@@ -79,49 +79,49 @@ export class NgxTreeGridRowDirective extends NgxHasFocusDirective implements OnD
 	/**
 	 * Sets focus on the first row of the grid
 	 */
-	@HostListener('keydown.PageUp') private moveToTopPageUp(): void {
+	@HostListener('keydown.PageUp') protected moveToTopPageUp(): void {
 		this.moveToTop();
 	}
 
 	/**
 	 * Sets focus on the first row of the grid
 	 */
-	@HostListener('keydown.Home') private moveToTopHome(): void {
+	@HostListener('keydown.Home') protected moveToTopHome(): void {
 		this.moveToTop();
 	}
 
 	/**
 	 * Sets focus on the first row of the grid
 	 */
-	@HostListener('keydown.control.Home') private moveToTopControlHome(): void {
+	@HostListener('keydown.control.Home') protected moveToTopControlHome(): void {
 		this.moveToTop();
 	}
 
 	/**
 	 * Sets focus on the last row of the grid
 	 */
-	@HostListener('keydown.PageDown') private moveToBottomPageDown(): void {
+	@HostListener('keydown.PageDown') protected moveToBottomPageDown(): void {
 		this.moveToBottom();
 	}
 
 	/**
 	 * Sets focus on the last row of the grid
 	 */
-	@HostListener('keydown.End') private moveToBottomEnd(): void {
+	@HostListener('keydown.End') protected moveToBottomEnd(): void {
 		this.moveToBottom();
 	}
 
 	/**
 	 * Sets focus on the last row of the grid
 	 */
-	@HostListener('keydown.control.End') private moveToBottomControlEnd(): void {
+	@HostListener('keydown.control.End') protected moveToBottomControlEnd(): void {
 		this.moveToBottom();
 	}
 
 	/**
 	 * Emits a select event to select a row
 	 */
-	@HostListener('keydown.shift.space') private selectRowShift(): void {
+	@HostListener('keydown.shift.space') protected selectRowShift(): void {
 		this.handleWhenFocussed(() => {
 			this.selectRow();
 		});
@@ -130,7 +130,7 @@ export class NgxTreeGridRowDirective extends NgxHasFocusDirective implements OnD
 	/**
 	 * Emits a select event to select a row
 	 */
-	@HostListener('keydown.control.space') private selectRowControl(): void {
+	@HostListener('keydown.control.space') protected selectRowControl(): void {
 		this.handleWhenFocussed(() => {
 			this.selectRow();
 		});
@@ -139,7 +139,7 @@ export class NgxTreeGridRowDirective extends NgxHasFocusDirective implements OnD
 	/**
 	 * Emits a select event to select a row below the current row and move focus to that row
 	 */
-	@HostListener('keydown.shift.ArrowDown') private selectNextRow(): void {
+	@HostListener('keydown.shift.ArrowDown') protected selectNextRow(): void {
 		this.handleWhenFocussed(() => {
 			this.parent.getRow(this.ngxTreeGridRow + 1)?.selectRow();
 			this.parent.getRow(this.ngxTreeGridRow + 1)?.focus();
@@ -149,7 +149,7 @@ export class NgxTreeGridRowDirective extends NgxHasFocusDirective implements OnD
 	/**
 	 * Emits a select event to select a row above the current row and move focus to that row
 	 */
-	@HostListener('keydown.shift.ArrowUp') private selectPreviousRow(): void {
+	@HostListener('keydown.shift.ArrowUp') protected selectPreviousRow(): void {
 		this.handleWhenFocussed(() => {
 			this.parent.getRow(this.ngxTreeGridRow - 1)?.selectRow();
 			this.parent.getRow(this.ngxTreeGridRow - 1)?.focus();

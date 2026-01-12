@@ -18,7 +18,7 @@ export class NgxTreeGridDirective implements OnChanges {
 	 */
 	private rows: NgxTreeGridRowDirective[] = [];
 
-	@HostBinding('attr.role') private role: 'table' | 'treegrid' = 'table';
+	@HostBinding('attr.role') protected role: 'table' | 'treegrid' = 'table';
 
 	/**
 	 * Whether the current item is a treegrid

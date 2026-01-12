@@ -3,7 +3,7 @@ import { ContentChild, Directive, TemplateRef } from '@angular/core';
 import { NgxAbstractTableCellDirective } from './cell.directive';
 
 @Directive({
-	selector: 'ngx-table-cell',
+	selector: 'ngx-table-cell', // eslint-disable-line @angular-eslint/directive-selector
 	providers: [
 		{
 			provide: NgxAbstractTableCellDirective,

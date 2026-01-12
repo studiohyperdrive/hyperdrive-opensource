@@ -33,7 +33,7 @@ export abstract class NgxTooltipAbstractComponent {
 	/**
 	 * The role of the component
 	 */
-	@HostBinding('role') public readonly role = 'tooltip';
+	@HostBinding('attr.role') public readonly role = 'tooltip';
 
 	/**
 	 * The position class of the tooltip

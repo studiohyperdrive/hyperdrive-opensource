@@ -17,7 +17,7 @@ export class LandingPageComponent {
 	@ViewChild('quote', { static: false }) private quote: ElementRef<HTMLDivElement> | undefined;
 	@ViewChild('photo', { static: false }) private photo: ElementRef<HTMLDivElement> | undefined;
 
-	@HostListener('window:scroll', ['$event'])
+	@HostListener('window:scroll')
 	isScrolledIntoView() {
 		if (this.quote && !this.clipQuoteLine) {
 			const rect = this.quote.nativeElement.getBoundingClientRect();
