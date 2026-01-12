@@ -1,6 +1,6 @@
 {
 	"name": "@studiohyperdrive/ngx-cookies",
-	"version": "20.0.0",
+	"version": "21.0.0",
 	"description": "An integrated Angular approach to the vanilla cookieconsent library.",
 	"keywords": [
 		"angular",
@@ -22,8 +22,9 @@
 		"directory": "libs/angular/cookies/src"
 	},
 	"peerDependencies": {
-		"@angular/common": "^20.2.4",
-		"@angular/core": "^20.2.4",
+		"@angular/common": "^21.0.8",
+		"@angular/core": "^21.0.8",
+		"@studiohyperdrive/ngx-core": "^21.0.0",
 		"lodash": "^4.17.21",
 		"vanilla-cookieconsent": "^3.0.1"
 	},
