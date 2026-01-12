@@ -1,6 +1,6 @@
 {
 	"name": "@studiohyperdrive/ngx-store",
-	"version": "20.0.2",
+	"version": "21.0.0",
 	"description": "A set of utils and services to plug into a Redux/NGRX Angular workflow.",
 	"keywords": [
 		"angular",
@@ -23,11 +23,11 @@
 		"directory": "libs/angular/store/src"
 	},
 	"peerDependencies": {
-		"@angular/common": "^20.2.4",
-		"@angular/core": "^20.2.4",
-		"@ngrx/entity": "^20.0.1",
-		"@ngrx/store": "^20.0.1",
-		"@ngrx/effects": "^20.0.1",
+		"@angular/common": "^21.0.8",
+		"@angular/core": "^21.0.8",
+		"@ngrx/entity": "^21.0.1",
+		"@ngrx/store": "^21.0.1",
+		"@ngrx/effects": "^21.0.1",
 		"lodash": "^4.17.21"
 	},
 	"dependencies": {
