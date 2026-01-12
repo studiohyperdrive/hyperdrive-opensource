@@ -1,6 +1,6 @@
 {
 	"name": "@studiohyperdrive/ngx-table",
-	"version": "20.0.0",
+	"version": "21.0.0",
 	"description": "An Angular based approach for customizable large scale datatables using Angular CDK.",
 	"keywords": [
 		"angular",
@@ -28,10 +28,10 @@
 	},
 	"license": "MIT",
 	"peerDependencies": {
-		"@angular/common": "^20.2.4",
-		"@angular/core": "^20.2.4",
-		"@angular/forms": "^20.2.4",
-		"@angular/cdk": "^20.2.4",
+		"@angular/common": "^21.0.8",
+		"@angular/core": "^21.0.8",
+		"@angular/forms": "^21.0.8",
+		"@angular/cdk": "^21.0.6",
 		"dot-prop": "^9.0.0",
 		"lodash": "^4.17.21",
 		"angular2-uuid": "^1.1.1"
