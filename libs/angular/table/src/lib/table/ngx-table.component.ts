@@ -96,13 +96,13 @@ export class NgxTableComponent
 	/**
 	 * Default class that will be put on the ngx-table component
 	 */
-	@HostBinding('class') private readonly componentClass =
+	@HostBinding('class') protected readonly componentClass =
 		this.ngxTableConfig?.ngxTableClass || '';
 
 	/**
 	 * The loading state of our table
 	 */
-	@HostBinding('ngx-table-loading') @Input() public loading: boolean = false;
+	@HostBinding('class.ngx-table-loading') @Input() public loading: boolean = false;
 
 	/**
 	 * A subject to handle the observables when the component gets destroyed

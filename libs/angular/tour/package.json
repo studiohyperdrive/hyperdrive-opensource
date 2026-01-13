@@ -1,6 +1,6 @@
 {
 	"name": "@studiohyperdrive/ngx-tour",
-	"version": "20.0.0",
+	"version": "21.0.0",
 	"description": "A lightweight and customizable Angular help tour approach using Angular CDK.",
 	"keywords": [
 		"angular",
@@ -29,9 +29,10 @@
 		"directory": "libs/angular/tour/src"
 	},
 	"peerDependencies": {
-		"@angular/common": "^20.2.4",
-		"@angular/core": "^20.2.4",
-		"@angular/cdk": "^20.2.4",
+		"@angular/common": "^21.0.8",
+		"@angular/core": "^21.0.8",
+		"@angular/cdk": "^21.0.6",
+		"@studiohyperdrive/ngx-core": "^21.0.0",
 		"angular2-uuid": "^1.1.1"
 	},
 	"sideEffects": false

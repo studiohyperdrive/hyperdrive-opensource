@@ -1,3 +1,4 @@
+import { provideZoneChangeDetection } from '@angular/core';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -30,6 +31,7 @@ import { provideNgDocContext } from '@ng-doc/generated'; // eslint-disable-line 
 bootstrapApplication(AppComponent, {
 	providers: [
 		// Provide context of the generated documentation
+		provideZoneChangeDetection(),
 		provideNgDocContext(),
 		// Provide default configuration for the documentation app
 		provideNgDocApp(),

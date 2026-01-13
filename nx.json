@@ -160,11 +160,16 @@
 			"plugin": "@nx/vite/plugin",
 			"options": {
 				"buildTargetName": "vite:build",
-				"testTargetName": "vite:test",
 				"serveTargetName": "serve",
 				"previewTargetName": "preview",
 				"serveStaticTargetName": "serve-static",
 				"typecheckTargetName": "typecheck"
+			}
+		},
+		{
+			"plugin": "@nx/vitest",
+			"options": {
+				"testTargetName": "vite:test"
 			}
 		}
 	]

@@ -1,6 +1,6 @@
 {
 	"name": "@studiohyperdrive/ngx-i18n",
-	"version": "20.0.0",
+	"version": "21.0.0",
 	"description": "A modular lazy loaded Angular approach to translations using ngx-translate.",
 	"keywords": [
 		"angular",
@@ -24,9 +24,10 @@
 		"directory": "libs/angular/i18n/src"
 	},
 	"peerDependencies": {
-		"@angular/common": "^20.2.4",
-		"@angular/core": "^20.2.4",
+		"@angular/common": "^21.0.8",
+		"@angular/core": "^21.0.8",
 		"@ngx-translate/core": "^15.0.0",
+		"@studiohyperdrive/ngx-core": "^21.0.0",
 		"angular2-uuid": "^1.1.1",
 		"deepmerge-ts": "^7.0.3"
 	},

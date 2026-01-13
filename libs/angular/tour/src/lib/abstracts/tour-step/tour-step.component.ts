@@ -32,7 +32,7 @@ export abstract class NgxTourStepComponent<DataType = any> implements OnInit, Af
 	/**
 	 * Close the tour on escape pressed
 	 */
-	@HostListener('document:keydown.escape') private onEscape() {
+	@HostListener('document:keydown.escape') protected onEscape() {
 		this.tourService.closeTour().subscribe();
 	}
 
@@ -98,7 +98,7 @@ export abstract class NgxTourStepComponent<DataType = any> implements OnInit, Af
 	/**
 	 * The aria-labelledby id of the title element
 	 */
-	private titleId: WritableSignal<string> = signal('');
+	protected titleId: WritableSignal<string> = signal('');
 
 	public ngOnInit(): void {
 		// Iben: We set the correct host class. As this step is rendered and not changed afterwards, we do not have to adjust this in the onChanges

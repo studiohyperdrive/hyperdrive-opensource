@@ -1,4 +1,4 @@
-import { importProvidersFrom } from '@angular/core';
+import { importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AppComponent } from './app/app.component';
@@ -7,6 +7,7 @@ import { importNgxI18nProviders } from '@ngx/i18n';
 
 bootstrapApplication(AppComponent, {
 	providers: [
+		provideZoneChangeDetection(),
 		importProvidersFrom(BrowserModule, AppRoutingModule),
 		importNgxI18nProviders({
 			defaultLanguage: 'nl',

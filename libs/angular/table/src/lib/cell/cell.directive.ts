@@ -4,7 +4,7 @@ import { NgxTableSortDirection } from '../enums/sort-direction.enum';
 import { NgxTableCypressDataTags, NgxTableSortEvent } from '../interfaces';
 
 @Directive({
-	selector: 'ngx-abstract-table-cell',
+	selector: 'ngx-abstract-table-cell', // eslint-disable-line @angular-eslint/directive-selector
 	standalone: true,
 })
 export class NgxAbstractTableCellDirective {

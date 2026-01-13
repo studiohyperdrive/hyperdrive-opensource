@@ -1,6 +1,6 @@
 {
 	"name": "@studiohyperdrive/ngx-auth",
-	"version": "20.0.0",
+	"version": "21.0.0",
 	"description": "A library of core authentication functionality used with @studiohyperdrive/types-auth.",
 	"keywords": [
 		"angular",
@@ -29,9 +29,9 @@
 		"directory": "libs/angular/authentication/src"
 	},
 	"peerDependencies": {
-		"@angular/core": "^20.2.4",
-		"@angular/common": "^20.2.4",
-		"@angular/router": "^20.2.4",
+		"@angular/core": "^21.0.8",
+		"@angular/common": "^21.0.8",
+		"@angular/router": "^21.0.8",
 		"@studiohyperdrive/types-auth": "^2.0.0",
 		"obj-clean": "~3.0.1",
 		"rxjs": "^7.8.1"

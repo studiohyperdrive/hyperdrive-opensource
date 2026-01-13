@@ -1,5 +1,9 @@
 {
 	"extends": "../../../tsconfig.base.json",
 	"exclude": ["**/*.spec.ts"],
-	"include": ["**/*.ts"]
+	"include": ["**/*.ts"],
+	"compilerOptions": {
+		"module": "preserve",
+		"moduleResolution": "bundler"
+	}
 }

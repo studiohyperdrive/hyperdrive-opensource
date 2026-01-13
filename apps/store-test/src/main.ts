@@ -1,4 +1,4 @@
-import { importProvidersFrom } from '@angular/core';
+import { importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -14,6 +14,7 @@ import { provideNgxAuthenticationConfiguration } from '@ngx/auth';
 
 bootstrapApplication(AppComponent, {
 	providers: [
+		provideZoneChangeDetection(),
 		importProvidersFrom(
 			BrowserModule,
 			StoreModule.forRoot({ users: reducers, courses: coursesReducers }),

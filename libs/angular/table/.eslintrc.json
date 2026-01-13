@@ -8,15 +8,17 @@
 				"@angular-eslint/directive-selector": [
 					"error",
 					{
-						"type": "attribute",
-						"style": "camelCase"
+						"type": ["attribute", "element"],
+						"style": "camelCase",
+						"prefix": ["ngx"]
 					}
 				],
 				"@angular-eslint/component-selector": [
 					"error",
 					{
 						"type": "element",
-						"style": "kebab-case"
+						"style": "kebab-case",
+						"prefix": ["ngx"]
 					}
 				],
 				"@angular-eslint/prefer-standalone": "off"

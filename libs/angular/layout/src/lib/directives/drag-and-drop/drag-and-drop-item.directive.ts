@@ -69,31 +69,37 @@ export class NgxAccessibleDragAndDropItemDirective
 	/**
 	 * Handle the ArrowUp Press
 	 */
-	@HostListener('keydown.ArrowUp', ['$event']) public onArrowUp(event: KeyboardEvent): void {
-		this.moveItem('up', event);
+	@HostListener('keydown.ArrowUp', ['$event']) public onArrowUp(event: Event): void {
+		const keyboardEvent = event as KeyboardEvent;
+
+		this.moveItem('up', keyboardEvent);
 	}
 
 	/**
 	 * Handle the ArrowDown Press
 	 */
-	@HostListener('keydown.ArrowDown', ['$event']) public onArrowDown(event: KeyboardEvent): void {
-		this.moveItem('down', event);
+	@HostListener('keydown.ArrowDown', ['$event']) public onArrowDown(event: Event): void {
+		const keyboardEvent = event as KeyboardEvent;
+
+		this.moveItem('down', keyboardEvent);
 	}
 
 	/**
 	 * Handle the ArrowLeft Press
 	 */
-	@HostListener('keydown.ArrowLeft', ['$event']) public onArrowLeft(event: KeyboardEvent): void {
-		this.moveItem('left', event);
+	@HostListener('keydown.ArrowLeft', ['$event']) public onArrowLeft(event: Event): void {
+		const keyboardEvent = event as KeyboardEvent;
+
+		this.moveItem('left', keyboardEvent);
 	}
 
 	/**
 	 * Handle the ArrowRight Press
 	 */
-	@HostListener('keydown.ArrowRight', ['$event']) public onArrowRight(
-		event: KeyboardEvent
-	): void {
-		this.moveItem('right', event);
+	@HostListener('keydown.ArrowRight', ['$event']) public onArrowRight(event: Event): void {
+		const keyboardEvent = event as KeyboardEvent;
+
+		this.moveItem('right', keyboardEvent);
 	}
 
 	/**
