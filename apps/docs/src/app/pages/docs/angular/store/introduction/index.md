@@ -2,6 +2,19 @@
 keyword: IntroductionPage
 ---
 
+## For Organisations
+
+The `@studiohyperdrive/ngx-store` package provides a robust solution for managing complex data and state in your web application. It helps organisations by:
+
+- **Reliable Data Management**: Ensures consistent and predictable data flow throughout your application
+- **Enhanced Performance**: Optimizes state updates and data handling for better application responsiveness
+- **Faster Development**: Reduces development time with ready-to-use solutions for complex state management
+- **Quality Assurance**: Implements proven patterns that minimize bugs and improve application stability
+- **Easy Maintenance**: Enforces consistent patterns for better code maintainability and easier updates
+- **Scalability**: Provides a structured approach that scales with your application's growing complexity
+
+## For Developers
+
 NGX-store aims to reduce the boilerplate that comes with `@ngrx`, `@ngrx/effects` and `@ngrx/entity`; whilst still including the benefits of said packages.
 
 Each of the provided utils can be used individually, but we strongly advice to use all three utils as a coherent unit to get the best developers experience.
