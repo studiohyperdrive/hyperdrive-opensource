@@ -1,3 +1,5 @@
+> ⚠️ **Deprecated:** This package is part of a repository that has been deprecated as of August 2026 and will no longer receive any updates, including bug fixes and security patches. It remains published on NPM, but we recommend planning a migration away from it.
+
 # Javascript Tools: Regex (`@studiohyperdrive/regex-common`)
 
 `@studiohyperdrive/regex-common` is a set of common regex patterns.

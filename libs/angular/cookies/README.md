@@ -1,3 +1,5 @@
+> ⚠️ **Deprecated:** This package is part of a repository that has been deprecated as of August 2026 and will no longer receive any updates, including bug fixes and security patches. It remains published on NPM, but we recommend planning a migration away from it.
+
 # # Angular Tools: NgxCookies (`@studiohyperdrive/ngx-cookies`)
 
 This library provides a quick and easy wrapper for [CookieConsent V3](https://cookieconsent.orestbida.com).

@@ -1,3 +1,5 @@
+> ⚠️ **Deprecated:** This package is part of a repository that has been deprecated as of August 2026 and will no longer receive any updates, including bug fixes and security patches. It remains published on NPM, but we recommend planning a migration away from it.
+
 # Angular Tools: NgxTours (`@studiohyperdrive/ngx-tours`)
 
 `ngx-tour` is light-weight and heavily customizable package to create a help tour through an application using [the CDK overlay](https://material.angular.io/cdk/overlay/overview).

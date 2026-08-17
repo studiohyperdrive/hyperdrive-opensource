@@ -1,3 +1,5 @@
+> ⚠️ **Deprecated:** This package is part of a repository that has been deprecated as of August 2026 and will no longer receive any updates, including bug fixes and security patches. It remains published on NPM, but we recommend planning a migration away from it.
+
 # Angular Tools: NgxStore (`@studiohyperdrive/ngx-store`)
 
 NGX-store aims to reduce the boilerplate that comes with `@ngrx`, `@ngrx/effects` and `@ngrx/entity`; whilst still including the benefits of said packages.

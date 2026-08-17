@@ -1,3 +1,5 @@
+> ⚠️ **Deprecated:** This package is part of a repository that has been deprecated as of August 2026 and will no longer receive any updates, including bug fixes and security patches. It remains published on NPM, but we recommend planning a migration away from it.
+
 # Angular Tools: Authentication (`@studiohyperdrive/ngx-auth`)
 
 This library provides a basic setup for authentication flows within Angular applications.

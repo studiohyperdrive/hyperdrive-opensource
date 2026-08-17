@@ -1,3 +1,5 @@
+> ⚠️ **Deprecated:** This package is part of a repository that has been deprecated as of August 2026 and will no longer receive any updates, including bug fixes and security patches. It remains published on NPM, but we recommend planning a migration away from it.
+
 # Angular Tools: NgxInform (`@studiohyperdrive/ngx-inform`)
 
 `ngx-inform` is a collection of Angular flows related to informing end-users.

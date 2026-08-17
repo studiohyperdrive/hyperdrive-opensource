@@ -1,3 +1,5 @@
+> ⚠️ **Deprecated:** This repository has been deprecated as of August 2026 and will no longer receive any updates, including bug fixes and security patches. The packages remain published on NPM, but we recommend planning a migration away from them.
+
 # Studio Hyperdrive: Angular Tools (ngx-tools)
 
 `ngx-tools` is a mono-repo providing several of the Angular based packages created and maintained by the [Studio Hyperdrive](https://studiohyperdrive.be/) team.
